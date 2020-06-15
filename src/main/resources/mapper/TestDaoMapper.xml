@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.stb.stbcrmserver.dao.TestDao">
+    <select id="queryTest" resultType="cn.stb.stbcrmserver.domain.Test">
+        select id, name, test_phone
+        from test
+    </select>
+
+    <select id="findTestById" resultType="cn.stb.stbcrmserver.domain.Test" parameterType="java.lang.String">
+        select id, name, test_phone
+        from test
+        where id = ${id}
+    </select>
+</mapper>
