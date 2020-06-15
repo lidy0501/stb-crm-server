@@ -10,5 +10,5 @@ public interface TestDao {
 
 	List<Test> queryTest();
 
-	Test findTestById();
+	Test findTestById(String id);
 }

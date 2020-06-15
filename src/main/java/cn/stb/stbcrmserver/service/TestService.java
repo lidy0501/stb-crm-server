@@ -22,4 +22,8 @@ public class TestService {
 		System.out.println("name==" + name);
 		return testDao.queryTest();
 	}
+
+	public Test findTestById(String id) {
+		return testDao.findTestById(id);
+	}
 }
