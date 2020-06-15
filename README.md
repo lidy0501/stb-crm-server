@@ -57,5 +57,10 @@ CREATE TABLE `test` (
     如：请求参数较多时，需要封装成对象，命名为 **Req放在vo文件夹下
     相应数据封装成 **Vo,放在vo文件夹下
     
+#10 sql文件存放在resource下的mapper文件夹下
+命名为 **DaoMapper.xml, 即要与对应的dao文件对应
+
+
+    
     
     
