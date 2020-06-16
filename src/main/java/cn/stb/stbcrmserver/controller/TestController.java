@@ -17,6 +17,7 @@ public class TestController {
 	@Autowired
 	private TestService testService;
 
+
 	@RequestMapping("/queryAllTest")
 	public List<Test> queryAllTest () {
 		return testService.queryAllTest();
