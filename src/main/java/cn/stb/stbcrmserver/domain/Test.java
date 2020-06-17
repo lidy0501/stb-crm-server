@@ -8,7 +8,10 @@ import lombok.NoArgsConstructor;
 /**
  * 数据库表的bean
  */
-@Data @Builder @AllArgsConstructor @NoArgsConstructor
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Test {
 	private String id;
 	private String name;
