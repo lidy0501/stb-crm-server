@@ -5,8 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.Date;
+import org.joda.time.DateTime;
 
 /**
  * 合同表bean
@@ -16,9 +15,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Contract {
-    private String ContractId;//合同ID
-    private String ContractCode;//合同编号
-    private Date CreateTime;//创建时间
-    private Date UpdateTime;//更新时间
-    private String Remark;//备注
+    private String contractId;//合同ID
+    private String contractCode;//合同编号
+    private DateTime createTime;//创建时间
+    private DateTime updateTime;//更新时间
+    private String remark;//备注
 }

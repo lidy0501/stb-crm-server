@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
-import java.util.Date;
 
 /**
  * 商品表bean
@@ -15,13 +15,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Goods {
-    private String GoodsId;//商品ID
-    private String GoodsName;//商品名称
-    private String GoodsPrice;//商品价格
-    private String GoodsSpe;//商品规格
-    private Date CreateTime;//创建时间
-    private Date UpdateTime;//更新时间
-    private String Remark;//备注
+    private String goodsId;//商品ID
+    private String goodsName;//商品名称
+    private String goodsPrice;//商品价格
+    private String goodsSpe;//商品规格
+    private DateTime createTime;//创建时间
+    private DateTime updateTime;//更新时间
+    private String remark;//备注
 
 
 }

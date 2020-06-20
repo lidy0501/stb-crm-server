@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.joda.time.DateTime;
 
-import java.util.Date;
 
 /**
  * 权限表bean
@@ -15,14 +15,14 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Right {
-    private String RightId;//权限ID
-    private String RightCode;//权限编码
-    private String RightName;//权限名称
-    private String RightState;//权限状态,1有效,0无效
-    private String RightDesc;//权限说明
-    private String RightUrl;//URL
-    private Date CreateTime;//创建时间
-    private Date UpdateTime;//更新时间
-    private String Remark;//备注
+    private String rightId;//权限ID
+    private String rightCode;//权限编码
+    private String rightName;//权限名称
+    private String rightState;//权限状态,1有效,0无效
+    private String rightDesc;//权限说明
+    private String rightUrl;//URL
+    private DateTime createTime;//创建时间
+    private DateTime updateTime;//更新时间
+    private String remark;//备注
 
 }
