@@ -21,8 +21,8 @@ public class Staff {
     private String passWord;//员工密码
     private String staffPhone;//员工电话
     private String staffType;//员工类型:0系统管理员，1普通员工
-    private String StaffState;//员工状态：1正常、9离职
-    private String StaffEmail;//邮箱
+    private String staffState;//员工状态：1正常、9离职
+    private String staffEmail;//邮箱
     private String operatorId;//操作人
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
