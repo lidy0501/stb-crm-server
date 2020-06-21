@@ -22,7 +22,7 @@ public class User {
     private String company;//客户公司名称
     private String userType;//客户类型：0公共区域、1私有区域
     private String userState;//客户状态：0无效 1有效
-    private String staffId;//创建人
+    private String operatorId;//创建人
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
     private String remark;//备注
