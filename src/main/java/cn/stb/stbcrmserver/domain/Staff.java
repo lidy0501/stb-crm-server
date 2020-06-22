@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
+import org.springframework.util.StringUtils;
 
 
 /**
@@ -28,4 +29,8 @@ public class Staff {
     private DateTime updateTime;//更新时间
     private String remark;//备注
 
+    /** 校验员工状态是否正常 */
+    public boolean stateIsOk() {
+        return "1".equals(staffState);
+    }
 }
