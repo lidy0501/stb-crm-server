@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.stb.stbcrmserver.dao.GoodsDao">
+    <select id="queryAllGoods" resultType="cn.stb.stbcrmserver.domain.Goods">
+        select goods_id,goods_name,goods_price,goods_spe,create_time,update_time,remark
+        from crm_goods
+        order by update_time
+        desc
+    </select>
+
+    <insert id="addGoods" parameterType="cn.stb.stbcrmserver.domain.Goods">
+        insert into
+        crm_goods(goods_id,goods_name,goods_price,goods_spe,remark)
+        values
+        (#{goodsId},#{goodsName},#{goodsPrice},#{goodsSpe},#{remark})
+    </insert>
+
+    <delete id="deleteGoodsById" parameterType="java.lang.String">
+        delete from crm_goods
+        where goods_id = #{goodsId}
+    </delete>
+</mapper>

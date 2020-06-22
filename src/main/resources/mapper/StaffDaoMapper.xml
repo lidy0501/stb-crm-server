@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.stb.stbcrmserver.dao.StaffDao">
+    <select id="queryAllStaff" resultType="cn.stb.stbcrmserver.domain.Staff">
+        SELECT staff_id,staff_name,staff_code,password,staff_phone,staff_type,staff_state,staff_email,operator_id,
+                create_time,update_time,remark
+        FROM crm_staff
+        ORDER BY update_time
+        DESC
+    </select>
+
+    <insert id="addStaff" parameterType="cn.stb.stbcrmserver.domain.Staff">
+        INSERT INTO
+        crm_staff(staff_id,staff_name,staff_code,password,staff_phone,staff_type,staff_state,staff_email,operator_id,remark)
+        VALUES
+        (#{staffId},#{staffName},#{staffCode},#{password},#{staffPhone},#{staffType},#{staffState},#{staffEmail},
+        #{operatorId},#{remark})
+    </insert>
+
+    <delete id="deleteStaffById" parameterType="java.lang.String">
+        DELETE FROM crm_staff
+        WHERE staff_id = #{staffId}
+    </delete>
+
+    <update id="modifyStaffStateById" parameterType="cn.stb.stbcrmserver.domain.Staff">
+        UPDATE crm_staff
+        SET staff_state = #{staffState} ,operator_id = #{operatorId}
+        WHERE staff_id = #{staffId}
+    </update>
+
+    <select id="getStaffState" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.Staff">
+        select staff_state,staff_type
+        from crm_staff
+        where staff_id = #{operatorId}
+    </select>
+</mapper>
