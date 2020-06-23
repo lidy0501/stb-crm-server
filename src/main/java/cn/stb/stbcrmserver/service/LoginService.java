@@ -22,6 +22,6 @@ public class LoginService {
 
         if (!staff.getPassWord().equals(loginReq.getPassword())) return RespResult.fail("密码错误");
 
-        return RespResult.ok("登录信息正确");
+        return RespResult.ok("验证通过", staff);
     }
 }
