@@ -20,7 +20,6 @@ public class Right {
     private String rightName;//权限名称
     private String rightState;//权限状态,1有效,0无效
     private String rightDesc;//权限说明
-    private String rightUrl;//URL
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
     private String remark;//备注

@@ -8,19 +8,19 @@ import org.joda.time.DateTime;
 
 
 /**
- * 角色信息表的bean
+ * 角色权限表的bean
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Role {
-    private String roleId;//角色ID
-    private String roleName;//角色名称
-    private String roleDesc;//角色描述
-    private String roleState;//角色状态：1有效、0无效
+public class StaffRight {
+    private String staffId;//员工ID
+    private String rightId;//权限ID
+    private String rightState;//权限状态：1有效、0无效
     private String operatorId;//操作人
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
     private String remark;//备注
+
 }

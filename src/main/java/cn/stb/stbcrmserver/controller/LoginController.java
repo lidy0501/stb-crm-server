@@ -1,9 +1,11 @@
 package cn.stb.stbcrmserver.controller;
 
 import cn.stb.stbcrmserver.base.RespResult;
+import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.service.LoginService;
 import cn.stb.stbcrmserver.utils.CookieUtils;
+import cn.stb.stbcrmserver.vo.LeftRightVo;
 import cn.stb.stbcrmserver.vo.LoginReq;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @RestController
 @RequestMapping("/LoginController")
@@ -31,4 +34,9 @@ public class LoginController {
         return RespResult.ok("登录成功", staff);
     }
 
+    @RequestMapping("/getRight")
+    public List<LeftRightVo> getRight() {
+        String staffId = AcContext.getStaffId();
+        return loginService.queryRightsByStaffId(staffId);
+    }
 }
