@@ -38,6 +38,30 @@ CREATE TABLE `crm_staff_right` (
   `REMARK` varchar(1000) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`STAFF_ID`,`RIGHT_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='员工权限关系表'
+
+# 菜单信息表
+CREATE TABLE `crm_menu` (
+  `MENU_ID` char(20) NOT NULL COMMENT '菜单ID',
+  `MENU_NAME` varchar(50) NOT NULL COMMENT '菜单名称',
+  `MENU_STATE` char(1) NOT NULL COMMENT '状态,1有效,0无效',
+  `MENU_DESC` varchar(500) DEFAULT NULL COMMENT '菜单说明',
+  `MENU_URL` varchar(250) DEFAULT NULL COMMENT 'URL',
+  `CREATE_TIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `UPDATE_TIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `REMARK` varchar(1000) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`MENU_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='菜单表'
+
+# 权限菜单关系表
+CREATE TABLE `crm_right_menu` (
+  `RIGHT_ID` char(20) NOT NULL COMMENT '权限ID',
+  `MENU_ID` char(20) NOT NULL COMMENT '菜单ID',
+  `CREATE_TIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `UPDATE_TIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  `REMARK` varchar(1000) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`RIGHT_ID`,`MENU_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='权限菜单关系表'
+
 # 客户信息表
 CREATE TABLE CRM_USER (
 	USER_ID char(20) NOT NULL COMMENT '客户ID',
@@ -109,5 +133,52 @@ CREATE TABLE CRM_CONTRACT(
 		REMARK varchar(1000) DEFAULT NULL COMMENT '备注',
 		PRIMARY KEY(CONTRACT_ID)
 )ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT = '合同信息表';
+
+
+
+#基础数据准备
+
+# 1 插入系统管理员
+insert into crm_staff(STAFF_ID, STAFF_NAME, STAFF_CODE, PASSWORD, STAFF_PHONE, STAFF_TYPE, STAFF_STATE, STAFF_EMAIL, OPERATOR_ID, CREATE_TIME, UPDATE_TIME, REMARK) values(
+'00000000000000000000', 'admin', 'A000', 'admin', '15311111111', '0', '1', 'admin@163.com', '00000000000000000000', '2020-06-22 22:34:14', '2020-06-22 22:39:22', '系统管理员');
+
+# 2 插入权限表
+insert into crm_right(RIGHT_ID,	RIGHT_CODE,	RIGHT_NAME,	RIGHT_STATE, RIGHT_DESC)
+values('00000000001111111100',	'RI000', '员工管理',	'1', '员工管理'), 
+	  ('00000000001111111101',	'RI001', '客户管理',	'1', '客户管理'),
+	  ('00000000001111111102',	'RI002', '订单管理',	'1', '订单管理');
+	  
+# 3 插入菜单表
+inset into crm_menu(MENU_ID, MENU_NAME, MENU_STATE, MENU_DESC, MENU_URL) values    
+('00000000002222222200', '员工列表', '1', '员工列表', '/manage/staff-list'),               
+('00000000002222222201', '新增员工', '1', '新增员工', '/manage/add-staff'),                
+('00000000002222222202', '公司客户', '1', '公司客户', '/manage/private-user-list'),        
+('00000000002222222203', '公共客户', '1', '公共客户', '/manage/public-user-list'),         
+('00000000002222222204', '新增客户', '1', '新增客户', '/manage/add-user'),                 
+('00000000002222222205', '订单列表', '1', '订单列表', '/manage/order-list'),               
+('00000000002222222206', '新增订单', '1', '新增订单', '/manage/add-order');                
+
+# 4 插入 员工权限表
+ insert into crm_staff_right(STAFF_ID, RIGHT_ID, RIGHT_STATE, OPERATOR_ID) values            
+ ('00000000000000000000', '00000000001111111100', '1', '00000000000000000000'),              
+ ('00000000000000000000', '00000000001111111101', '1', '00000000000000000000'),              
+ ('00000000000000000000', '00000000001111111102', '1', '00000000000000000000'); 
+ 
+ 
+# 5 插入权限菜单表
+insert into crm_right_menu(RIGHT_ID, MENU_ID) values  
+ ('00000000001111111100', '00000000002222222200'),    
+ ('00000000001111111100', '00000000002222222201'),    
+ ('00000000001111111101', '00000000002222222202'),    
+ ('00000000001111111101', '00000000002222222203');                 
+                                                                                             
+
+
+
+
+
+
+
+
 
 
