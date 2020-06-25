@@ -10,36 +10,27 @@
     <select id="queryRightsByRightIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.Right">
         select RIGHT_ID, RIGHT_CODE, RIGHT_NAME, RIGHT_STATE, RIGHT_DESC, CREATE_TIME, UPDATE_TIME, REMARK
         from crm_right
-        <where>
-            <if test="rightIds != null and rightIds.size()>0">
-                <foreach collection="rightIds"  open=" and RIGHT_ID in (" close=")"    item="item" separator="," >
-                    #{item}
-                </foreach>
-            </if>
-        </where>
+        where RIGHT_ID in
+        <foreach collection="list"  open="("  item="item" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
     <select id="queryRightMenusByRightIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.RightMenu">
-        SELECT `RIGHT_ID`, `MENU_ID`, `CREATE_TIME`, `UPDATE_TIME`, `REMARK`
-        FROM `crm`.`crm_right_menu`;
-        <where>
-            <if test="rightIds != null and rightIds.size()>0">
-                <foreach collection="rightIds"  open=" and RIGHT_ID in (" close=")"    item="item" separator="," >
-                    #{item}
-                </foreach>
-            </if>
-        </where>
+        SELECT RIGHT_ID, MENU_ID, CREATE_TIME, UPDATE_TIME, REMARK
+        FROM crm_right_menu
+        where RIGHT_ID in
+        <foreach collection="list"  open="("  item="item" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
 
     <select id="queryMenusByMenuIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.Menu">
         SELECT `MENU_ID`, `MENU_NAME`, `MENU_STATE`, `MENU_DESC`, `MENU_URL`, `CREATE_TIME`, `UPDATE_TIME`, `REMARK`
         FROM `crm_menu`
-        <where>
-            <if test="menuIds != null and menuIds.size()>0">
-                <foreach collection="menuIds"  open=" and MENU_ID in (" close=")"    item="item" separator="," >
-                    #{item}
-                </foreach>
-            </if>
-        </where>
+        where MENU_ID in
+        <foreach collection="list"  open="(" close=")"    item="item" separator="," >
+             #{item, jdbcType=VARCHAR}
+        </foreach>
     </select>
 </mapper>

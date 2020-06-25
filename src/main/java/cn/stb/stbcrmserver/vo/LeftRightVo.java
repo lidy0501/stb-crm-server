@@ -12,5 +12,6 @@ import java.util.List;
 public class LeftRightVo {
     private String rightId;//权限ID
     private String rightName;//权限名称
+    private boolean show;
     private List<Menu> menus;
 }
