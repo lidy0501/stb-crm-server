@@ -43,4 +43,16 @@
         </if>
     </select>
 
+    <select id="selectUserByLike" resultType="cn.stb.stbcrmserver.domain.User" parameterType="java.lang.String">
+        select user_id,user_name,user_phone,company,user_email,operator_id,USER_TYPE,USER_STATE,CREATE_TIME,UPDATE_TIME,remark
+        from crm_user
+        where user_state = 1
+        and
+        (user_name like CONCAT (concat('%',#{s}),'%')
+        or user_phone like CONCAT (concat('%',#{s}),'%')
+        or company like CONCAT (concat('%',#{s}),'%')
+        or user_email like CONCAT (concat('%',#{s}),'%')
+        or remark like CONCAT (concat('%',#{s}),'%'))
+    </select>
+
 </mapper>

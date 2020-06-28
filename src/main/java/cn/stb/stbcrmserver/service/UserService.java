@@ -52,4 +52,8 @@ public class UserService {
         List<User> userList = userDao.queryUserByOperatorIdAndUserType(map);
         return userList;
     }
+
+    public List<User> selectUserByLike(String s) {
+        return userDao.selectUserByLike(s);
+    }
 }
