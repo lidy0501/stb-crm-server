@@ -15,7 +15,5 @@ public interface StaffDao {
 
     int modifyStaffStateById(Staff staff);
 
-    Staff getStaffState(String operatorId);
-
     Staff findStaffByStaffCode(String staffCode);
 }
