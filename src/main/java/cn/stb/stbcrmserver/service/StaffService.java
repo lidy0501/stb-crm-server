@@ -55,4 +55,18 @@ public class StaffService {
             return RespResult.fail("修改失败!");
         }
     }
+
+    /**
+     * 查询员工的权限id
+     */
+
+    public List<String> queryStaffRightIds(String staffId) {
+        return staffDao.queryStaffRightIds(staffId);
+    }
+
+
+
+
+
+
 }

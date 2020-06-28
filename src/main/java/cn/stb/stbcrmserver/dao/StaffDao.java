@@ -16,4 +16,6 @@ public interface StaffDao {
     int modifyStaffStateById(Staff staff);
 
     Staff findStaffByStaffCode(String staffCode);
+
+    List<String> queryStaffRightIds(String staffId);
 }

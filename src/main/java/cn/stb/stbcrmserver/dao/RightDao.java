@@ -17,4 +17,6 @@ public interface RightDao {
     List<RightMenu> queryRightMenusByRightIds(List<String> rightIds);
 
     List<Menu> queryMenusByMenuIds(List<String> menuIds);
+
+    List<String> queryRightIdsByRightCodes(List<String> rightCodes);
 }

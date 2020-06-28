@@ -33,4 +33,11 @@
         from crm_staff
         where staff_code = #{staffCode}
     </select>
+
+    <select id="queryStaffRightIds" parameterType="java.lang.String" resultType="java.lang.String">
+        select RIGHT_ID
+        from crm_staff_right
+        where STAFF_ID = #{staffId}
+
+    </select>
 </mapper>

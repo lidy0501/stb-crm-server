@@ -33,4 +33,13 @@
              #{item, jdbcType=VARCHAR}
         </foreach>
     </select>
+
+    <select id="queryRightIdsByRightCodes" parameterType="java.util.List" resultType="java.lang.String">
+        select RIGHT_ID
+        from crm_right
+        where RIGHT_CODE in
+        <foreach collection="list" open="(" item="item" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
