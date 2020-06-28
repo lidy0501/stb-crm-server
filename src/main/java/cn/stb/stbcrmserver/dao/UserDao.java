@@ -1,9 +1,7 @@
 package cn.stb.stbcrmserver.dao;
 
-import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.domain.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -18,4 +16,6 @@ public interface UserDao {
     int deleteUserById(String userId);
 
     List<User> queryUserByOperatorIdAndUserType(Map map);
+
+    List<User> selectUserByLike(String s);
 }

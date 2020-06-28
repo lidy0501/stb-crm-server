@@ -67,4 +67,9 @@ public class UserController {
     public RespResult deleteUserById(@PathVariable String userId){
         return userService.deleteUserById(userId);
     }
+
+    @RequestMapping("/selectUserByLike/{s}")
+    public List<User> selectUserByLike(@PathVariable String s){
+        return userService.selectUserByLike(s);
+    }
 }
