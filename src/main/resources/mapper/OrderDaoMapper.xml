@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.stb.stbcrmserver.dao.OrderDao">
+    <select id="queryAllOrder" resultType="cn.stb.stbcrmserver.domain.Order" parameterType="java.util.Map">
+        select order_id,user_id,operator_id,PRODUCT_NAME,PRODUCT_SPE,PRODUCT_NUM,ORDER_STATE,PAY_TYPE,TOTAL_FEE,DOWN_PAY_FEE,
+        FINAL_PAY_FEE,PAY_PROGRESS,DELIVERY_TIME,DELIVERY_NO,PAY_RECORD,ORDER_DELETE,CREATE_TIME,UPDATE_TIME,REMARK
+        from crm_order
+        where ORDER_DELETE = '0'
+        <if test=" 0 neq staffType ">
+           and operator_id = #{operatorId}
+        </if>
+    </select>
+    <insert id="addOrder" parameterType="cn.stb.stbcrmserver.domain.Order">
+        insert into
+        crm_order(order_id,user_id,operator_id,PRODUCT_NAME,PRODUCT_SPE,PRODUCT_NUM,ORDER_STATE,PAY_TYPE,TOTAL_FEE,DOWN_PAY_FEE,
+        FINAL_PAY_FEE,PAY_PROGRESS,DELIVERY_TIME,DELIVERY_NO,PAY_RECORD,ORDER_DELETE,REMARK)
+        values (#{orderId},#{userId},#{operatorId},#{productName},#{productSpe},#{productNum},#{orderState},#{payType},#{totalFee}
+        ,#{downPayFee},#{finalPayFee},#{payProgress},#{deliveryTime},#{deliveryNo},#{payRecord},#{orderDelete},#{remark})
+    </insert>
+</mapper>
