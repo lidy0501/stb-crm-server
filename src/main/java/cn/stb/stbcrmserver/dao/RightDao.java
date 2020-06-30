@@ -22,4 +22,6 @@ public interface RightDao {
     List<String> queryRightIdsByRightCodes(List<String> rightCodes);
 
     List<RightVo> getAll();
+
+    int addStaffRight(List<StaffRight> staffRightList);
 }

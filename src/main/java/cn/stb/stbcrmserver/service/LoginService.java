@@ -32,7 +32,7 @@ public class LoginService {
         Staff staff = staffDao.findStaffByStaffCode(loginReq.getStaffCode());
         if (staff == null || !staff.stateIsOk()) return RespResult.fail("该账号不是系统员工");
 
-        if (!staff.getPassWord().equals(loginReq.getPassword())) return RespResult.fail("密码错误");
+        if (!staff.getPassword().equals(loginReq.getPassword())) return RespResult.fail("密码错误");
 
         return RespResult.ok("验证通过", staff);
     }

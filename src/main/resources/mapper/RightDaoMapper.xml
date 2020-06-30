@@ -43,8 +43,22 @@
         </foreach>
     </select>
 
-    <select id="getAll" resultType="cn.stb.stbcrmserver.domain.Right">
+    <select id="getAll" resultType="cn.stb.stbcrmserver.vo.RightVo">
         select right_id,right_name
         from crm_right
     </select>
+
+    <insert id="addStaffRight" parameterType="java.util.List">
+      insert into crm_staff_right(STAFF_ID, RIGHT_ID, RIGHT_STATE, OPERATOR_ID, REMARK)
+      values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.staffId},
+            #{item.rightId},
+            #{item.rightState},
+            #{item.operatorId},
+            #{item.remark}
+            )
+        </foreach>
+    </insert>
 </mapper>

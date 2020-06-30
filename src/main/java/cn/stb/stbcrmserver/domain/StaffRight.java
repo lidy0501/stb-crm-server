@@ -1,5 +1,6 @@
 package cn.stb.stbcrmserver.domain;
 
+import cn.stb.stbcrmserver.context.AcContext;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,5 +23,14 @@ public class StaffRight {
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
     private String remark;//备注
+
+    public static StaffRight convert(String staffId, String rightId) {
+        return StaffRight.builder()
+                .staffId(staffId)
+                .rightId(rightId)
+                .rightState("1")
+                .operatorId(AcContext.getStaffId())
+                .build();
+    }
 
 }

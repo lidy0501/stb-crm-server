@@ -1,5 +1,6 @@
 package cn.stb.stbcrmserver.controller;
 
+import cn.stb.stbcrmserver.base.LoginIgnore;
 import cn.stb.stbcrmserver.service.RightService;
 import cn.stb.stbcrmserver.vo.RightVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,8 @@ public class RightController {
     private RightService rightService;
 
     @RequestMapping("/getAll")
-    public List<RightVo> getAll(){
+    @LoginIgnore
+    public List<RightVo> getAll() {
         return rightService.getAll();
     }
 }

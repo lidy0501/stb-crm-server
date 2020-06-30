@@ -1,10 +1,13 @@
 package cn.stb.stbcrmserver.controller;
 
+import cn.stb.stbcrmserver.base.LoginIgnore;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.service.StaffService;
+import cn.stb.stbcrmserver.vo.AddStaffReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,9 +25,11 @@ public class StaffController {
     }
 
     @RequestMapping("/addStaff")
-    public RespResult addStaff(Staff staff){
-        return staffService.addStaff(staff);
+    @LoginIgnore
+    public RespResult addStaff(@RequestBody AddStaffReq req){
+        return staffService.addStaff(req);
     }
+
     @RequestMapping("/deleteStaffById/{staffId}")
     public RespResult deleteStaffById(@PathVariable String staffId){
         return staffService.deleteStaffById(staffId);

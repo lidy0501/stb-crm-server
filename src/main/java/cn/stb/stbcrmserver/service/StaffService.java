@@ -1,19 +1,26 @@
 package cn.stb.stbcrmserver.service;
 
 import cn.stb.stbcrmserver.base.RespResult;
+import cn.stb.stbcrmserver.dao.RightDao;
 import cn.stb.stbcrmserver.dao.StaffDao;
 import cn.stb.stbcrmserver.domain.Staff;
+import cn.stb.stbcrmserver.domain.StaffRight;
+import cn.stb.stbcrmserver.vo.AddStaffReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class StaffService {
     @Autowired
     private StaffDao staffDao;
+    @Autowired
+    private RightDao rightDao;
 
 
     public List<Staff> queryAllStaff() {
@@ -21,20 +28,27 @@ public class StaffService {
     }
 
     @Transactional
-    public RespResult addStaff(Staff staff) {
-        if(!StringUtils.isEmpty(staff.getStaffName()) &&
-                !StringUtils.isEmpty(staff.getStaffType()) &&
-                !StringUtils.isEmpty(staff.getStaffState()) &&
-                !StringUtils.isEmpty(staff.getOperatorId())) {
-            // todo 逻辑
-                int effectNum = staffDao.addStaff(staff);
-                if (effectNum>0){
-                    return RespResult.ok("新增员工成功!");
-                }else {
-                    return RespResult.fail("新增员工失败!");
-                }
-        }else {
-           return RespResult.fail("员工信息不可为空!");
+    public RespResult addStaff(AddStaffReq req) {
+
+        if (!StringUtils.isEmpty(req.getStaffName()) && !StringUtils.isEmpty(req.getStaffPhone()) &&
+                !StringUtils.isEmpty(req.getStaffCode()) && !StringUtils.isEmpty(req.getPassWord())
+                && !CollectionUtils.isEmpty(req.getRightVoList())) {
+            // 落crm_staff表
+            Staff staff = Staff.convert(req);
+            int effectNum1 = staffDao.addStaff(staff);
+            // 落 crm_staff_right表
+            List<StaffRight> staffRightList = req.getRightVoList().stream().map(x ->
+                StaffRight.convert(staff.getStaffId(), x.getRightId())).collect(Collectors.toList());
+            int effectNum2 = rightDao.addStaffRight(staffRightList);
+
+
+            if (effectNum1 > 0 && effectNum2 > 0) {
+                return RespResult.ok("新增员工成功!");
+            } else {
+                return RespResult.fail("新增员工失败!");
+            }
+        } else {
+            return RespResult.fail("员工信息不可为空!");
         }
     }
 
@@ -63,10 +77,6 @@ public class StaffService {
     public List<String> queryStaffRightIds(String staffId) {
         return staffDao.queryStaffRightIds(staffId);
     }
-
-
-
-
 
 
 }
