@@ -42,4 +42,9 @@
             #{item}
         </foreach>
     </select>
+
+    <select id="getAll" resultType="cn.stb.stbcrmserver.domain.Right">
+        select right_id,right_name
+        from crm_right
+    </select>
 </mapper>

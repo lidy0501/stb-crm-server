@@ -4,6 +4,7 @@ import cn.stb.stbcrmserver.domain.Menu;
 import cn.stb.stbcrmserver.domain.Right;
 import cn.stb.stbcrmserver.domain.RightMenu;
 import cn.stb.stbcrmserver.domain.StaffRight;
+import cn.stb.stbcrmserver.vo.RightVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface RightDao {
     List<Menu> queryMenusByMenuIds(List<String> menuIds);
 
     List<String> queryRightIdsByRightCodes(List<String> rightCodes);
+
+    List<RightVo> getAll();
 }
