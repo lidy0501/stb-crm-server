@@ -15,7 +15,7 @@ public class SessionUtils {
 
     public static void removeStaffSession(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        session.removeAttribute("staffId");
-        session.removeAttribute("staff");
+        session.setAttribute("staffId", null);
+        session.setAttribute("staff", null);
     }
 }

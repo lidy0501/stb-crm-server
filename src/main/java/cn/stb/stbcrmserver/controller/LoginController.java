@@ -8,6 +8,7 @@ import cn.stb.stbcrmserver.utils.CookieUtils;
 import cn.stb.stbcrmserver.utils.SessionUtils;
 import cn.stb.stbcrmserver.vo.LeftRightVo;
 import cn.stb.stbcrmserver.vo.LoginReq;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
 @RequestMapping("/LoginController")
+@Slf4j
 public class LoginController {
 
     @Autowired
@@ -32,6 +33,7 @@ public class LoginController {
         if (result.isNotOk()) return result;
         // 缓存登录人信息
         Staff staff = (Staff)result.getData();
+        SessionUtils.removeStaffSession(request);
         SessionUtils.cacheStaffSession(request, staff);
         CookieUtils.cacheStaffInfo(response, staff);
         return RespResult.ok("登录成功", staff);
@@ -40,6 +42,7 @@ public class LoginController {
     @RequestMapping("/getRight")
     public List<LeftRightVo> getRight() {
         String staffId = AcContext.getStaffId();
+        log.info("getRight-----------   {}", staffId);
         return loginService.queryRightsByStaffId(staffId);
     }
 

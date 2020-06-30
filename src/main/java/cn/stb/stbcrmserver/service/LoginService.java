@@ -68,7 +68,7 @@ public class LoginService {
     }
 
     public RespResult loginOut(HttpServletRequest request, HttpServletResponse response) {
-        CookieUtils.removeStaffCookie(request);
+        CookieUtils.removeStaffCookie(request, response);
         SessionUtils.removeStaffSession(request);
         AcContext.clearInfo();
         return RespResult.ok("退出成功");

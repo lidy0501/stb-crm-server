@@ -28,11 +28,11 @@ public class FilterConfig implements Filter {
         log.info("请求拦截");
         HttpSession session = request.getSession();
 
+        log.info("session.getAttribute(staffId)-----{}", session.getAttribute("staffId"));
+
         if (session.getAttribute("staffId") != null) {
-            if (AcContext.getStaffId() == null) {
-                AcContext.setStaffId(session.getAttribute("staffId") + "");
-                AcContext.setStaff((Staff) session.getAttribute("staff"));
-            }
+            AcContext.setStaffId((String)session.getAttribute("staffId"));
+            AcContext.setStaff((Staff) session.getAttribute("staff"));
         }
         filterChain.doFilter(servletRequest, servletResponse );
     }

@@ -38,10 +38,11 @@ public class CookieUtils {
 		log.info("缓存的cookie信息------   {} : {}", cookie.getName(), cookie.getValue());
 	}
 
-	public static void removeStaffCookie(HttpServletRequest request) {
+	public static void removeStaffCookie(HttpServletRequest request, HttpServletResponse response) {
 		Cookie[] cookies = request.getCookies();
 		for (Cookie cookie : cookies) {
 			cookie.setMaxAge(0);
+			response.addCookie(cookie);
 		}
 	}
 
