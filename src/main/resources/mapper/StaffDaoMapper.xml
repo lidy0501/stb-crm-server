@@ -40,10 +40,4 @@
         where STAFF_ID = #{staffId}
 
     </select>
-    
-    <select id="getAllStaffCode" resultType="java.lang.String">
-        select staff_code
-        from crm_staff
-        where staff_code = #{staffCode}
-    </select>
 </mapper>

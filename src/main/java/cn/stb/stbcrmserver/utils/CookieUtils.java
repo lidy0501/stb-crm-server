@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -35,6 +36,13 @@ public class CookieUtils {
 		}
 		res.addCookie(cookie);
 		log.info("缓存的cookie信息------   {} : {}", cookie.getName(), cookie.getValue());
+	}
+
+	public static void removeStaffCookie(HttpServletRequest request) {
+		Cookie[] cookies = request.getCookies();
+		for (Cookie cookie : cookies) {
+			cookie.setMaxAge(0);
+		}
 	}
 
 }

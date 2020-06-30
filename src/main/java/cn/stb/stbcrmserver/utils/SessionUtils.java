@@ -12,4 +12,10 @@ public class SessionUtils {
         session.setAttribute("staffId", staff.getStaffId());
         session.setAttribute("staff", staff);
     }
+
+    public static void removeStaffSession(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        session.removeAttribute("staffId");
+        session.removeAttribute("staff");
+    }
 }

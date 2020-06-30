@@ -22,4 +22,9 @@ public class AcContext {
 	public static Staff getStaff() {
 		return LOCAL_Staff_INFO.get();
 	}
+
+	public static void clearInfo() {
+		setStaffId(null);
+		setStaff(null);
+	}
 }

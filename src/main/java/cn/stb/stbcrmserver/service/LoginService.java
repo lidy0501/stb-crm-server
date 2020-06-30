@@ -5,12 +5,16 @@ import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.RightDao;
 import cn.stb.stbcrmserver.dao.StaffDao;
 import cn.stb.stbcrmserver.domain.*;
+import cn.stb.stbcrmserver.utils.CookieUtils;
+import cn.stb.stbcrmserver.utils.SessionUtils;
 import cn.stb.stbcrmserver.vo.LeftRightVo;
 import cn.stb.stbcrmserver.vo.LoginReq;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -61,5 +65,12 @@ public class LoginService {
                     .build()
         ).collect(Collectors.toList());
         return rightVoList;
+    }
+
+    public RespResult loginOut(HttpServletRequest request, HttpServletResponse response) {
+        CookieUtils.removeStaffCookie(request);
+        SessionUtils.removeStaffSession(request);
+        AcContext.clearInfo();
+        return RespResult.ok("退出成功");
     }
 }

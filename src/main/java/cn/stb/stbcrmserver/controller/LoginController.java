@@ -42,4 +42,9 @@ public class LoginController {
         String staffId = AcContext.getStaffId();
         return loginService.queryRightsByStaffId(staffId);
     }
+
+    @RequestMapping("/loginOut")
+    public RespResult loginOut(HttpServletRequest request,HttpServletResponse response) {
+        return loginService.loginOut(request, response);
+    }
 }
