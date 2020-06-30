@@ -11,4 +11,8 @@ public interface OrderDao {
     List<Order> queryAllOrder(Map map);
 
     int addOrder(Order order);
+
+    int modifyOrderStateAndDeleteById(Order order);
+
+    int deleteOrder(Map map);
 }

@@ -45,4 +45,22 @@ public class OrderService {
             return RespResult.fail("信息不能为空!");
         }
     }
+
+    public RespResult modifyOrderStateAndDeleteById(Order order) {
+        String operatorId = AcContext.getStaffId();
+        order.setOperatorId(operatorId);
+        int effectNum = orderDao.modifyOrderStateAndDeleteById(order);
+        if (effectNum > 0 ) return RespResult.ok("修改信息成功!");
+        return RespResult.fail("修改信息失败!");
+    }
+
+    public RespResult deleteOrder(String orderId) {
+        String operatorId = AcContext.getStaffId();
+        Map map = new HashMap();
+        map.put("operatorId",operatorId);
+        map.put("orderId",orderId);
+        int effectNum = orderDao.deleteOrder(map);
+        if(effectNum > 0 ) return RespResult.ok("删除订单成功!");
+        return RespResult.fail("删除失败!");
+    }
 }
