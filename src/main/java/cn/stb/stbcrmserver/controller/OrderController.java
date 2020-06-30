@@ -1,6 +1,5 @@
 package cn.stb.stbcrmserver.controller;
 
-import cn.stb.stbcrmserver.base.LoginIgnore;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.service.OrderService;
@@ -28,7 +27,6 @@ public class OrderController {
     }
 
     @RequestMapping("/modifyOrderStateAndDeleteById")
-    @LoginIgnore
     public RespResult modifyOrderStateAndDeleteById(Order order){
         return orderService.modifyOrderStateAndDeleteById(order);
     }
