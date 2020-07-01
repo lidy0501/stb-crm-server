@@ -3,13 +3,13 @@
 <mapper namespace="cn.stb.stbcrmserver.dao.RightDao">
     <select id="queryStaffRightByStaffId" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.StaffRight">
         select STAFF_ID, RIGHT_ID, RIGHT_STATE, OPERATOR_ID, CREATE_TIME, UPDATE_TIME, REMARK
-        from crm_staff_right
+        from CRM_STAFF_RIGHT
         where STAFF_ID = #{staffId}
     </select>
 
     <select id="queryRightsByRightIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.Right">
         select RIGHT_ID, RIGHT_CODE, RIGHT_NAME, RIGHT_STATE, RIGHT_DESC, CREATE_TIME, UPDATE_TIME, REMARK
-        from crm_right
+        from CRM_RIGHT
         where RIGHT_ID in
         <foreach collection="list"  open="("  item="item" separator="," close=")">
             #{item}
@@ -18,7 +18,7 @@
 
     <select id="queryRightMenusByRightIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.RightMenu">
         SELECT RIGHT_ID, MENU_ID, CREATE_TIME, UPDATE_TIME, REMARK
-        FROM crm_right_menu
+        FROM CRM_RIGHT_MENU
         where RIGHT_ID in
         <foreach collection="list"  open="("  item="item" separator="," close=")">
             #{item}
@@ -27,7 +27,7 @@
 
     <select id="queryMenusByMenuIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.Menu">
         SELECT `MENU_ID`, `MENU_NAME`, `MENU_STATE`, `MENU_DESC`, `MENU_URL`, `CREATE_TIME`, `UPDATE_TIME`, `REMARK`
-        FROM `crm_menu`
+        FROM CRM_MENU
         where MENU_ID in
         <foreach collection="list"  open="(" close=")"    item="item" separator="," >
              #{item, jdbcType=VARCHAR}
@@ -36,7 +36,7 @@
 
     <select id="queryRightIdsByRightCodes" parameterType="java.util.List" resultType="java.lang.String">
         select RIGHT_ID
-        from crm_right
+        from CRM_RIGHT
         where RIGHT_CODE in
         <foreach collection="list" open="(" item="item" separator="," close=")">
             #{item}
@@ -45,11 +45,11 @@
 
     <select id="getAll" resultType="cn.stb.stbcrmserver.vo.RightVo">
         select right_id,right_name
-        from crm_right
+        from CRM_RIGHT
     </select>
 
     <insert id="addStaffRight" parameterType="java.util.List">
-      insert into crm_staff_right(STAFF_ID, RIGHT_ID, RIGHT_STATE, OPERATOR_ID, REMARK)
+      insert into CRM_STAFF_RIGHT(STAFF_ID, RIGHT_ID, RIGHT_STATE, OPERATOR_ID, REMARK)
       values
         <foreach collection="list" item="item" index="index" separator=",">
             (

@@ -30,7 +30,7 @@
 
     <select id="findStaffByStaffCode" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.Staff">
         select staff_id,staff_name,staff_code,password,staff_phone,staff_type,staff_state,staff_email,operator_id,remark
-        from crm_staff
+        from CRM_STAFF
         where staff_code = #{staffCode}
     </select>
 
