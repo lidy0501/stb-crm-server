@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.stb.stbcrmserver.dao.StaffDao">
-    <select id="queryAllStaff" resultType="cn.stb.stbcrmserver.domain.Staff">
-        SELECT staff_id,staff_name,staff_code,password,staff_phone,staff_type,staff_state,staff_email,operator_id,
-                create_time,update_time,remark
-        FROM crm_staff
-        ORDER BY update_time
-        DESC
+    <select id="queryAllStaff" resultType="cn.stb.stbcrmserver.vo.StaffListVo">
+        select a.staff_id,a.staff_name,a.staff_code,a.password,a.staff_phone,a.staff_type,a.staff_state,a.staff_email,a.operator_id,a.remark ,
+        group_concat(c.right_name separator '、') as right_names
+        from crm_staff a
+        left join crm_staff_right b on b.staff_id = a.staff_id
+        left join crm_right c on c.right_id = b.right_id
+        group by a.staff_id;
     </select>
 
     <insert id="addStaff" parameterType="cn.stb.stbcrmserver.domain.Staff">

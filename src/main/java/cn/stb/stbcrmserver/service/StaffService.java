@@ -6,6 +6,7 @@ import cn.stb.stbcrmserver.dao.StaffDao;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.domain.StaffRight;
 import cn.stb.stbcrmserver.vo.AddStaffReq;
+import cn.stb.stbcrmserver.vo.StaffListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class StaffService {
     private RightDao rightDao;
 
 
-    public List<Staff> queryAllStaff() {
+    public List<StaffListVo> queryAllStaff() {
         return staffDao.queryAllStaff();
     }
 

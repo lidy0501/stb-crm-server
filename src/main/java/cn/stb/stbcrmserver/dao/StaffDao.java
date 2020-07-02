@@ -1,13 +1,14 @@
 package cn.stb.stbcrmserver.dao;
 
 import cn.stb.stbcrmserver.domain.Staff;
+import cn.stb.stbcrmserver.vo.StaffListVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 @Mapper
 public interface StaffDao {
-    List<Staff> queryAllStaff();
+    List<StaffListVo> queryAllStaff();
 
     int addStaff(Staff staff);
 

@@ -5,6 +5,7 @@ import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.service.StaffService;
 import cn.stb.stbcrmserver.vo.AddStaffReq;
+import cn.stb.stbcrmserver.vo.StaffListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,7 +21,8 @@ public class StaffController {
     private StaffService staffService;
 
     @RequestMapping("/queryAllStaff")
-    public List<Staff> queryAllStaff (){
+    @LoginIgnore
+    public List<StaffListVo> queryAllStaff (){
         return staffService.queryAllStaff();
     }
 
