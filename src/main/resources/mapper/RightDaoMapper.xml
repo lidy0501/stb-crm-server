@@ -61,4 +61,18 @@
             )
         </foreach>
     </insert>
+
+    <select id="queryStaffRightInStaffIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.StaffRight">
+        select STAFF_ID, RIGHT_ID, RIGHT_STATE, OPERATOR_ID, CREATE_TIME, UPDATE_TIME, REMARK
+        from CRM_STAFF_RIGHT
+        where STAFF_ID in
+        <foreach collection="list" open="(" item="item" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="deleteStaffRightsByStaffId" parameterType="java.lang.String">
+        delete from CRM_STAFF_RIGHT
+        where STAFF_ID = #{staffId}
+    </delete>
 </mapper>

@@ -33,11 +33,13 @@ public class StaffController {
     }
 
     @RequestMapping("/deleteStaffById/{staffId}")
+    @LoginIgnore
     public RespResult deleteStaffById(@PathVariable String staffId){
         return staffService.deleteStaffById(staffId);
     }
 
     @RequestMapping("/modifyStaffStateById")
+    @LoginIgnore
     public RespResult modifyStaffStateById(Staff staff){
         return staffService.modifyStaffStateById(staff);
     }

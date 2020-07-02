@@ -57,13 +57,15 @@ public class StaffService {
         }
     }
 
+    @Transactional
     public RespResult deleteStaffById(String staffId) {
-        int effectNum = staffDao.deleteStaffById(staffId);
-        if (effectNum > 0) {
-            return RespResult.ok("删除成功!");
-        } else {
-            return RespResult.fail("删除失败!");
-        }
+        // 删除员工信息
+        int effectNum1 = staffDao.deleteStaffById(staffId);
+        // 删除员工的权限
+        int effectNum2 = rightDao.deleteStaffRightsByStaffId(staffId);
+
+        if (effectNum1 > 0 && effectNum2 > 0) return RespResult.ok("删除成功!");
+        return RespResult.fail("删除失败!");
     }
 
     public RespResult modifyStaffStateById(Staff staff) {

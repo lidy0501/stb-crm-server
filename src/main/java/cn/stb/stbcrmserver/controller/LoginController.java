@@ -42,7 +42,6 @@ public class LoginController {
     @RequestMapping("/getRight")
     public List<LeftRightVo> getRight() {
         String staffId = AcContext.getStaffId();
-        log.info("getRight-----------   {}", staffId);
         return loginService.queryRightsByStaffId(staffId);
     }
 

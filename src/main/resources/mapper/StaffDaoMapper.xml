@@ -12,19 +12,19 @@
 
     <insert id="addStaff" parameterType="cn.stb.stbcrmserver.domain.Staff">
         INSERT INTO
-        crm_staff(staff_id,staff_name,staff_code,password,staff_phone,staff_type,staff_state,staff_email,operator_id,remark)
+        CRM_STAFF(staff_id,staff_name,staff_code,password,staff_phone,staff_type,staff_state,staff_email,operator_id,remark)
         VALUES
         (#{staffId},#{staffName},#{staffCode},#{password},#{staffPhone},#{staffType},#{staffState},#{staffEmail},
         #{operatorId},#{remark})
     </insert>
 
     <delete id="deleteStaffById" parameterType="java.lang.String">
-        DELETE FROM crm_staff
+        DELETE FROM CRM_STAFF
         WHERE staff_id = #{staffId}
     </delete>
 
     <update id="modifyStaffStateById" parameterType="cn.stb.stbcrmserver.domain.Staff">
-        UPDATE crm_staff
+        UPDATE CRM_STAFF
         SET staff_state = #{staffState} ,operator_id = #{operatorId}
         WHERE staff_id = #{staffId}
     </update>
@@ -37,7 +37,7 @@
 
     <select id="queryStaffRightIds" parameterType="java.lang.String" resultType="java.lang.String">
         select RIGHT_ID
-        from crm_staff_right
+        from CRM_STAFF_RIGHT
         where STAFF_ID = #{staffId}
 
     </select>
