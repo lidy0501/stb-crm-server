@@ -32,7 +32,6 @@ public class LoginService {
     protected RightDao rightDao;
 
     public RespResult login(LoginReq loginReq) {
-        log.info(loginReq.toString());
         Staff staff = staffDao.findStaffByStaffCode(loginReq.getStaffCode());
         if (staff == null || !staff.stateIsOk()) return RespResult.fail("该账号不是系统员工");
 

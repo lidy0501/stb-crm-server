@@ -28,7 +28,6 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("112233");
         if (!(handler instanceof HandlerMethod)) {
             return true;
         }
@@ -45,8 +44,6 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter {
 
         RightType[] rightTypes = right.value();
         List<String> rightCodes = Arrays.stream(rightTypes).map(RightType::getCode).collect(Collectors.toList());
-
-        System.out.println("rightCodes-----------"  + rightCodes.get(0));
 
         if (rightTypes.length == 0) {
             throw new RuntimeException("Annotated @Right annotation need right codes");
