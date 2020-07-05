@@ -7,9 +7,7 @@ import cn.stb.stbcrmserver.base.RightType;
 import cn.stb.stbcrmserver.domain.User;
 import cn.stb.stbcrmserver.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,7 +42,8 @@ public class UserController {
      * @return
      */
     @RequestMapping("/addUser")
-    public RespResult addUser(User user) {
+    @LoginIgnore
+    public RespResult addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
 

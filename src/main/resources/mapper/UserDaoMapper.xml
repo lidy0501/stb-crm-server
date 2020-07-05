@@ -4,14 +4,14 @@
 
     <insert id="addUser" parameterType="cn.stb.stbcrmserver.domain.User">
         insert into
-        crm_user(user_id,user_name,user_phone,user_email,company,user_state,user_type,operator_id,
+        CRM_USER(user_id,user_name,user_phone,user_email,company,user_state,user_type,operator_id,
         remark)
         values (#{userId},#{userName},#{userPhone},#{userEmail},#{company},#{userState},#{userType},#{operatorId},
         #{remark})
     </insert>
 
     <update id="modifyUser" parameterType="cn.stb.stbcrmserver.domain.User">
-        update crm_user
+        update CRM_USER
         <set>
             <if test="userState!=null">
                 user_state=#{userState}
@@ -24,13 +24,13 @@
     </update>
 
     <delete id="deleteUserById" parameterType="java.lang.String">
-        delete from crm_user
+        delete from CRM_USER
         where user_id = #{userId}
     </delete>
 
     <select id="queryUserByOperatorIdAndUserType" resultType="cn.stb.stbcrmserver.domain.User"  parameterType="java.util.Map">
         select user_id,user_name,user_phone,user_email,company,user_state,operator_id,user_type,create_time,update_time,remark
-        from crm_user
+        from CRM_USER
         where user_state = '1'
         <if test=" 0 eq userType">
             and user_type = '0'
@@ -45,7 +45,7 @@
 
     <select id="selectUserByLike" resultType="cn.stb.stbcrmserver.domain.User" parameterType="java.lang.String">
         select user_id,user_name,user_phone,company,user_email,operator_id,USER_TYPE,USER_STATE,CREATE_TIME,UPDATE_TIME,remark
-        from crm_user
+        from CRM_USER
         where user_state = 1
         and
         (user_name like CONCAT (concat('%',#{s}),'%')

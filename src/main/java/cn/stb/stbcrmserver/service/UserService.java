@@ -5,6 +5,7 @@ import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.UserDao;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.domain.User;
+import cn.stb.stbcrmserver.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ public class UserService {
 
     // 新增客户,默认公司客户
     public RespResult addUser(User user) {
+        user.setUserId(UUIDUtil.getNumId());
         String operatorId = AcContext.getStaffId();
         user.setUserType("1"); //私有
         user.setUserState("1"); // 有效
