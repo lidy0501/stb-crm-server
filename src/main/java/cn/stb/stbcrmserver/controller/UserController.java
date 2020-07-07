@@ -22,6 +22,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/queryPrivateUser")
+    @LoginIgnore
     public List<User> queryPrivateUser() {
         return userService.queryUsersByStaffType("1");
     }
@@ -63,6 +64,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/deleteUserById/{userId}")
+    @LoginIgnore
     public RespResult deleteUserById(@PathVariable String userId){
         return userService.deleteUserById(userId);
     }
