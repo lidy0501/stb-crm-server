@@ -1,11 +1,10 @@
 package cn.stb.stbcrmserver.controller;
 
-import cn.stb.stbcrmserver.base.LoginIgnore;
-import cn.stb.stbcrmserver.base.RespResult;
-import cn.stb.stbcrmserver.base.Right;
-import cn.stb.stbcrmserver.base.RightType;
+import cn.stb.stbcrmserver.base.*;
 import cn.stb.stbcrmserver.domain.User;
 import cn.stb.stbcrmserver.service.UserService;
+import cn.stb.stbcrmserver.vo.ListReq;
+import cn.stb.stbcrmserver.vo.ListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,8 +22,8 @@ public class UserController {
      */
     @RequestMapping("/queryPrivateUser")
     @LoginIgnore
-    public List<User> queryPrivateUser() {
-        return userService.queryUsersByStaffType("1");
+    public ListVo<User> queryPrivateUser(@RequestBody ListReq req) {
+        return userService.queryUsersByStaffType("1", req);
     }
 
     /**
@@ -33,8 +32,8 @@ public class UserController {
      */
     @RequestMapping("/queryPublicAreaUser")
     @Right(RightType.CRM_员工管理)
-    public List<User> queryPublicAreaUser() { // userType : 0公共客户, 1 私有客户
-        return userService.queryUsersByStaffType("0");
+    public ListVo<User> queryPublicAreaUser(@RequestBody ListReq req) { // userType : 0公共客户, 1 私有客户
+        return userService.queryUsersByStaffType("0", req);
     }
 
     /**

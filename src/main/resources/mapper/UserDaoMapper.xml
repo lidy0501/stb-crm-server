@@ -41,6 +41,13 @@
             </if>
             and user_type = '1'
         </if>
+        <if test="searchValue != null and searchValue != ''">
+          and (
+              user_name like CONCAT (concat('%',#{searchValue}),'%')
+              or user_phone like CONCAT (concat('%',#{searchValue}),'%')
+          )
+        </if>
+        order by update_time desc
     </select>
 
     <select id="selectUserByLike" resultType="cn.stb.stbcrmserver.domain.User" parameterType="java.lang.String">

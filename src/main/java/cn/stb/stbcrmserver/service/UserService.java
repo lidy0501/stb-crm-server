@@ -1,17 +1,21 @@
 package cn.stb.stbcrmserver.service;
 
+import cn.stb.stbcrmserver.base.Page;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.UserDao;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.domain.User;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
+import cn.stb.stbcrmserver.vo.ListReq;
+import cn.stb.stbcrmserver.vo.ListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
@@ -43,7 +47,10 @@ public class UserService {
     }
 
     // 查询客户,通过客户类型  userType : 0公共客户, 1 私有客户
-    public List<User> queryUsersByStaffType(String userType) {
+    public ListVo<User> queryUsersByStaffType(String userType, ListReq req) {
+        Page page = new Page();
+        page.setStartIndex(req.getStartIndex());
+        page.setPageRows(10);
         Staff staff = AcContext.getStaff();
         String operatorId = staff.getStaffId();
         String staffType = staff.getStaffType();
@@ -51,8 +58,12 @@ public class UserService {
         map.put("staffType", staffType);
         map.put("operatorId", operatorId);
         map.put("userType", userType);
-        List<User> userList = userDao.queryUserByOperatorIdAndUserType(map);
-        return userList;
+        map.put("searchValue", req.getSearchValue());
+        List<User> users = userDao.queryUserByOperatorIdAndUserType(map);
+        List<User> userList = users.stream().skip(page.getStartIndex()).limit(10).collect(Collectors.toList());
+        page.setTotalRows(users.size());
+        ListVo<User> listVo = new ListVo(userList, page);
+        return listVo;
     }
 
     public List<User> selectUserByLike(String s) {
