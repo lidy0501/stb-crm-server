@@ -53,7 +53,8 @@ public class UserController {
      * @return
      */
     @RequestMapping("/modifyUser")
-    public RespResult modifyUser(User user){
+    @LoginIgnore
+    public RespResult modifyUser(@RequestBody User user){
         return userService.modifyUser(user);
     }
 
@@ -63,11 +64,18 @@ public class UserController {
      * @return
      */
     @RequestMapping("/deleteUserById/{userId}")
+    @LoginIgnore
     public RespResult deleteUserById(@PathVariable String userId){
         return userService.deleteUserById(userId);
     }
 
+    /**
+     * 模糊查询客户
+     * @param s
+     * @return
+     */
     @RequestMapping("/selectUserByLike/{s}")
+    @LoginIgnore
     public List<User> selectUserByLike(@PathVariable String s){
         return userService.selectUserByLike(s);
     }

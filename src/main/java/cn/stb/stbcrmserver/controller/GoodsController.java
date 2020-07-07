@@ -1,5 +1,6 @@
 package cn.stb.stbcrmserver.controller;
 
+import cn.stb.stbcrmserver.base.LoginIgnore;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.domain.Goods;
 import cn.stb.stbcrmserver.service.GoodsService;
@@ -22,6 +23,7 @@ public class GoodsController {
      * @return
      */
     @RequestMapping("/queryAllGoods")
+    @LoginIgnore
     public List<Goods> queryAllGoods(){
         return goodsService.queryAllGoods();
     }
@@ -32,6 +34,7 @@ public class GoodsController {
      * @return
      */
     @RequestMapping("/addGoods")
+    @LoginIgnore
     public RespResult addGoods(@RequestBody Goods goods){
         return goodsService.addGoods(goods);
     }
@@ -42,6 +45,7 @@ public class GoodsController {
      * @return
      */
     @RequestMapping("/deleteGoodsById/{goodsId}")
+    @LoginIgnore
     public RespResult deleteGoodsById(@PathVariable String goodsId){
         return goodsService.deleteGoodsById(goodsId);
     }
