@@ -79,4 +79,10 @@ public class UserController {
     public List<User> selectUserByLike(@PathVariable String s){
         return userService.selectUserByLike(s);
     }
+
+    @RequestMapping("/changeUserType/{userId}")
+    @LoginIgnore
+    public RespResult changeUserType(@PathVariable String userId){
+        return userService.changeUserType(userId);
+    }
 }

@@ -18,4 +18,8 @@ public interface UserDao {
     List<User> queryUserByOperatorIdAndUserType(Map map);
 
     List<User> selectUserByLike(String s);
+
+    User findUserById(String userId);
+
+    int changeUserType(Map map);
 }

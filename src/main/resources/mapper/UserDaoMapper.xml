@@ -62,4 +62,15 @@
         or remark like CONCAT (concat('%',#{s}),'%'))
     </select>
 
+    <select id="findUserById" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.User">
+        select user_id,user_name,user_phone,user_email,company,user_state,operator_id,user_type,create_time,update_time,remark
+        from CRM_USER
+        where user_id = #{userId}
+    </select>
+
+    <update id="changeUserType" parameterType="java.util.Map">
+        update CRM_USER
+        set user_type = '0', operator_id = #{operatorId}
+        where user_id = #{userId}
+    </update>
 </mapper>

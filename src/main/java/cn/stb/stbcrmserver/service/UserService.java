@@ -41,6 +41,13 @@ public class UserService {
     }
 
     public RespResult deleteUserById(String userId) {
+        User user = userDao.findUserById(userId);
+        if (user != null && "0".equals(user.getUserType()) ) { // 公共客户
+            Staff staff = AcContext.getStaff();
+            if (!"0".equals(staff.getStaffType())) {
+                return RespResult.fail("删除失败!");
+            }
+        }
         int effectNum = userDao.deleteUserById(userId);
         if (effectNum > 0 ) return RespResult.ok("删除成功!");
         return RespResult.fail("删除失败!");
@@ -68,5 +75,15 @@ public class UserService {
 
     public List<User> selectUserByLike(String s) {
         return userDao.selectUserByLike(s);
+    }
+
+    public RespResult changeUserType(String userId) {
+        String operatorId = AcContext.getStaffId();
+        Map map = new HashMap();
+        map.put("userId",userId);
+        map.put("operatorId",operatorId);
+        int effectNum = userDao.changeUserType(map);
+        if (effectNum > 0 ) return RespResult.ok("操作成功!");
+        return RespResult.fail("操作失败!");
     }
 }
