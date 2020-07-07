@@ -22,6 +22,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/queryPrivateUser")
+    @LoginIgnore
     public List<User> queryPrivateUser() {
         return userService.queryUsersByStaffType("1");
     }
