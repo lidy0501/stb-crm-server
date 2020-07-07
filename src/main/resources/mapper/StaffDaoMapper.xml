@@ -39,6 +39,11 @@
         select RIGHT_ID
         from CRM_STAFF_RIGHT
         where STAFF_ID = #{staffId}
+    </select>
 
+    <select id="findStaffById" resultType="cn.stb.stbcrmserver.domain.Staff" parameterType="java.lang.String">
+        select staff_id,staff_name,staff_code,password,staff_phone,staff_type,staff_state,staff_email,operator_id,remark
+        from CRM_STAFF
+        where staff_id = #{staffId}
     </select>
 </mapper>

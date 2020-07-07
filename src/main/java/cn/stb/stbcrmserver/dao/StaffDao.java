@@ -20,4 +20,5 @@ public interface StaffDao {
 
     List<String> queryStaffRightIds(String staffId);
 
+    Staff findStaffById(String staffId);
 }

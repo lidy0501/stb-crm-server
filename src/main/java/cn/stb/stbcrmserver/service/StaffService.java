@@ -1,6 +1,7 @@
 package cn.stb.stbcrmserver.service;
 
 import cn.stb.stbcrmserver.base.RespResult;
+import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.RightDao;
 import cn.stb.stbcrmserver.dao.StaffDao;
 import cn.stb.stbcrmserver.domain.Staff;
@@ -59,6 +60,13 @@ public class StaffService {
 
     @Transactional
     public RespResult deleteStaffById(String staffId) {
+        //获取当前操作员信息
+        Staff staff = AcContext.getStaff();
+        //获取传入ID员工信息
+        Staff staff1 = staffDao.findStaffById(staffId);
+        if (staffId == staff.getStaffId() || "0".equals(staff1.getStaffType())) {
+            return RespResult.fail("删除失败!");
+        }
         // 删除员工信息
         int effectNum1 = staffDao.deleteStaffById(staffId);
         // 删除员工的权限
