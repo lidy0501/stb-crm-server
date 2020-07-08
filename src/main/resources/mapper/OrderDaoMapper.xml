@@ -2,20 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.stb.stbcrmserver.dao.OrderDao">
     <select id="queryAllOrder" resultType="cn.stb.stbcrmserver.domain.Order" parameterType="java.util.Map">
-        select order_id,user_id,operator_id,PRODUCT_NAME,PRODUCT_SPE,PRODUCT_NUM,ORDER_STATE,PAY_TYPE,TOTAL_FEE,DOWN_PAY_FEE,
-        FINAL_PAY_FEE,PAY_PROGRESS,DELIVERY_TIME,DELIVERY_NO,PAY_RECORD,ORDER_DELETE,CREATE_TIME,UPDATE_TIME,REMARK
+        select order_id,user_id,USER_NAME,COMPANY,operator_id,PRODUCT_NAME,PRODUCT_SPE,PRODUCT_NUM,ORDER_STATE,PAY_TYPE,TOTAL_FEE,DOWN_PAY_FEE,
+        FINAL_PAY_FEE,PAY_PROGRESS,DELIVERY_TIME,DELIVERY_NO,PAY_RECORD,CREATE_TIME,UPDATE_TIME,REMARK
         from CRM_ORDER
-        where ORDER_DELETE = '0'
+        where ORDER_STATE != '9'
         <if test=" 0 neq staffType ">
            and operator_id = #{operatorId}
         </if>
     </select>
     <insert id="addOrder" parameterType="cn.stb.stbcrmserver.domain.Order">
         insert into
-        CRM_ORDER(order_id,user_id,operator_id,PRODUCT_NAME,PRODUCT_SPE,PRODUCT_NUM,ORDER_STATE,PAY_TYPE,TOTAL_FEE,DOWN_PAY_FEE,
-        FINAL_PAY_FEE,PAY_PROGRESS,DELIVERY_TIME,DELIVERY_NO,PAY_RECORD,ORDER_DELETE,REMARK)
-        values (#{orderId},#{userId},#{operatorId},#{productName},#{productSpe},#{productNum},#{orderState},#{payType},#{totalFee}
-        ,#{downPayFee},#{finalPayFee},#{payProgress},#{deliveryTime},#{deliveryNo},#{payRecord},#{orderDelete},#{remark})
+        CRM_ORDER(order_id,user_id,USER_NAME,COMPANY,operator_id,PRODUCT_NAME,PRODUCT_SPE,PRODUCT_NUM,ORDER_STATE,PAY_TYPE,TOTAL_FEE,DOWN_PAY_FEE,
+        FINAL_PAY_FEE,PAY_PROGRESS,DELIVERY_TIME,DELIVERY_NO,PAY_RECORD,REMARK)
+        values (#{orderId},#{userId},#{userName},#{company},#{operatorId},#{productName},#{productSpe},#{productNum},#{orderState},#{payType},#{totalFee}
+        ,#{downPayFee},#{finalPayFee},#{payProgress},#{deliveryTime},#{deliveryNo},#{payRecord},#{remark})
     </insert>
     <update id="modifyOrderStateAndDeleteById" parameterType="cn.stb.stbcrmserver.domain.Order">
         update CRM_ORDER
@@ -34,4 +34,34 @@
         where order_id = #{orderId}
         and operatorId = #{operatorId}
     </delete>
+    <select id="selectAllUserVoLikeUserName" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.vo.UserVo">
+        select user_id,user_name,company
+        from CRM_USER
+        where user_name
+        like concat('%',#{userName},'%')
+    </select>
+    <select id="selectOrderByOrderId" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.Order">
+        select order_id,user_id,USER_NAME,COMPANY,operator_id,PRODUCT_NAME,PRODUCT_SPE,PRODUCT_NUM,ORDER_STATE,PAY_TYPE,TOTAL_FEE,DOWN_PAY_FEE,
+        FINAL_PAY_FEE,PAY_PROGRESS,DELIVERY_TIME,DELIVERY_NO,PAY_RECORD,CREATE_TIME,UPDATE_TIME,REMARK
+        from CRM_ORDER
+        where order_id = #{orderId}
+    </select>
+    <update id="modifyOrderByUserIdAndOperatorId" parameterType="cn.stb.stbcrmserver.domain.Order">
+        update CRM_ORDER
+        <set>
+            <if test="PRODUCT_NAME != null ">PRODUCT_NAME = #{productName},</if>
+            <if test="PRODUCT_SPE != null ">PRODUCT_SPE = #{productSpe},</if>
+            <if test="ORDER_STATE != null ">ORDER_STATE = #{orderState},</if>
+            <if test="PAY_TYPE != null ">PAY_TYPE = #{payType},</if>
+            <if test="TOTAL_FEE != null ">TOTAL_FEE = #{totalFee},</if>
+            <if test="DOWN_PAY_FEE != null ">DOWN_PAY_FEE = #{downPayFee},</if>
+            <if test="FINAL_PAY_FEE != null ">FINAL_PAY_FEE = #{finalPayFee},</if>
+            <if test="PAY_PROGRESS != null ">PAY_PROGRESS = #{payProgress},</if>
+            <if test="DELIVERY_TIME != null ">DELIVERY_TIME = #{deliveryTime},</if>
+            <if test="DELIVERY_NO != null ">DELIVERY_NO = #{deliveryNo},</if>
+            <if test="PAY_RECORD != null ">PAY_RECORD = #{payRecord},</if>
+            <if test="REMARK != null ">REMARK = #{remake}</if>
+        </set>
+        where order_id = #{orderId}
+    </update>
 </mapper>
