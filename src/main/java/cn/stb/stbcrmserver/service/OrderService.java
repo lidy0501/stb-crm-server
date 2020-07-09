@@ -5,6 +5,7 @@ import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.OrderDao;
 import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.Staff;
+import cn.stb.stbcrmserver.utils.UUIDUtil;
 import cn.stb.stbcrmserver.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,19 +31,24 @@ public class OrderService {
     }
 
     public RespResult addOrder(Order order) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String operatorId = AcContext.getStaffId();
-        if((!StringUtils.isEmpty(order.getProductName())) && (!StringUtils.isEmpty(order.getUserId()))
-                && (!StringUtils.isEmpty(order.getTotalFee())) && (!StringUtils.isEmpty(order.getDeliveryNo()))){
+        if((!StringUtils.isEmpty(order.getProductName()))){
+            order.setOrderId(UUIDUtil.getNumId());
             order.setOperatorId(operatorId);
             order.setOrderState("0");
             int effectNum = orderDao.addOrder(order);
             if (effectNum > 0) {
                 return RespResult.ok("添加订单成功!");
-            }else {
+            } else {
                 return RespResult.fail("添加订单失败!");
             }
-        }else{
-            return RespResult.fail("信息不能为空!");
+        } else {
+            return RespResult.fail("产品名称不能为空!");
         }
     }
 
