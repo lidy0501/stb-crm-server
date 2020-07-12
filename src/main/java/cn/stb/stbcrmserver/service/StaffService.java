@@ -93,5 +93,12 @@ public class StaffService {
         return staffDao.queryStaffRightIds(staffId);
     }
 
+    /**
+     * 获取所有员工信息
+     */
+    public List<Staff> queryAllStaffIgnoreState() {
+        return staffDao.queryAllStaffIgnoreState();
+    }
+
 
 }

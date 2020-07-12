@@ -20,19 +20,18 @@ public class OrderService {
     @Autowired
     private OrderDao orderDao;
 
-    public List<Order> queryAllOrder() {
+    public List<Order> queryAllOrder(String searchValue) {
         Staff staff = AcContext.getStaff();
-        String operatorId = staff.getStaffId();
-        String staffType = staff.getStaffType();
         Map map = new HashMap();
-        map.put("operatorId",operatorId);
-        map.put("staffType",staffType);
+        map.put("operatorId", staff.getStaffId());
+        map.put("staffType", staff.getStaffType());
+        map.put("searchValue", searchValue);
         return orderDao.queryAllOrder(map);
     }
 
     public RespResult addOrder(Order order) {
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

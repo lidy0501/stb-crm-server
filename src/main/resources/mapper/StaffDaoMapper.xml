@@ -10,6 +10,12 @@
         group by a.staff_id;
     </select>
 
+    <select id="queryAllStaffIgnoreState" resultType="cn.stb.stbcrmserver.domain.Staff">
+        select STAFF_ID, STAFF_NAME, STAFF_CODE, PASSWORD, STAFF_PHONE, STAFF_TYPE, STAFF_STATE, STAFF_EMAIL,
+               OPERATOR_ID, CREATE_TIME, UPDATE_TIME, remark
+        from   CRM_STAFF
+    </select>
+
     <insert id="addStaff" parameterType="cn.stb.stbcrmserver.domain.Staff">
         INSERT INTO
         CRM_STAFF(staff_id,staff_name,staff_code,password,staff_phone,staff_type,staff_state,staff_email,operator_id,remark)

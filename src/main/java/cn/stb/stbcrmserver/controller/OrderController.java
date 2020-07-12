@@ -1,24 +1,31 @@
 package cn.stb.stbcrmserver.controller;
 
 import cn.stb.stbcrmserver.base.LoginIgnore;
+import cn.stb.stbcrmserver.base.Page;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.domain.Order;
+import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.domain.User;
 import cn.stb.stbcrmserver.service.OrderService;
+import cn.stb.stbcrmserver.service.StaffService;
+import cn.stb.stbcrmserver.vo.ListReq;
+import cn.stb.stbcrmserver.vo.ListVo;
+import cn.stb.stbcrmserver.vo.OrderListVo;
 import cn.stb.stbcrmserver.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/OrderController")
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private StaffService staffService;
 
     /**
      * 显示所有订单(员工只能看到自己的,老板能看到所有的)
@@ -26,8 +33,19 @@ public class OrderController {
      */
     @RequestMapping("/queryAllOrder")
     @LoginIgnore
-    public List<Order> queryAllOrder(){
-        return orderService.queryAllOrder();
+    public ListVo<OrderListVo> queryAllOrder(@RequestBody ListReq req) {
+        int startIndex = req.getStartIndex();
+        Page page = new Page(startIndex, 10);
+        List<Order> orderList = orderService.queryAllOrder(req.getSearchValue());
+        page.setTotalRows(orderList.size());
+        orderList = orderList.stream().skip(startIndex).limit(10).collect(Collectors.toList());
+        List<Staff> staffList = staffService.queryAllStaffIgnoreState();
+        Map<String, Staff> staffMap = staffList.stream().collect(Collectors.toMap(Staff::getStaffId, x -> x));
+        List<OrderListVo> orders = orderList.stream()
+                .map(x -> OrderListVo.convert(x, staffMap.get(x.getOperatorId()).getStaffName()))
+                .collect(Collectors.toList());
+        ListVo<OrderListVo> data = new ListVo(orders, page);
+        return data;
     }
 
     /**
