@@ -60,6 +60,7 @@
         or company like CONCAT (concat('%',#{s}),'%')
         or user_email like CONCAT (concat('%',#{s}),'%')
         or remark like CONCAT (concat('%',#{s}),'%'))
+        order by update_time desc
     </select>
 
     <select id="findUserById" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.User">

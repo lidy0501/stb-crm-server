@@ -108,4 +108,13 @@ public class OrderController {
     public RespResult modifyOrderByUserIdAndOperatorId(@RequestBody Order order){
         return orderService.modifyOrderByUserIdAndOperatorId(order);
     }
+
+    /**
+     * 修改订单状态
+     */
+    @RequestMapping("/changeOrderState/{orderId}/{orderState}")
+    @LoginIgnore
+    public RespResult changeOrderState(@PathVariable String orderId, @PathVariable String orderState) {
+        return orderService.changeOrderState(orderId, orderState);
+    }
 }

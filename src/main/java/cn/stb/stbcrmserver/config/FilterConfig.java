@@ -25,7 +25,6 @@ public class FilterConfig implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-        log.info("请求拦截");
         HttpSession session = request.getSession();
 
         if (session.getAttribute("staffId") != null) {

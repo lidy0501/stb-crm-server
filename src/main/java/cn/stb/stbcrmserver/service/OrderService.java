@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -85,5 +86,19 @@ public class OrderService {
             return RespResult.fail("修改订单信息失败!");
         }
         return RespResult.fail("修改失败!");
+    }
+
+    /**
+     * 修改订单状态
+     * @param orderId
+     * @param orderState
+     * @return
+     */
+    public RespResult changeOrderState(String orderId, String orderState) {
+        Map map = new LinkedHashMap();
+        map.put("orderId", orderId);
+        map.put("orderState", orderState);
+        orderDao.changeOrderState(map);
+        return RespResult.ok("操作成功");
     }
 }
