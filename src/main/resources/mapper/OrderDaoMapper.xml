@@ -51,8 +51,9 @@
         like concat('%',#{userName},'%')
     </select>
     <select id="selectOrderByOrderId" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.Order">
-        select order_id,user_id,USER_NAME,COMPANY,operator_id,PRODUCT_NAME,PRODUCT_SPE,PRODUCT_NUM,ORDER_STATE,PAY_TYPE,TOTAL_FEE,DOWN_PAY_FEE,
-        FINAL_PAY_FEE,PAY_PROGRESS,DELIVERY_TIME,DELIVERY_NO,PAY_RECORD,CREATE_TIME,UPDATE_TIME,REMARK
+        select order_id, user_id, USER_NAME, COMPANY, operator_id, PRODUCT_NAME, PRODUCT_SPE, PRODUCT_NUM,
+               ORDER_STATE, PAY_TYPE, TOTAL_FEE, DOWN_PAY_FEE, FINAL_PAY_FEE, PAY_PROGRESS, DELIVERY_TIME,
+               DELIVERY_NO,PAY_RECORD,CREATE_TIME,UPDATE_TIME,REMARK
         from CRM_ORDER
         where order_id = #{orderId}
     </select>
@@ -78,5 +79,26 @@
     <update id="changeOrderState" parameterType="java.util.Map">
       update CRM_ORDER set ORDER_STATE = #{orderState}
       where ORDER_ID = #{orderId}
+    </update>
+
+    <update id="updateOrder" parameterType="cn.stb.stbcrmserver.domain.Order">
+        update CRM_ORDER
+        set
+            PRODUCT_NAME = #{productName},
+            PRODUCT_SPE = #{productSpe},
+            PRODUCT_NUM = #{productNum},
+            DELIVERY_NO = #{deliveryNo},
+            USER_ID = #{userId},
+            USER_NAME = #{userName},
+            COMPANY = # {company},
+            TOTAL_FEE = #{totalFee},
+            DELIVERY_TIME = #{deliveryTime},
+            DOWN_PAY_FEE = #{downPayFee},
+            PAY_TYPE = #{payType},
+            FINAL_PAY_FEE = #{finalPayFee},
+            PAY_PROGRESS = #{payProgress},
+            PAY_RECORD = #{payRecord},
+            REMARK = #{remark}
+        where order_id = #{orderId}
     </update>
 </mapper>

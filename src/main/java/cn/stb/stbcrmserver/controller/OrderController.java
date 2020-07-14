@@ -5,7 +5,6 @@ import cn.stb.stbcrmserver.base.Page;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.Staff;
-import cn.stb.stbcrmserver.domain.User;
 import cn.stb.stbcrmserver.service.OrderService;
 import cn.stb.stbcrmserver.service.StaffService;
 import cn.stb.stbcrmserver.vo.ListReq;

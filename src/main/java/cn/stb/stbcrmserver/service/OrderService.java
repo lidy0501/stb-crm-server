@@ -37,16 +37,16 @@ public class OrderService {
             e.printStackTrace();
         }
         String operatorId = AcContext.getStaffId();
-        if((!StringUtils.isEmpty(order.getProductName()))){
-            order.setOrderId(UUIDUtil.getNumId());
-            order.setOperatorId(operatorId);
-            order.setOrderState("0");
-            int effectNum = orderDao.addOrder(order);
-            if (effectNum > 0) {
-                return RespResult.ok("添加订单成功!");
-            } else {
-                return RespResult.fail("添加订单失败!");
+        if((!StringUtils.isEmpty(order.getProductName()))) {
+            if (StringUtils.isEmpty(order.getOrderId())) { //新增
+                order.setOrderId(UUIDUtil.getNumId());
+                order.setOperatorId(operatorId);
+                order.setOrderState("0");
+                orderDao.addOrder(order);
+            } else { //编辑
+                orderDao.updateOrder(order);
             }
+            return RespResult.ok("保存订单成功!");
         } else {
             return RespResult.fail("产品名称不能为空!");
         }

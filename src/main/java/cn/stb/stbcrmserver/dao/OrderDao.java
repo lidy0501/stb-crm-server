@@ -24,4 +24,6 @@ public interface OrderDao {
     int modifyOrderByUserIdAndOperatorId(Order order);
 
     int changeOrderState(Map map);
+
+    int updateOrder(Order order);
 }
