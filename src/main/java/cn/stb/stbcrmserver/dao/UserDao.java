@@ -13,7 +13,7 @@ public interface UserDao {
 
     int modifyUser(User user);
 
-    int deleteUserById(String userId);
+    int deleteUserById(Map<String, String> map);
 
     List<User> queryUserByOperatorIdAndUserType(Map map);
 

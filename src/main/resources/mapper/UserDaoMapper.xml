@@ -23,10 +23,12 @@
         </set>
     </update>
 
-    <delete id="deleteUserById" parameterType="java.lang.String">
-        delete from CRM_USER
+    <update id="deleteUserById" parameterType="java.util.Map">
+        update CRM_USER
+        set USER_STATE = '9',
+            OPERATOR_ID = #{operatorId}
         where user_id = #{userId}
-    </delete>
+    </update>
 
     <select id="queryUserByOperatorIdAndUserType" resultType="cn.stb.stbcrmserver.domain.User"  parameterType="java.util.Map">
         select user_id,user_name,user_phone,user_email,company,user_state,operator_id,user_type,create_time,update_time,remark

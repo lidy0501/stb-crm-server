@@ -40,6 +40,11 @@ public class UserService {
         return RespResult.fail("修改失败!");
     }
 
+    /**
+     * 软删除
+     * @param userId
+     * @return
+     */
     public RespResult deleteUserById(String userId) {
         User user = userDao.findUserById(userId);
         if (user != null && "0".equals(user.getUserType()) ) { // 公共客户
@@ -48,7 +53,11 @@ public class UserService {
                 return RespResult.fail("删除失败!");
             }
         }
-        int effectNum = userDao.deleteUserById(userId);
+        String operatorId = AcContext.getStaffId();
+        Map<String, String> map = new HashMap<>();
+        map.put("userId", userId);
+        map.put("operatorId", operatorId);
+        int effectNum = userDao.deleteUserById(map);
         if (effectNum > 0 ) return RespResult.ok("删除成功!");
         return RespResult.fail("删除失败!");
     }

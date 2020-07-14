@@ -59,7 +59,7 @@ public class UserController {
     }
 
     /**
-     * 硬删除
+     * 软删除
      * @param userId
      * @return
      */
