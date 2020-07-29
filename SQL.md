@@ -146,7 +146,7 @@ insert into CRM_MENU(MENU_ID, MENU_NAME, MENU_STATE, MENU_DESC, MENU_URL) values
 ('00000000002222222200', '员工列表', '1', '员工列表', '/manage/staff-list'),               
 ('00000000002222222201', '新增员工', '1', '新增员工', '/manage/add-staff'),                
 ('00000000002222222202', '公司客户', '1', '公司客户', '/manage/private-user-list'),        
-('00000000002222222203', '公共客户', '1', '公共客户', '/manage/public-user-list'),         
+('00000000002222222203', '公海客户', '1', '公海客户', '/manage/public-user-list'),         
 ('00000000002222222204', '新增客户', '1', '新增客户', '/manage/add-user'),                 
 ('00000000002222222205', '订单列表', '1', '订单列表', '/manage/order-list'),               
 ('00000000002222222206', '新增订单', '1', '新增订单', '/manage/add-order');                
