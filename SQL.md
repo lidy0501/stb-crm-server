@@ -70,6 +70,7 @@ CREATE TABLE CRM_USER (
     USER_PHONE varchar(16) DEFAULT NULL COMMENT '客户电话',
     USER_EMAIL varchar(45) DEFAULT NULL COMMENT '客户邮箱',
     COMPANY varchar(100) DEFAULT NULL COMMENT '客户公司名称',
+    POST varchar(100) DEFAULT NULL COMMENT '公司职位',
     USER_TYPE char(1) NOT NULL COMMENT '客户类型：0公共区域、1私有区域',
     USER_STATE char(1) NOT NULL COMMENT '客户状态：0无效 1有效',
     OPERATOR_ID char(20) NOT NULL COMMENT '操作人',

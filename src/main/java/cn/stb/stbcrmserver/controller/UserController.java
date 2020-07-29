@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static cn.stb.stbcrmserver.base.RightType.CRM_客户管理;
+
 @RestController
 @RequestMapping("/UserController")
 public class UserController {
@@ -21,7 +23,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/queryPrivateUser")
-    @LoginIgnore
+    @Right(CRM_客户管理)
     public ListVo<User> queryPrivateUser(@RequestBody ListReq req) {
         return userService.queryUsersByStaffType("1", req);
     }
@@ -31,7 +33,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/queryPublicAreaUser")
-    @Right(RightType.CRM_员工管理)
+    @Right(CRM_客户管理)
     public ListVo<User> queryPublicAreaUser(@RequestBody ListReq req) { // userType : 0公共客户, 1 私有客户
         return userService.queryUsersByStaffType("0", req);
     }
@@ -42,7 +44,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/addUser")
-    @LoginIgnore
+    @Right(CRM_客户管理)
     public RespResult addUser(@RequestBody User user) {
         return userService.addUser(user);
     }
@@ -64,7 +66,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/deleteUserById/{userId}")
-    @LoginIgnore
+    @Right(CRM_客户管理)
     public RespResult deleteUserById(@PathVariable String userId){
         return userService.deleteUserById(userId);
     }
@@ -75,13 +77,13 @@ public class UserController {
      * @return
      */
     @RequestMapping("/selectUserByLike/{s}")
-    @LoginIgnore
+    @Right(CRM_客户管理)
     public List<User> selectUserByLike(@PathVariable String s){
         return userService.selectUserByLike(s);
     }
 
     @RequestMapping("/changeUserType/{userId}")
-    @LoginIgnore
+    @Right(CRM_客户管理)
     public RespResult changeUserType(@PathVariable String userId){
         return userService.changeUserType(userId);
     }

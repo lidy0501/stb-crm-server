@@ -2,6 +2,7 @@ package cn.stb.stbcrmserver.controller;
 
 import cn.stb.stbcrmserver.base.LoginIgnore;
 import cn.stb.stbcrmserver.base.RespResult;
+import cn.stb.stbcrmserver.base.Right;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.service.StaffService;
 import cn.stb.stbcrmserver.vo.AddStaffReq;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static cn.stb.stbcrmserver.base.RightType.CRM_员工管理;
+
 @RestController
 @RequestMapping("/StaffController")
 public class StaffController {
@@ -21,13 +24,13 @@ public class StaffController {
     private StaffService staffService;
 
     @RequestMapping("/queryAllStaff")
-    @LoginIgnore
+    @Right(CRM_员工管理)
     public List<StaffListVo> queryAllStaff (){
         return staffService.queryAllStaff();
     }
 
     @RequestMapping("/addStaff")
-    @LoginIgnore
+    @Right(CRM_员工管理)
     public RespResult addStaff(@RequestBody AddStaffReq req){
         return staffService.addStaff(req);
     }
@@ -39,7 +42,7 @@ public class StaffController {
     }
 
     @RequestMapping("/modifyStaffStateById")
-    @LoginIgnore
+    @Right(CRM_员工管理)
     public RespResult modifyStaffStateById(Staff staff){
         return staffService.modifyStaffStateById(staff);
     }

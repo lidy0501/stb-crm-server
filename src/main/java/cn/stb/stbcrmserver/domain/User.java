@@ -26,4 +26,5 @@ public class User {
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
     private String remark;//备注
+    private String post;// 公司职位
 }

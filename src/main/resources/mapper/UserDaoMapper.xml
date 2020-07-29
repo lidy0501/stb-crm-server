@@ -4,9 +4,9 @@
 
     <insert id="addUser" parameterType="cn.stb.stbcrmserver.domain.User">
         insert into
-        CRM_USER(user_id,user_name,user_phone,user_email,company,user_state,user_type,operator_id,
+        CRM_USER(user_id,user_name,user_phone,user_email,company,post,user_state,user_type,operator_id,
         remark)
-        values (#{userId},#{userName},#{userPhone},#{userEmail},#{company},#{userState},#{userType},#{operatorId},
+        values (#{userId},#{userName},#{userPhone},#{userEmail},#{company}, #{post},#{userState},#{userType},#{operatorId},
         #{remark})
     </insert>
 
@@ -31,7 +31,7 @@
     </update>
 
     <select id="queryUserByOperatorIdAndUserType" resultType="cn.stb.stbcrmserver.domain.User"  parameterType="java.util.Map">
-        select user_id,user_name,user_phone,user_email,company,user_state,operator_id,user_type,create_time,update_time,remark
+        select user_id,user_name,user_phone,user_email,company,post,user_state,operator_id,user_type,create_time,update_time,remark
         from CRM_USER
         where user_state = '1'
         <if test=" 0 eq userType">
