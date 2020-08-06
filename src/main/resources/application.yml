@@ -11,11 +11,25 @@ mybatis:
 
 spring:
   # mysql配置
+  # 本地
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/crm?useUnicode=true&&characterEncoding=UTF-8&connectTimeout=1000&autoReconnect=true&useTimezone=true&serverTimezone=GMT%2B8&useSSL=false
     password: root
     username: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # 测试
+    #url: jdbc:mysql://47.114.140.213:3306/crm?useUnicode=true&&characterEncoding=UTF-8&connectTimeout=1000&autoReconnect=true&useTimezone=true&serverTimezone=GMT%2B8&useSSL=false
+    #password: "@LDYroot123"
+    #username: maplemysql
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # 生产
+    #url: jdbc:mysql://47.96.230.123:3306/crm?useUnicode=true&&characterEncoding=UTF-8&connectTimeout=1000&autoReconnect=true&useTimezone=true&serverTimezone=GMT%2B8&useSSL=false
+    #password: "@LDYroot123"
+    #username: maplemysql
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+
   # redis配置   https://blog.csdn.net/u010957645/article/details/89340983?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase&depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.nonecase
   redis:
     database: 0                      # Redis数据库索引（默认为0）
