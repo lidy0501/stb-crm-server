@@ -14,7 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +28,11 @@ public class StaffService {
 
 
     public List<StaffListVo> queryAllStaff() {
-        return staffDao.queryAllStaff();
+        Staff staff = AcContext.getStaff();
+        Map<String, String> map = new HashMap();
+        map.put("staffType", staff.getStaffType());
+        map.put("operatorId", staff.getStaffId());
+        return staffDao.queryAllStaff(map);
     }
 
     @Transactional

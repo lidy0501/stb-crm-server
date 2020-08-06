@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.stb.stbcrmserver.dao.StaffDao">
-    <select id="queryAllStaff" resultType="cn.stb.stbcrmserver.vo.StaffListVo">
+    <select id="queryAllStaff" resultType="cn.stb.stbcrmserver.vo.StaffListVo" parameterType="java.util.Map">
         select a.staff_id,a.staff_name,a.staff_code,a.password,a.staff_phone,a.staff_type,a.staff_state,a.staff_email,a.operator_id,a.remark ,
         group_concat(c.right_name separator '、') as right_names
         from CRM_STAFF a
         left join CRM_STAFF_RIGHT b on b.staff_id = a.staff_id
         left join CRM_RIGHT c on c.right_id = b.right_id
+        where a.STAFF_STATE = '1'
+        <if test=" 0 neq staffType ">
+            and a.operator_id = #{operatorId}
+        </if>
         group by a.staff_id;
     </select>
 

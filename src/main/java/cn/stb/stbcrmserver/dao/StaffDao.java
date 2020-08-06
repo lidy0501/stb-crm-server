@@ -5,10 +5,11 @@ import cn.stb.stbcrmserver.vo.StaffListVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface StaffDao {
-    List<StaffListVo> queryAllStaff();
+    List<StaffListVo> queryAllStaff(Map<String, String> map);
 
     int addStaff(Staff staff);
 

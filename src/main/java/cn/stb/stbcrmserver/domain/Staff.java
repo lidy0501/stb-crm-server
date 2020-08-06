@@ -3,12 +3,14 @@ package cn.stb.stbcrmserver.domain;
 import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
 import cn.stb.stbcrmserver.vo.AddStaffReq;
+import cn.stb.stbcrmserver.vo.RightVo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
-import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 
 /**
@@ -39,7 +41,7 @@ public class Staff {
                 .staffCode(req.getStaffCode())
                 .password(req.getPassWord())
                 .staffPhone(req.getStaffPhone())
-                .staffType("1")
+                .staffType(getStaffType(req.getRightVoList()))
                 .staffState("1")
                 .staffEmail(req.getStaffEmail())
                 .operatorId(AcContext.getStaffId())
@@ -51,4 +53,13 @@ public class Staff {
     public boolean stateIsOk() {
         return "1".equals(staffState);
     }
+
+    /** 判断新增的是不是分销员 staffType = 2 是普通员工 ，1 是分销员 */
+    public static String getStaffType(List<RightVo> rightVos) {
+        for (RightVo rightVo : rightVos) {
+            if ("员工管理".equals(rightVo.getRightName())) return "1";
+        }
+        return "2";
+    }
+
 }

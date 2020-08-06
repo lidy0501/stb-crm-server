@@ -5,7 +5,7 @@ CREATE TABLE CRM_STAFF (
 	STAFF_CODE varchar(20) DEFAULT NULL COMMENT '员工工号,用于账号登录',
 	PASSWORD varchar(100) DEFAULT NULL COMMENT '员工密码',
 	STAFF_PHONE varchar(16) DEFAULT NULL COMMENT '员工电话',
-	STAFF_TYPE char(1) NOT NULL COMMENT '员工类型:0系统管理员,1普通员工',
+	STAFF_TYPE char(1) NOT NULL COMMENT '员工类型:0系统管理员,1分销员(由系统管理员创建，并且具有员工管理权限)，2普通员工',
 	STAFF_STATE char(1) NOT NULL COMMENT '员工状态：1正常、9离职',
 	STAFF_EMAIL varchar(100) DEFAULT NULL COMMENT '邮箱',
 	OPERATOR_ID char(20) NOT NULL COMMENT '操作人',
