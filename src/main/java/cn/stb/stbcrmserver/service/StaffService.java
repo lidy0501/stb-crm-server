@@ -44,7 +44,7 @@ public class StaffService {
             //校验staffCode是否存在
             String staffCode = req.getStaffCode();
             Staff checkStaff = staffDao.findStaffByStaffCode(staffCode);
-            if (checkStaff != null) return RespResult.fail("该用户代码已经存在!");
+            if (checkStaff != null) return RespResult.fail("该账号已经存在!");
             // 落crm_staff表
             Staff staff = Staff.convert(req);
             int effectNum1 = staffDao.addStaff(staff);
