@@ -70,7 +70,8 @@ public class StaffService {
         Staff staff = AcContext.getStaff();
         //获取传入ID员工信息
         Staff staff1 = staffDao.findStaffById(staffId);
-        if (staffId == staff.getStaffId() || "0".equals(staff1.getStaffType())) {
+        if (staff1 == null) return  RespResult.fail("该员工不存在!");
+        if (staffId.equals(staff.getStaffId()) || "0".equals(staff1.getStaffType())) { // 不能删除自己和系统管理员
             return RespResult.fail("删除失败!");
         }
         // 删除员工信息

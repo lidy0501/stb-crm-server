@@ -36,7 +36,7 @@ public class StaffController {
     }
 
     @RequestMapping("/deleteStaffById/{staffId}")
-    @LoginIgnore
+    @Right(CRM_员工管理)
     public RespResult deleteStaffById(@PathVariable String staffId){
         return staffService.deleteStaffById(staffId);
     }
