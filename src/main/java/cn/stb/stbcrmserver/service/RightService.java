@@ -26,12 +26,8 @@ public class RightService {
         Staff staff = AcContext.getStaff();
         List<RightVo> rightVos = rightDao.getAll();
         if (!"0".equals(staff.getStaffType())) { // 不是老板，不能展示财务管理的选项
-            // 不是老板，不能展示财务管理的选项
-            rightVos = rightVos.stream().filter(x -> !"财务管理".equals(x.getRightName())).collect(Collectors.toList());
-            // 不是分销员，不能展示员工管理的选项
-            if (!"1".equals(staff.getStaffType())) {
-                rightVos = rightVos.stream().filter(x -> !"员工管理".equals(x.getRightName())).collect(Collectors.toList());
-            }
+            // 不是老板，不能展示财务管理 和工管理的选项
+            rightVos = rightVos.stream().filter(x -> !"财务管理".equals(x.getRightName()) && !"员工管理".equals(x.getRightName())).collect(Collectors.toList());
 
         }
         return rightVos;
