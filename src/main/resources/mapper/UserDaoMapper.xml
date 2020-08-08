@@ -40,6 +40,9 @@
         <if test="1 eq userType">
             <if test="0 neq staffType">
                 and  operator_id = #{operatorId}
+                <if test="1 eq staffType">
+                    or operator_id in (select cs.staff_id from CRM_STAFF cs where cs.operator_id = #{operatorId})
+                </if>
             </if>
             and user_type = '1'
         </if>

@@ -70,7 +70,7 @@ public class UserService {
         Staff staff = AcContext.getStaff();
         String operatorId = staff.getStaffId();
         String staffType = staff.getStaffType();
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap();
         map.put("staffType", staffType);
         map.put("operatorId", operatorId);
         map.put("userType", userType);
@@ -88,7 +88,7 @@ public class UserService {
 
     public RespResult changeUserType(String userId) {
         String operatorId = AcContext.getStaffId();
-        Map map = new HashMap();
+        Map<String, String> map = new HashMap();
         map.put("userId",userId);
         map.put("operatorId",operatorId);
         int effectNum = userDao.changeUserType(map);
