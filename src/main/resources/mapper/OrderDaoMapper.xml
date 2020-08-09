@@ -8,7 +8,10 @@
         from CRM_ORDER
         where ORDER_STATE != '9'
         <if test=" 0 neq staffType ">
-            and operator_id = #{operatorId}
+            and (
+                operator_id = #{operatorId}
+                or operator_id in (select cs.staff_id from CRM_STAFF cs where cs.operator_id = #{operatorId})
+                )
         </if>
         <if test="searchValue != null and searchValue != ''">
             and (
