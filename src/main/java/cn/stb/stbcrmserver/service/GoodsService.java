@@ -3,6 +3,7 @@ package cn.stb.stbcrmserver.service;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.dao.GoodsDao;
 import cn.stb.stbcrmserver.domain.Goods;
+import cn.stb.stbcrmserver.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -20,6 +21,7 @@ public class GoodsService {
 
     public RespResult addGoods(Goods goods) {
         if (!StringUtils.isEmpty(goods.getGoodsName())) {
+            goods.setGoodsId(UUIDUtil.getNumId());
             int effectedNum = goodsDao.addGoods(goods);
             if (effectedNum > 0) {
                 return RespResult.ok("新增商品成功!");
