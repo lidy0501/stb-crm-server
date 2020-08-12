@@ -21,8 +21,6 @@ public class CookieUtils {
 		saveCookie(res, STAFF_AUTHC, staff.getStaffId()); // todo 实际应该给staffId加密后在传入cookie
 		AcContext.setStaff(staff);
 		AcContext.setStaffId(staff.getStaffId());
-		log.info("缓存的staffId------ {}", AcContext.getStaffId());
-		log.info("缓存的员工信息----- {}", AcContext.getStaff());
 	}
 
 	public static void saveCookie(HttpServletResponse res, String cookieName, String value) {
@@ -35,7 +33,6 @@ public class CookieUtils {
 			cookie.setDomain(domain);
 		}
 		res.addCookie(cookie);
-		log.info("缓存的cookie信息------   {} : {}", cookie.getName(), cookie.getValue());
 	}
 
 	public static void removeStaffCookie(HttpServletRequest request, HttpServletResponse response) {
