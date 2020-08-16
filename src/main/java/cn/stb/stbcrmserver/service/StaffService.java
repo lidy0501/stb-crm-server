@@ -32,7 +32,13 @@ public class StaffService {
         Map<String, String> map = new HashMap();
         map.put("staffType", staff.getStaffType());
         map.put("operatorId", staff.getStaffId());
-        return staffDao.queryAllStaff(map);
+        List<StaffListVo> staffList = staffDao.queryAllStaff(map);
+        staffList.forEach(x -> {
+            if ("A000".equals(x.getStaffCode())) {
+                x.setPassword("******");
+            }
+        });
+        return staffList;
     }
 
     @Transactional
