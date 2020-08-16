@@ -36,6 +36,7 @@ public class LoginController {
         SessionUtils.removeStaffSession(request);
         SessionUtils.cacheStaffSession(request, staff);
         CookieUtils.cacheStaffInfo(response, staff);
+        response.setHeader("token", staff.getStaffId());
         return RespResult.ok("登录成功", staff);
     }
 

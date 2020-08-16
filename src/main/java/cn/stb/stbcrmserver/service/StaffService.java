@@ -108,4 +108,7 @@ public class StaffService {
     }
 
 
+	public Staff findStaffById(String staffId) {
+        return staffDao.findStaffById(staffId);
+	}
 }

@@ -37,9 +37,11 @@ public class CookieUtils {
 
 	public static void removeStaffCookie(HttpServletRequest request, HttpServletResponse response) {
 		Cookie[] cookies = request.getCookies();
-		for (Cookie cookie : cookies) {
-			cookie.setMaxAge(0);
-			response.addCookie(cookie);
+		if (cookies != null && cookies.length > 0) {
+			for (Cookie cookie : cookies) {
+				cookie.setMaxAge(0);
+				response.addCookie(cookie);
+			}
 		}
 	}
 

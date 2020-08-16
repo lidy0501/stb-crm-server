@@ -2,7 +2,9 @@ package cn.stb.stbcrmserver.config;
 
 import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.domain.Staff;
+import cn.stb.stbcrmserver.service.StaffService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.*;
@@ -13,6 +15,10 @@ import java.io.IOException;
 @Slf4j
 @Configuration
 public class FilterConfig implements Filter {
+
+    @Autowired
+    private StaffService staffService;
+
     @Override
     public void init(javax.servlet.FilterConfig filterConfig) throws ServletException {
     }
@@ -25,12 +31,18 @@ public class FilterConfig implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
-        HttpSession session = request.getSession();
-
-        if (session.getAttribute("staffId") != null) {
-            AcContext.setStaffId((String)session.getAttribute("staffId"));
-            AcContext.setStaff((Staff) session.getAttribute("staff"));
+        String token = request.getHeader("token");
+        if (token != null) {
+            AcContext.setStaffId(token);
+            Staff staff = staffService.findStaffById(token);
+            AcContext.setStaff(staff);
         }
+//        HttpSession session = request.getSession();
+//
+//        if (session.getAttribute("staffId") != null) {
+//            AcContext.setStaffId((String)session.getAttribute("staffId"));
+//            AcContext.setStaff((Staff) session.getAttribute("staff"));
+//        }
         filterChain.doFilter(servletRequest, servletResponse );
     }
 
