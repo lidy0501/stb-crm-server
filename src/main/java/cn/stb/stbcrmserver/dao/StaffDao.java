@@ -24,4 +24,8 @@ public interface StaffDao {
     Staff findStaffById(String staffId);
 
     List<Staff> queryAllStaffIgnoreState();
+
+    int updateStaff(Staff staff);
+
+    int changeStaffState(Map<String, String> map);
 }

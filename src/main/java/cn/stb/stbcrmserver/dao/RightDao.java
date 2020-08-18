@@ -28,4 +28,6 @@ public interface RightDao {
     List<StaffRight> queryStaffRightInStaffIds(List<String> staffIds);
 
     int deleteStaffRightsByStaffId(String staffId);
+
+    int nullifyRightsByStaffId(String staffId);
 }

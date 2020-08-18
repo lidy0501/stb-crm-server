@@ -36,7 +36,7 @@ public class Staff {
 
     public static Staff convert(AddStaffReq req) {
         return Staff.builder()
-                .staffId(UUIDUtil.getNumId())
+                .staffId("0".equals(req.getStaffId()) ? UUIDUtil.getNumId() : req.getStaffId()) // 0 表示新增
                 .staffName(req.getStaffName())
                 .staffCode(req.getStaffCode())
                 .password(req.getPassWord())

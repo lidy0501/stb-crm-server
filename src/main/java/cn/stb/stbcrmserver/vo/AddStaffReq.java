@@ -1,5 +1,6 @@
 package cn.stb.stbcrmserver.vo;
 
+import cn.stb.stbcrmserver.domain.Staff;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,5 +22,19 @@ public class AddStaffReq {
     private String staffEmail;//邮箱
     private String remark;//备注
     private List<RightVo> rightVoList;
+
+    public static AddStaffReq convert(Staff staff, List<RightVo> rightVoList) {
+        return AddStaffReq.builder()
+                .staffId(staff.getStaffId())
+                .staffName(staff.getStaffName())
+                .staffCode(staff.getStaffCode())
+                .passWord(staff.getPassword())
+                .staffPhone(staff.getStaffPhone())
+                .staffType(staff.getStaffType())
+                .staffEmail(staff.getStaffEmail())
+                .remark(staff.getRemark())
+                .rightVoList(rightVoList)
+                .build();
+    }
 
 }

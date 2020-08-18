@@ -75,4 +75,10 @@
         delete from CRM_STAFF_RIGHT
         where STAFF_ID = #{staffId}
     </delete>
+
+    <update id="nullifyRightsByStaffId" parameterType="java.lang.String">
+        update CRM_STAFF_RIGHT
+        set RIGHT_STATE = '9'
+        where STAFF_ID = #{staffId}
+    </update>
 </mapper>

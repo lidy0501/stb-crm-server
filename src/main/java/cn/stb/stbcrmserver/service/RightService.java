@@ -3,6 +3,7 @@ package cn.stb.stbcrmserver.service;
 import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.RightDao;
 import cn.stb.stbcrmserver.domain.Staff;
+import cn.stb.stbcrmserver.domain.StaffRight;
 import cn.stb.stbcrmserver.vo.RightVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,5 +32,10 @@ public class RightService {
 
         }
         return rightVos;
+    }
+
+    /** 获取员工权限 */
+    public List<StaffRight> queryStaffRightByStaffId(String staffId) {
+        return rightDao.queryStaffRightByStaffId(staffId);
     }
 }

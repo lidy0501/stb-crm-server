@@ -28,10 +28,24 @@
         #{operatorId},#{remark})
     </insert>
 
-    <delete id="deleteStaffById" parameterType="java.lang.String">
-        DELETE FROM CRM_STAFF
+    <update id="updateStaff" parameterType="cn.stb.stbcrmserver.domain.Staff">
+        update CRM_STAFF
+        set staff_name = #{staffName}
+            ,staff_code = #{staffCode}
+            ,password = #{password}
+            ,staff_phone = #{staffPhone}
+            ,staff_type = #{staffType}
+            ,staff_state = #{staffState}
+            ,staff_email = #{staffEmail}
+            ,remark = #{remark}
+        where staff_id = #{staffId}
+    </update>
+
+    <update id="changeStaffState" parameterType="java.util.Map">
+        UPDATE CRM_STAFF
+        SET staff_state = #{staffState}
         WHERE staff_id = #{staffId}
-    </delete>
+    </update>
 
     <update id="modifyStaffStateById" parameterType="cn.stb.stbcrmserver.domain.Staff">
         UPDATE CRM_STAFF
@@ -43,6 +57,7 @@
         select staff_id,staff_name,staff_code,password,staff_phone,staff_type,staff_state,staff_email,operator_id,remark
         from CRM_STAFF
         where staff_code = #{staffCode}
+        and staff_state != '9'
     </select>
 
     <select id="queryStaffRightIds" parameterType="java.lang.String" resultType="java.lang.String">
