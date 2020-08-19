@@ -5,9 +5,11 @@ import cn.stb.stbcrmserver.domain.User;
 import cn.stb.stbcrmserver.service.UserService;
 import cn.stb.stbcrmserver.vo.ListReq;
 import cn.stb.stbcrmserver.vo.ListVo;
+import cn.stb.stbcrmserver.vo.UserReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.DocFlavor;
 import java.util.List;
 
 import static cn.stb.stbcrmserver.base.RightType.CRM_客户管理;
@@ -86,5 +88,27 @@ public class UserController {
     @Right(CRM_客户管理)
     public RespResult changeUserType(@PathVariable String userId){
         return userService.changeUserType(userId);
+    }
+
+    /**
+     * 从公海认领客户
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/receiveUser/{userId}")
+    @LoginIgnore
+    public RespResult receiveUser(@PathVariable String userId){
+        return userService.receiveUser(userId);
+    }
+
+    /**
+     * 管理员从公海分配客户
+     * @param req
+     * @return
+     */
+    @RequestMapping("/distributionUser")
+    @LoginIgnore
+    public RespResult distributionUser(@RequestBody UserReq req){
+        return userService.distributionUser(req);
     }
 }

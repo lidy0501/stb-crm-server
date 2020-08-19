@@ -2,17 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.stb.stbcrmserver.dao.GoodsDao">
     <select id="queryAllGoods" resultType="cn.stb.stbcrmserver.domain.Goods">
-        select goods_id,goods_name,goods_price,goods_spe,create_time,update_time,remark
+        select goods_id,goods_code,goods_name,goods_price,goods_spe,create_time,update_time,remark
         from CRM_GOODS
-        order by update_time
-        desc
     </select>
 
     <insert id="addGoods" parameterType="cn.stb.stbcrmserver.domain.Goods">
         insert into
-        CRM_GOODS(goods_id,goods_name,goods_price,goods_spe,remark)
+        CRM_GOODS(goods_id,goods_code,goods_name,goods_price,goods_spe,remark)
         values
-        (#{goodsId},#{goodsName},#{goodsPrice},#{goodsSpe},#{remark})
+        (#{goodsId},#{goodsCode},#{goodsName},#{goodsPrice},#{goodsSpe},#{remark})
     </insert>
 
     <delete id="deleteGoodsById" parameterType="java.lang.String">

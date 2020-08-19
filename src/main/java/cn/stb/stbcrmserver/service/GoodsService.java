@@ -1,6 +1,7 @@
 package cn.stb.stbcrmserver.service;
 
 import cn.stb.stbcrmserver.base.RespResult;
+import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.GoodsDao;
 import cn.stb.stbcrmserver.domain.Goods;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
@@ -33,11 +34,12 @@ public class GoodsService {
         }
     }
     public RespResult deleteGoodsById (String goodsId){
-        int effectedNum = goodsDao.deleteGoodsById(goodsId);
-        if (effectedNum > 0) {
-            return RespResult.ok("删除成功!");
-        } else {
+        String staffType = AcContext.getStaff().getStaffType();
+        if ("0".equals(staffType) || "1".equals(staffType)){
+            int effectedNum = goodsDao.deleteGoodsById(goodsId);
+            if (effectedNum > 0) return RespResult.ok("删除成功!");
             return RespResult.fail("删除失败");
         }
+        return RespResult.fail("无此权限!");
     }
 }

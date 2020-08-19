@@ -22,4 +22,6 @@ public interface UserDao {
     User findUserById(String userId);
 
     int changeUserType(Map map);
+
+    int receiveUser(Map<String, Object> map);
 }

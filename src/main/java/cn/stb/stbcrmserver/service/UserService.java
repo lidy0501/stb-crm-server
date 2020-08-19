@@ -9,6 +9,8 @@ import cn.stb.stbcrmserver.domain.User;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
 import cn.stb.stbcrmserver.vo.ListReq;
 import cn.stb.stbcrmserver.vo.ListVo;
+import cn.stb.stbcrmserver.vo.UserReq;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -94,5 +96,30 @@ public class UserService {
         int effectNum = userDao.changeUserType(map);
         if (effectNum > 0 ) return RespResult.ok("操作成功!");
         return RespResult.fail("操作失败!");
+    }
+
+    public RespResult receiveUser(String userId) {
+        String operatorId = AcContext.getStaffId();
+        Map<String , Object> map = new HashMap<>();
+        map.put("userId",userId);
+        map.put("operatorId",operatorId);
+        map.put("followTime", DateTime.now());
+        int effectNum = userDao.receiveUser(map);
+        if (effectNum > 0 ) return  RespResult.ok("认领成功!");
+        return RespResult.fail("认领失败!");
+    }
+
+    public RespResult distributionUser(UserReq req) {
+        String staffType = AcContext.getStaff().getStaffType();
+        if ("0".equals(staffType) || "1".equals(staffType)){
+            Map<String , Object> map = new HashMap<>();
+            map.put("userId",req.getUserId());
+            map.put("operatorId",req.getStaffId());
+            map.put("followTime", DateTime.now());
+            int effectNum = userDao.receiveUser(map);
+            if (effectNum > 0 ) return  RespResult.ok("分配成功!");
+            return RespResult.fail("分配失败!");
+        }
+        return RespResult.fail("无此权限!");
     }
 }
