@@ -4,6 +4,7 @@ import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.GoodsDao;
 import cn.stb.stbcrmserver.domain.Goods;
+import cn.stb.stbcrmserver.domain.Sku;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,5 +42,22 @@ public class GoodsService {
             return RespResult.fail("删除失败");
         }
         return RespResult.fail("无此权限!");
+    }
+
+    public RespResult addSku(Sku sku) {
+        if (!StringUtils.isEmpty(sku.getSkuCode()) && !StringUtils.isEmpty(sku.getSkuUnit())
+                && !StringUtils.isEmpty(sku.getSkuCOLOR())) {
+            sku.setSkuId(UUIDUtil.getNumId());
+            int effectNum = goodsDao.addSku(sku);
+            if ( effectNum > 0 ) return RespResult.ok("添加SKU成功!");
+            return RespResult.fail("添加失败!");
+        }
+        return RespResult.fail("数据不能为空!");
+    }
+
+    public RespResult deleteSkuById(String skuId) {
+        int effectedNum = goodsDao.deleteSkuById(skuId);
+        if (effectedNum > 0) return RespResult.ok("删除成功!");
+        return RespResult.fail("删除失败");
     }
 }

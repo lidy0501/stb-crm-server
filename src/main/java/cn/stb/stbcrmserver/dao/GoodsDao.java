@@ -1,6 +1,7 @@
 package cn.stb.stbcrmserver.dao;
 
 import cn.stb.stbcrmserver.domain.Goods;
+import cn.stb.stbcrmserver.domain.Sku;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,4 +14,8 @@ public interface GoodsDao {
     Integer addGoods(Goods goods);
 
     Integer deleteGoodsById(String  goodsId);
+
+    int addSku(Sku sku);
+
+    int deleteSkuById(String skuId);
 }

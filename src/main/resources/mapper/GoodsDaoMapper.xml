@@ -17,4 +17,16 @@
         delete from CRM_GOODS
         where goods_id = #{goodsId}
     </delete>
+
+    <insert id="addSku" parameterType="cn.stb.stbcrmserver.domain.Sku">
+        insert into
+        CRM_SKU(sku_id,sku_code,sku_unit,sku_color,remark)
+        values
+        (#{skuId},#{skuCode},#{skuUnit},#{skuColor},#{remark})
+    </insert>
+
+    <delete id="deleteSkuById" parameterType="java.lang.String">
+        delete from CRM_SKU
+        where sku_id = #{skuId}
+    </delete>
 </mapper>

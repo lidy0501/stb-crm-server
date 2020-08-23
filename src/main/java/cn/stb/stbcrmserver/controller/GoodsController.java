@@ -3,6 +3,7 @@ package cn.stb.stbcrmserver.controller;
 import cn.stb.stbcrmserver.base.LoginIgnore;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.domain.Goods;
+import cn.stb.stbcrmserver.domain.Sku;
 import cn.stb.stbcrmserver.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,5 +49,21 @@ public class GoodsController {
     @LoginIgnore
     public RespResult deleteGoodsById(@PathVariable String goodsId){
         return goodsService.deleteGoodsById(goodsId);
+    }
+
+    /**
+     * 添加商品SKU
+     * @param sku
+     * @return
+     */
+    @RequestMapping("/addSku")
+    @LoginIgnore
+    public RespResult addSku(@RequestBody Sku sku){
+        return goodsService.addSku(sku);
+    }
+
+    @RequestMapping("/deleteSkuById/{skuId}")
+    public RespResult deleteSkuById(@PathVariable String skuId){
+        return goodsService.deleteSkuById(skuId);
     }
 }
