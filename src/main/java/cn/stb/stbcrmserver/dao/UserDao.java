@@ -26,4 +26,6 @@ public interface UserDao {
     int receiveUser(Map<String, Object> map);
 
     User findUserByUserCode(String userCode);
+
+    User selectUserByUserId(String userId);
 }

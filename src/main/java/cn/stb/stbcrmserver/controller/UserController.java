@@ -52,6 +52,17 @@ public class UserController {
     }
 
     /**
+     * 通过userId查询客户详情
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/selectUserByUserId/{userId}")
+    @Right(CRM_客户管理)
+    public User selectUserByUserId(@PathVariable String userId){
+        return userService.selectUserByUserId(userId);
+    }
+
+    /**
      * 通过客户ID修改状态(修改状态,软删除)
      * @param user
      * @return

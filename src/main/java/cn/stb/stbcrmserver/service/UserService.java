@@ -125,4 +125,8 @@ public class UserService {
         }
         return RespResult.fail("无此权限!");
     }
+
+    public User selectUserByUserId(String userId) {
+        return userDao.selectUserByUserId(userId);
+    }
 }
