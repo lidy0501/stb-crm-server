@@ -88,4 +88,12 @@
         set user_type = '1', operator_id = #{operatorId} ,follow_time = #{followTime}
         where user_id = #{userId}
     </update>
+
+    <select id="findUserByUserCode" resultType="cn.stb.stbcrmserver.domain.User">
+        select user_id,user_code,user_name,nation,user_phone,user_telephone,user_email,company,company_address,company_web,
+        post,user_state,user_type,operator_id,subtotal,remark
+        from CRM_USER
+        where user_code = #{userCode}
+        and user_state = '1'
+    </select>
 </mapper>
