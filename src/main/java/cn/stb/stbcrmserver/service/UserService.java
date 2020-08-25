@@ -3,13 +3,16 @@ package cn.stb.stbcrmserver.service;
 import cn.stb.stbcrmserver.base.Page;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.context.AcContext;
+import cn.stb.stbcrmserver.dao.StaffDao;
 import cn.stb.stbcrmserver.dao.UserDao;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.domain.User;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
 import cn.stb.stbcrmserver.vo.ListReq;
 import cn.stb.stbcrmserver.vo.ListVo;
+import cn.stb.stbcrmserver.vo.UserListVo;
 import cn.stb.stbcrmserver.vo.UserReq;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +23,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class UserService {
     @Autowired
     private UserDao userDao;
+    @Autowired
+    private StaffDao staffDao;
 
     // 新增客户,默认公司客户
     public RespResult addUser(User user) {
@@ -68,7 +74,7 @@ public class UserService {
     }
 
     // 查询客户,通过客户类型  userType : 0公共客户, 1 私有客户
-    public ListVo<User> queryUsersByStaffType(String userType, ListReq req) {
+    public ListVo<UserListVo> queryUsersByStaffType(String userType, ListReq req) {
         Page page = new Page();
         page.setStartIndex(req.getStartIndex());
         page.setPageRows(10);
@@ -81,11 +87,33 @@ public class UserService {
         map.put("userType", userType);
         map.put("searchValue", req.getSearchValue());
         List<User> users = userDao.queryUserByOperatorIdAndUserType(map);
+        log.info("user--------------, {}", users.get(0));
         List<User> userList = users.stream().skip(page.getStartIndex()).limit(10).collect(Collectors.toList());
+        List<String> operatorIds = userList.stream().map(User::getOperatorId).collect(Collectors.toList());
+        Map<String, String> nameMap = getOperatorNameMap(operatorIds);
+        List<UserListVo> userListVos = userList.stream().map(user -> UserListVo.convert(user, nameMap.get(user.getOperatorId()))).collect(Collectors.toList());
+
         page.setTotalRows(users.size());
-        ListVo<User> listVo = new ListVo(userList, page);
+        ListVo<UserListVo> listVo = new ListVo(userListVos, page);
         return listVo;
     }
+
+    /**
+     * 获取跟进客户的员工姓名
+     * @param operatorIds
+     * @return
+     */
+    public Map<String, String> getOperatorNameMap(List<String> operatorIds) {
+        List<Staff> staffList = staffDao.queryStaffsByIds(operatorIds);
+        Map<String, String> staffMap = staffList.stream().collect(Collectors.toMap(Staff::getStaffId, Staff::getStaffName));
+        return staffMap;
+    }
+
+
+
+
+
+
 
     public List<User> selectUserByLike(String s) {
         return userDao.selectUserByLike(s);

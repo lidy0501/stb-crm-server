@@ -5,6 +5,7 @@ import cn.stb.stbcrmserver.domain.User;
 import cn.stb.stbcrmserver.service.UserService;
 import cn.stb.stbcrmserver.vo.ListReq;
 import cn.stb.stbcrmserver.vo.ListVo;
+import cn.stb.stbcrmserver.vo.UserListVo;
 import cn.stb.stbcrmserver.vo.UserReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class UserController {
      */
     @RequestMapping("/queryPrivateUser")
     @Right(CRM_客户管理)
-    public ListVo<User> queryPrivateUser(@RequestBody ListReq req) {
+    public ListVo<UserListVo> queryPrivateUser(@RequestBody ListReq req) {
         return userService.queryUsersByStaffType("1", req);
     }
 
@@ -36,7 +37,7 @@ public class UserController {
      */
     @RequestMapping("/queryPublicAreaUser")
     @Right(CRM_客户管理)
-    public ListVo<User> queryPublicAreaUser(@RequestBody ListReq req) { // userType : 0公共客户, 1 私有客户
+    public ListVo<UserListVo> queryPublicAreaUser(@RequestBody ListReq req) { // userType : 0公共客户, 1 私有客户
         return userService.queryUsersByStaffType("0", req);
     }
 

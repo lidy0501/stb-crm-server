@@ -28,4 +28,6 @@ public interface StaffDao {
     int updateStaff(Staff staff);
 
     int changeStaffState(Map<String, String> map);
+
+    List<Staff> queryStaffsByIds(List<String> operatorIds);
 }

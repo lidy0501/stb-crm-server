@@ -71,4 +71,14 @@
         from CRM_STAFF
         where staff_id = #{staffId}
     </select>
+
+    <select id="queryStaffsByIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.Staff">
+        select STAFF_ID, STAFF_NAME, STAFF_CODE, PASSWORD, STAFF_PHONE, STAFF_TYPE, STAFF_STATE, STAFF_EMAIL,
+        OPERATOR_ID, CREATE_TIME, UPDATE_TIME, remark
+        from CRM_STAFF
+        where STAFF_ID in
+        <foreach collection="list" open="(" item="item" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 </mapper>
