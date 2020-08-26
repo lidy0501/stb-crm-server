@@ -12,5 +12,5 @@ import org.apache.ibatis.annotations.Param;
 @NoArgsConstructor
 public class UserReq {
     private String userId;//客户Id
-    private String StaffId;//员工Id
+    private String staffId;//员工Id
 }

@@ -23,7 +23,7 @@ public interface UserDao {
 
     int changeUserType(Map map);
 
-    int receiveUser(Map<String, Object> map);
+    int receiveUser(Map<String, String> map);
 
     User findUserByUserCode(String userCode);
 

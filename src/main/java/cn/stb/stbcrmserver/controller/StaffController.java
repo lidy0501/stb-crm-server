@@ -1,6 +1,5 @@
 package cn.stb.stbcrmserver.controller;
 
-import cn.stb.stbcrmserver.base.LoginIgnore;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.base.Right;
 import cn.stb.stbcrmserver.domain.Staff;
@@ -11,7 +10,6 @@ import cn.stb.stbcrmserver.vo.AddStaffReq;
 import cn.stb.stbcrmserver.vo.RightVo;
 import cn.stb.stbcrmserver.vo.StaffListVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +26,7 @@ public class StaffController {
     private RightService rightService;
 
     @RequestMapping("/queryAllStaff")
-    @Right(CRM_员工管理)
+    @Right({CRM_员工管理, CRM_员工管理})
     public List<StaffListVo> queryAllStaff (){
         return staffService.queryAllStaff();
     }

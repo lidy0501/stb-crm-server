@@ -85,7 +85,7 @@
 
     <update id="receiveUser" parameterType="java.util.Map">
         update CRM_USER
-        set user_type = '1', operator_id = #{operatorId} ,follow_time = #{followTime}
+        set user_type = '1', operator_id = #{operatorId} ,follow_time = now()
         where user_id = #{userId}
     </update>
 
