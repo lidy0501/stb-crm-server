@@ -34,9 +34,10 @@ public class UserListVo {
                 .build();
     }
 
-    public static int getFollowDays(DateTime startTime) {
+    public static int getFollowDays(String startTime) {
+        DateTime start = DateTime.parse(startTime);
         DateTime currentTime = DateTime.now();
-        return Days.daysBetween(currentTime, startTime).getDays();
+        return Days.daysBetween(start, currentTime).getDays();
     }
 
 

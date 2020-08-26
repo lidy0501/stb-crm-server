@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.joda.time.DateTime;
 
+import java.sql.Date;
+
 
 /**
  * 客户信息表bean
@@ -31,7 +33,7 @@ public class User {
     private String operatorId;//创建人
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
-    private DateTime followTime;//创建时间
+    private String followTime;//创建时间
     private String subtotal;//跟进小计
     private String remark;//备注
 

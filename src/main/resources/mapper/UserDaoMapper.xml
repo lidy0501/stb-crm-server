@@ -32,7 +32,7 @@
 
     <select id="queryUserByOperatorIdAndUserType" resultType="cn.stb.stbcrmserver.domain.User"  parameterType="java.util.Map">
         select user_id,user_code,user_name,nation,user_phone,user_telephone,user_email,company,company_address,company_web,
-        post,user_state,user_type,operator_id,follow_time as followTime,subtotal,remark
+        post,user_state,user_type,operator_id,DATE_FORMAT(follow_time, '%Y-%m-%d') as followTime,subtotal,remark
         from CRM_USER
         where user_state = '1'
         <if test=" 0 eq userType">
