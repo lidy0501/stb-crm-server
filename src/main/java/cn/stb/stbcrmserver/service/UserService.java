@@ -16,10 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -87,6 +86,9 @@ public class UserService {
         map.put("userType", userType);
         map.put("searchValue", req.getSearchValue());
         List<User> users = userDao.queryUserByOperatorIdAndUserType(map);
+        if (CollectionUtils.isEmpty(users)) {
+            return new ListVo(new ArrayList(), page);
+        }
         log.info("user--------------, {}", users.get(0));
         List<User> userList = users.stream().skip(page.getStartIndex()).limit(10).collect(Collectors.toList());
         List<String> operatorIds = userList.stream().map(User::getOperatorId).collect(Collectors.toList());
