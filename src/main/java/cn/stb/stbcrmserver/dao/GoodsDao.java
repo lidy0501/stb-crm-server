@@ -18,4 +18,8 @@ public interface GoodsDao {
     int addSku(Sku sku);
 
     int deleteSkuById(String skuId);
+
+    int updateSku(Sku sku);
+
+    Goods selectGoodsBySkuId(String skuId);
 }

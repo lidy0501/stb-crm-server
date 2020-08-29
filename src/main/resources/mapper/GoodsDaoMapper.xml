@@ -4,29 +4,46 @@
     <select id="queryAllGoods" resultType="cn.stb.stbcrmserver.domain.Goods">
         select goods_id,goods_code,goods_name,goods_price,goods_spe,create_time,update_time,remark
         from CRM_GOODS
+        where goods_state = '0'
     </select>
 
     <insert id="addGoods" parameterType="cn.stb.stbcrmserver.domain.Goods">
         insert into
-        CRM_GOODS(goods_id,goods_code,goods_name,goods_price,goods_spe,remark)
+        CRM_GOODS(goods_id,goods_code,goods_name,goods_price,goods_spe,goods_state,operator_id,remark)
         values
-        (#{goodsId},#{goodsCode},#{goodsName},#{goodsPrice},#{goodsSpe},#{remark})
+        (#{goodsId},#{goodsCode},#{goodsName},#{goodsPrice},#{goodsSpe},#{goodsState},#{operatorId},#{remark})
     </insert>
 
-    <delete id="deleteGoodsById" parameterType="java.lang.String">
-        delete from CRM_GOODS
+    <update id="deleteGoodsById" parameterType="java.lang.String">
+        update CRM_GOODS
+        set goods_state= '1'
         where goods_id = #{goodsId}
-    </delete>
+    </update>
 
     <insert id="addSku" parameterType="cn.stb.stbcrmserver.domain.Sku">
         insert into
-        CRM_SKU(sku_id,sku_code,sku_unit,sku_color,remark)
+        CRM_SKU(sku_id,sku_code,sku_unit,sku_color,sku_state,operator_id,remark)
         values
-        (#{skuId},#{skuCode},#{skuUnit},#{skuColor},#{remark})
+        (#{skuId},#{skuCode},#{skuUnit},#{skuColor},#{skuState},#{operatorId},#{remark})
     </insert>
+
+    <update id="updateSku" parameterType="cn.stb.stbcrmserver.domain.Sku">
+        update CRM_SKU
+        set sku_code=#{skuCode},
+            sku_unit=#{skuUnit},
+            sku_color=#{skuColor},
+            operator_id=#{operatorId}
+        where sku_id=#{sku_id}
+    </update>
 
     <delete id="deleteSkuById" parameterType="java.lang.String">
         delete from CRM_SKU
         where sku_id = #{skuId}
     </delete>
+
+    <select id="selectGoodsBySkuId" parameterType="cn.stb.stbcrmserver.domain.Goods">
+        select goods_id,goods_code,goods_name,goods_price,goods_spe,create_time,update_time,remark
+        from CRM_GOODS
+        where goods_state = '0' and goods_spe=#{sku_id}
+    </select>
 </mapper>

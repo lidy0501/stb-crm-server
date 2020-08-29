@@ -20,6 +20,8 @@ public class Goods {
     private String goodsName;//商品名称
     private String goodsPrice;//商品价格
     private String goodsSpe;//商品规格
+    private String goodsState;//商品状态,0未删除,1已删除
+    private String operatorId;//操作员
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
     private String remark;//备注

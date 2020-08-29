@@ -22,8 +22,11 @@ public class GoodsService {
     }
 
     public RespResult addGoods(Goods goods) {
+        String operatorId = AcContext.getStaffId();
         if (!StringUtils.isEmpty(goods.getGoodsName())) {
             goods.setGoodsId(UUIDUtil.getNumId());
+            goods.setGoodsState("0");
+            goods.setOperatorId(operatorId);
             int effectedNum = goodsDao.addGoods(goods);
             if (effectedNum > 0) {
                 return RespResult.ok("新增商品成功!");
@@ -45,19 +48,28 @@ public class GoodsService {
     }
 
     public RespResult addSku(Sku sku) {
-        if (!StringUtils.isEmpty(sku.getSkuCode()) && !StringUtils.isEmpty(sku.getSkuUnit())
-                && !StringUtils.isEmpty(sku.getSkuCOLOR())) {
-            sku.setSkuId(UUIDUtil.getNumId());
-            int effectNum = goodsDao.addSku(sku);
-            if ( effectNum > 0 ) return RespResult.ok("添加SKU成功!");
-            return RespResult.fail("添加失败!");
+        String operatorId = AcContext.getStaffId();
+        if (!StringUtils.isEmpty(sku.getSkuCode())) {
+            if (StringUtils.isEmpty(sku.getSkuId())){
+                sku.setSkuId(UUIDUtil.getNumId());
+                sku.setSkuState("0");
+                sku.setOperatorId(operatorId);
+                goodsDao.addSku(sku);
+            }else {
+                goodsDao.updateSku(sku);
+            }
+            return RespResult.fail("保存成功!");
         }
-        return RespResult.fail("数据不能为空!");
+        return RespResult.fail("SKU编码不能为空!");
     }
 
     public RespResult deleteSkuById(String skuId) {
-        int effectedNum = goodsDao.deleteSkuById(skuId);
-        if (effectedNum > 0) return RespResult.ok("删除成功!");
+        Goods goods = goodsDao.selectGoodsBySkuId(skuId);
+        if (StringUtils.isEmpty(goods.getGoodsId())){
+            goodsDao.deleteSkuById(skuId);
+            return RespResult.ok("删除成功!");
+        }
         return RespResult.fail("删除失败");
     }
+
 }
