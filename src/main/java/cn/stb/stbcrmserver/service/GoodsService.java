@@ -56,6 +56,7 @@ public class GoodsService {
                 sku.setOperatorId(operatorId);
                 goodsDao.addSku(sku);
             }else {
+                sku.setOperatorId(operatorId);
                 goodsDao.updateSku(sku);
             }
             return RespResult.fail("保存成功!");
