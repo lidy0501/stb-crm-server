@@ -181,7 +181,7 @@ insert into CRM_MENU(MENU_ID, MENU_NAME, MENU_STATE, MENU_DESC, MENU_URL) values
 ('00000000002222222208', '新增商品', '1', '商品列表', '/manage/add-goods'),
 ('00000000002222222209', '合同列表', '1', '合同列表', '/manage/contract-list'),
 ('00000000002222222210', '新增合同', '1', '新增合同', '/manage/add-contract'),
-('00000000002222222211', '财务管理', '1', '财务管理', '/manage/finance-manage');          
+('00000000002222222211', '财务管理', '1', '财务管理', '/manage/finance-manage'),          
 ('00000000002222222212', 'SKU设置', '1', 'SKU设置', '/manage/sku-set');          
 
 # 4 插入 员工权限表
