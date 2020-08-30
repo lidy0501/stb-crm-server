@@ -20,11 +20,20 @@
         where goods_id = #{goodsId}
     </update>
 
-    <insert id="addSku" parameterType="cn.stb.stbcrmserver.domain.Sku">
-        insert into
-        CRM_SKU(sku_id,sku_code,sku_unit,sku_color,sku_state,operator_id,remark)
+    <insert id="addSku" parameterType="java.util.List">
+        insert into CRM_SKU(sku_id, sku_code, sku_unit, sku_color,sku_state,operator_id,remark)
         values
-        (#{skuId},#{skuCode},#{skuUnit},#{skuColor},#{skuState},#{operatorId},#{remark})
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.skuId},
+            #{item.skuCode},
+            #{item.skuUnit},
+            #{item.skuColor},
+            #{item.skuState},
+            #{item.operatorId},
+            #{item.remark}
+            )
+        </foreach>
     </insert>
 
     <update id="updateSku" parameterType="cn.stb.stbcrmserver.domain.Sku">
@@ -46,4 +55,10 @@
         from CRM_GOODS
         where goods_state = '0' and goods_spe=#{sku_id}
     </select>
+
+    <select id="querySkuList" resultType="cn.stb.stbcrmserver.domain.Sku">
+        select sku_id, sku_code, sku_unit, sku_color, sku_state, operator_id, remark
+        from CRM_SKU
+    </select>
+    
 </mapper>

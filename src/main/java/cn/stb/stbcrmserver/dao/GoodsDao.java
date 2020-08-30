@@ -15,11 +15,13 @@ public interface GoodsDao {
 
     Integer deleteGoodsById(String  goodsId);
 
-    int addSku(Sku sku);
+    int addSku(List<Sku> skuList);
 
     int deleteSkuById(String skuId);
 
     int updateSku(Sku sku);
 
     Goods selectGoodsBySkuId(String skuId);
+
+	List<Sku> querySkuList();
 }

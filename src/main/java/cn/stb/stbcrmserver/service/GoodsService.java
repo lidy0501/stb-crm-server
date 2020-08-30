@@ -47,21 +47,18 @@ public class GoodsService {
         return RespResult.fail("无此权限!");
     }
 
-    public RespResult addSku(Sku sku) {
+    public RespResult addSku(List<Sku> skuList) {
         String operatorId = AcContext.getStaffId();
-        if (!StringUtils.isEmpty(sku.getSkuCode())) {
-            if (StringUtils.isEmpty(sku.getSkuId())){
+        if (skuList != null && skuList.size() > 0) {
+            skuList.forEach(sku -> {
+                sku.setOperatorId(operatorId);
                 sku.setSkuId(UUIDUtil.getNumId());
                 sku.setSkuState("0");
-                sku.setOperatorId(operatorId);
-                goodsDao.addSku(sku);
-            }else {
-                sku.setOperatorId(operatorId);
-                goodsDao.updateSku(sku);
-            }
-            return RespResult.fail("保存成功!");
+            });
+            goodsDao.addSku(skuList);
+            return RespResult.ok("保存成功");
         }
-        return RespResult.fail("SKU编码不能为空!");
+        return RespResult.fail("保存失败");
     }
 
     public RespResult deleteSkuById(String skuId) {
@@ -73,4 +70,8 @@ public class GoodsService {
         return RespResult.fail("删除失败");
     }
 
+    /** SKU列表 */
+	public List<Sku> querySkuList() {
+	    return goodsDao.querySkuList();
+	}
 }
