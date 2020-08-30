@@ -20,7 +20,7 @@ public class Goods {
     private String goodsName;//商品名称
     private int goodsPrice;//商品价格: 单位 分`
     private String skuId;//商品对应的skuId
-    private String goodsState;//商品状态,0未删除,1已删除
+    private String goodsState;//商品状态,0已删除,1未删除
     private String operatorId;//操作员
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
