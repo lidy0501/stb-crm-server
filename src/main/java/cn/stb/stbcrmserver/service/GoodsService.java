@@ -1,11 +1,15 @@
 package cn.stb.stbcrmserver.service;
 
+import cn.stb.stbcrmserver.base.Page;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.GoodsDao;
 import cn.stb.stbcrmserver.domain.Goods;
 import cn.stb.stbcrmserver.domain.Sku;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
+import cn.stb.stbcrmserver.vo.GoodsListVo;
+import cn.stb.stbcrmserver.vo.ListReq;
+import cn.stb.stbcrmserver.vo.ListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -13,14 +17,25 @@ import org.springframework.util.StringUtils;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class GoodsService {
     @Autowired
     private GoodsDao goodsDao;
 
-    public List<Goods> queryAllGoods() {
-        return goodsDao.queryAllGoods();
+    public ListVo<GoodsListVo> queryAllGoods(ListReq req) {
+        int startIndex = req.getStartIndex();
+        Page page = new Page(startIndex, 10);
+        List<Goods> goodsList =  goodsDao.queryAllGoods();
+        page.setTotalRows(goodsList.size());
+        goodsList = goodsList.stream().skip(startIndex).limit(10).collect(Collectors.toList());
+        List<String> skuIds = goodsList.stream().map(Goods::getSkuId).collect(Collectors.toList());
+        List<Sku> skuList = goodsDao.querySkuListByIds(skuIds);
+        Map<String, Sku> skuMap = skuList.stream().collect(Collectors.toMap(Sku::getSkuId, x -> x));
+        List<GoodsListVo> goodsListVos = goodsList.stream().map(goods -> GoodsListVo.convert(goods, skuMap.get(goods.getSkuId()))).collect(Collectors.toList());
+        ListVo<GoodsListVo> data = new ListVo<>(goodsListVos, page);
+        return data;
     }
 
     public RespResult addGoods(Goods goods) {

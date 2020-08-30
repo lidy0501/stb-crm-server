@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.stb.stbcrmserver.dao.GoodsDao">
     <select id="queryAllGoods" resultType="cn.stb.stbcrmserver.domain.Goods">
-        select goods_id,goods_code,goods_name,goods_price,sku_id,create_time,update_time,remark
+        select goods_id, goods_code, goods_name, goods_price, sku_id,create_time, update_time, remark
         from CRM_GOODS
-        where goods_state = '0'
+        where goods_state = '1'
+        order by update_time desc
     </select>
 
     <insert id="addGoods" parameterType="cn.stb.stbcrmserver.domain.Goods">
@@ -65,6 +66,15 @@
         select goods_id, goods_code, goods_name, goods_price, sku_id, create_time, update_time, remark
         from CRM_GOODS
         where goods_state = '1' and goods_code=#{goodsCode}
+    </select>
+
+    <select id="querySkuListByIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.Sku">
+        select sku_id, sku_code, sku_unit, sku_color, sku_state, operator_id, remark
+        from CRM_SKU
+        where sku_id in
+        <foreach collection="list"  open="("  item="item" separator="," close=")">
+            #{item}
+        </foreach>
     </select>
     
 </mapper>

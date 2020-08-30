@@ -1,11 +1,15 @@
 package cn.stb.stbcrmserver.controller;
 
 import cn.stb.stbcrmserver.base.LoginIgnore;
+import cn.stb.stbcrmserver.base.Page;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.base.Right;
 import cn.stb.stbcrmserver.domain.Goods;
 import cn.stb.stbcrmserver.domain.Sku;
 import cn.stb.stbcrmserver.service.GoodsService;
+import cn.stb.stbcrmserver.vo.GoodsListVo;
+import cn.stb.stbcrmserver.vo.ListReq;
+import cn.stb.stbcrmserver.vo.ListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,8 +32,8 @@ public class GoodsController {
      */
     @RequestMapping("/queryAllGoods")
     @Right(CRM_商品管理)
-    public List<Goods> queryAllGoods(){
-        return goodsService.queryAllGoods();
+    public ListVo<GoodsListVo> queryAllGoods(@RequestBody ListReq req){
+        return goodsService.queryAllGoods(req);
     }
 
     /**

@@ -27,4 +27,6 @@ public interface GoodsDao {
 	List<Sku> querySkuList();
 
 	Goods findGoodsByCode(String goodsCode);
+
+	List<Sku> querySkuListByIds(List<String> skuIds);
 }
