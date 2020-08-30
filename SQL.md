@@ -117,7 +117,7 @@ CREATE TABLE CRM_GOODS(
 		GOODS_ID char(20) NOT NULL COMMENT '商品ID',
 		GOODS_CODE varchar(45) NOT NULL COMMENT '商品编码',
 		GOODS_NAME varchar(50) NOT NULL COMMENT '商品名称',
-		GOODS_PRICE decimal DEFAULT NULL COMMENT '商品价格',
+        GOODS_PRICE int default 0 NOT NULL comment '商品价格: 单位  分',
 		SKU_ID char(20) NOT NULL COMMENT '商品对应的sku_id',
 		GOODS_STATE char(1) Default '1' NOT NULL COMMENT '0:已删除 1:未删除',
 		OPERATOR_ID char(20) NOT NULL COMMENT '操作人',

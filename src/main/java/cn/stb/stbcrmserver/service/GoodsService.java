@@ -24,19 +24,19 @@ public class GoodsService {
     }
 
     public RespResult addGoods(Goods goods) {
+        String goodsCode = goods.getGoodsCode();
+        Goods goodsByCode = goodsDao.findGoodsByCode(goodsCode);
+        if (goodsByCode != null) {
+            return RespResult.fail("该商品编码已存在，请重新填写！");
+        }
         String operatorId = AcContext.getStaffId();
-        if (!StringUtils.isEmpty(goods.getGoodsName())) {
-            goods.setGoodsId(UUIDUtil.getNumId());
-            goods.setGoodsState("0");
-            goods.setOperatorId(operatorId);
-            int effectedNum = goodsDao.addGoods(goods);
-            if (effectedNum > 0) {
-                return RespResult.ok("新增商品成功!");
-            } else {
-                return RespResult.fail("新增商品失败!");
-            }
-        }else {
-            return RespResult.fail("商品名称不能为空!");
+        goods.setGoodsId(UUIDUtil.getNumId());
+        goods.setOperatorId(operatorId);
+        int effectedNum = goodsDao.addGoods(goods);
+        if (effectedNum > 0) {
+            return RespResult.ok("新增商品成功!");
+        } else {
+            return RespResult.fail("新增商品失败!");
         }
     }
     public RespResult deleteGoodsById (String goodsId){
