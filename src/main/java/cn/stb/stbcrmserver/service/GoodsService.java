@@ -53,7 +53,6 @@ public class GoodsService {
             skuList.forEach(sku -> {
                 sku.setOperatorId(operatorId);
                 sku.setSkuId(UUIDUtil.getNumId());
-                sku.setSkuState("0");
             });
             goodsDao.addSku(skuList);
             return RespResult.ok("保存成功");
