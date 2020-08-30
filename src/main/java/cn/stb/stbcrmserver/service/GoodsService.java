@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,9 @@ public class GoodsService {
         Page page = new Page(startIndex, 10);
         List<Goods> goodsList =  goodsDao.queryAllGoods();
         page.setTotalRows(goodsList.size());
+        if (goodsList.size() == 0) {
+            return new ListVo<>(new ArrayList<GoodsListVo>(), page);
+        }
         goodsList = goodsList.stream().skip(startIndex).limit(10).collect(Collectors.toList());
         List<String> skuIds = goodsList.stream().map(Goods::getSkuId).collect(Collectors.toList());
         List<Sku> skuList = goodsDao.querySkuListByIds(skuIds);
@@ -55,13 +59,14 @@ public class GoodsService {
         }
     }
     public RespResult deleteGoodsById (String goodsId){
-        String staffType = AcContext.getStaff().getStaffType();
-        if ("0".equals(staffType) || "1".equals(staffType)){
-            int effectedNum = goodsDao.deleteGoodsById(goodsId);
-            if (effectedNum > 0) return RespResult.ok("删除成功!");
-            return RespResult.fail("删除失败");
-        }
-        return RespResult.fail("无此权限!");
+        // todo 校验该商品是否已经存在订单中，订单中存在的商品不能删
+        String operatorId = AcContext.getStaffId();
+        Map<String, String> map = new HashMap<>();
+        map.put("operatorId", operatorId);
+        map.put("goodsId", goodsId);
+        int effectedNum = goodsDao.deleteGoodsById(map);
+        if (effectedNum > 0) return RespResult.ok("删除成功!");
+        return RespResult.fail("删除失败");
     }
 
     public RespResult addSku(List<Sku> skuList) {

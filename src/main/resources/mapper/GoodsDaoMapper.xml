@@ -15,9 +15,9 @@
         (#{goodsId},#{goodsCode},#{goodsName},#{goodsPrice},#{skuId},#{operatorId},#{remark})
     </insert>
 
-    <update id="deleteGoodsById" parameterType="java.lang.String">
+    <update id="deleteGoodsById" parameterType="java.util.Map">
         update CRM_GOODS
-        set goods_state= '1'
+        set goods_state= '0', operator_id = #{operatorId}
         where goods_id = #{goodsId}
     </update>
 

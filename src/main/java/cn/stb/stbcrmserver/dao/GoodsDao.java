@@ -14,7 +14,7 @@ public interface GoodsDao {
 
     Integer addGoods(Goods goods);
 
-    Integer deleteGoodsById(String  goodsId);
+    int deleteGoodsById(Map<String, String>  map);
 
     int addSku(List<Sku> skuList);
 
