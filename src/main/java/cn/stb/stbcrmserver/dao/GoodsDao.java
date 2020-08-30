@@ -5,6 +5,7 @@ import cn.stb.stbcrmserver.domain.Sku;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface GoodsDao {
@@ -17,7 +18,7 @@ public interface GoodsDao {
 
     int addSku(List<Sku> skuList);
 
-    int deleteSkuById(String skuId);
+    int deleteSkuById(Map<String, String> map);
 
     int updateSku(Sku sku);
 

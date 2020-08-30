@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class GoodsService {
@@ -62,11 +64,15 @@ public class GoodsService {
 
     public RespResult deleteSkuById(String skuId) {
         Goods goods = goodsDao.selectGoodsBySkuId(skuId);
-        if (StringUtils.isEmpty(goods.getGoodsId())){
-            goodsDao.deleteSkuById(skuId);
+        if (goods == null){
+            String operatorId = AcContext.getStaffId();
+            Map<String, String> map = new HashMap<>();
+            map.put("operatorId", operatorId);
+            map.put("skuId", skuId);
+            goodsDao.deleteSkuById(map);
             return RespResult.ok("删除成功!");
         }
-        return RespResult.fail("删除失败");
+        return RespResult.fail("该SKU正在用于商品" + goods.getGoodsName() + "，不能删除");
     }
 
     /** SKU列表 */

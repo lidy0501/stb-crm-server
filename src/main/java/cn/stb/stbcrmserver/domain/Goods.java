@@ -19,7 +19,7 @@ public class Goods {
     private String goodsCode;//商品编码
     private String goodsName;//商品名称
     private String goodsPrice;//商品价格
-    private String goodsSpe;//商品规格
+    private String skuId;//商品对应的skuId
     private String goodsState;//商品状态,0未删除,1已删除
     private String operatorId;//操作员
     private DateTime createTime;//创建时间
