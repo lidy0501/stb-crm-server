@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class OrderListVo {
     private String orderId;//订单ID
+    private String orderCode;//订单编号
     private String userName;//客户姓名
     private String company;//公司名称
     private String operatorName;//跟单人姓名
@@ -25,6 +26,7 @@ public class OrderListVo {
     public static OrderListVo convert(Order order, String operatorName) {
         return OrderListVo.builder()
                 .orderId(order.getOrderId())
+                .orderCode(order.getOrderCode())
                 .userName(order.getUserName())
                 .company(order.getCompany())
                 .operatorName(operatorName)
