@@ -16,6 +16,7 @@ import org.joda.time.DateTime;
 @NoArgsConstructor
 public class Order {
     private String orderId;//订单ID
+    private String orderCode;//订单编码
     private String userId;//客户ID
     private String userName;//客户姓名
     private String company;//公司名称
