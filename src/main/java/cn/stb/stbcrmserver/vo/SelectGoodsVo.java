@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderGoodsVo {
+public class SelectGoodsVo {
     private String goodsId;//商品ID
     private String goodsName;//商品名称
     private String goodsPrice;//商品价格

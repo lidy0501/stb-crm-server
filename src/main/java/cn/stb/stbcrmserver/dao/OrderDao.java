@@ -28,5 +28,4 @@ public interface OrderDao {
 
     int updateOrder(Order order);
 
-    List<OrderListVo> selectAllOrderGoodsVo();
 }

@@ -2,11 +2,13 @@ package cn.stb.stbcrmserver.service;
 
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.context.AcContext;
+import cn.stb.stbcrmserver.dao.GoodsDao;
 import cn.stb.stbcrmserver.dao.OrderDao;
 import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
 import cn.stb.stbcrmserver.vo.OrderListVo;
+import cn.stb.stbcrmserver.vo.SelectGoodsVo;
 import cn.stb.stbcrmserver.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ import java.util.Map;
 public class OrderService {
     @Autowired
     private OrderDao orderDao;
+    @Autowired
+    private GoodsDao goodsDao;
 
     public List<Order> queryAllOrder(String searchValue) {
         Staff staff = AcContext.getStaff();
@@ -103,7 +107,7 @@ public class OrderService {
         return RespResult.ok("操作成功");
     }
 
-    public List<OrderListVo> selectAllOrderGoodsVo() {
-        return orderDao.selectAllOrderGoodsVo();
+    public List<SelectGoodsVo> queryAllSelectGoodsVo() {
+        return goodsDao.queryAllSelectGoodsVo();
     }
 }

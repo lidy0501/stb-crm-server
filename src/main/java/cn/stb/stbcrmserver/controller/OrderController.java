@@ -7,10 +7,7 @@ import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.service.OrderService;
 import cn.stb.stbcrmserver.service.StaffService;
-import cn.stb.stbcrmserver.vo.ListReq;
-import cn.stb.stbcrmserver.vo.ListVo;
-import cn.stb.stbcrmserver.vo.OrderListVo;
-import cn.stb.stbcrmserver.vo.UserVo;
+import cn.stb.stbcrmserver.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -117,9 +114,9 @@ public class OrderController {
         return orderService.changeOrderState(orderId, orderState);
     }
 
-    @RequestMapping("/selectAllOrderGoodsVo")
+    @RequestMapping("/queryAllSelectGoodsVo")
     @LoginIgnore
-    public List<OrderListVo> selectAllOrderGoodsVo(){
-        return orderService.selectAllOrderGoodsVo();
+    public List<SelectGoodsVo> queryAllSelectGoodsVo() {
+        return orderService.queryAllSelectGoodsVo();
     }
 }

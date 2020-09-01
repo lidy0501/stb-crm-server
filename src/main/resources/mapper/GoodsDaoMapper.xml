@@ -76,5 +76,12 @@
             #{item}
         </foreach>
     </select>
+
+
+    <select id="queryAllSelectGoodsVo" resultType="cn.stb.stbcrmserver.vo.SelectGoodsVo">
+        select g.goods_id, g.goods_name, g.goods_price, s.sku_unit, s.sku_color
+        from CRM_GOODS g left join CRM_SKU s on g.sku_id = s.sku_id
+        where g.goods_state = '1'
+    </select>
     
 </mapper>
