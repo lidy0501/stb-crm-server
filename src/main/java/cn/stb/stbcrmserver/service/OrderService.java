@@ -6,6 +6,7 @@ import cn.stb.stbcrmserver.dao.OrderDao;
 import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
+import cn.stb.stbcrmserver.vo.OrderListVo;
 import cn.stb.stbcrmserver.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,5 +101,9 @@ public class OrderService {
         map.put("orderState", orderState);
         orderDao.changeOrderState(map);
         return RespResult.ok("操作成功");
+    }
+
+    public List<OrderListVo> selectAllOrderGoodsVo() {
+        return orderDao.selectAllOrderGoodsVo();
     }
 }

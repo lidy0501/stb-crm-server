@@ -116,4 +116,10 @@ public class OrderController {
     public RespResult changeOrderState(@PathVariable String orderId, @PathVariable String orderState) {
         return orderService.changeOrderState(orderId, orderState);
     }
+
+    @RequestMapping("/selectAllOrderGoodsVo")
+    @LoginIgnore
+    public List<OrderListVo> selectAllOrderGoodsVo(){
+        return orderService.selectAllOrderGoodsVo();
+    }
 }

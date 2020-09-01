@@ -105,4 +105,10 @@
             REMARK = #{remark}
         where order_id = #{orderId}
     </update>
+
+    <select id="selectAllOrderGoodsVo" resultType="cn.stb.stbcrmserver.vo.OrderGoodsVo">
+        select g.goods_id, g.goods_name, g.goods_price,s.sku_unit,s.sku_color
+        from crm_goods g join crm_sku s
+        where g.sku_id = s.sku_id and g.goods_state =1
+    </select>
 </mapper>
