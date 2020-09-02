@@ -5,19 +5,23 @@ import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.GoodsDao;
 import cn.stb.stbcrmserver.dao.OrderDao;
 import cn.stb.stbcrmserver.domain.Order;
+import cn.stb.stbcrmserver.domain.OrderGoods;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
+import cn.stb.stbcrmserver.vo.AddOrderReq;
 import cn.stb.stbcrmserver.vo.OrderListVo;
 import cn.stb.stbcrmserver.vo.SelectGoodsVo;
 import cn.stb.stbcrmserver.vo.UserVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class OrderService {
@@ -35,26 +39,32 @@ public class OrderService {
         return orderDao.queryAllOrder(map);
     }
 
-    public RespResult addOrder(Order order) {
+    /**
+     * 新增订单
+     * @param req
+     * @return
+     */
+    @Transactional
+    public RespResult addOrder(AddOrderReq req) {
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        String operatorId = AcContext.getStaffId();
-        if((!StringUtils.isEmpty(order.getProductName()))) {
-            if (StringUtils.isEmpty(order.getOrderId())) { //新增
-                order.setOrderId(UUIDUtil.getNumId());
-                order.setOperatorId(operatorId);
-                order.setOrderState("0");
-                orderDao.addOrder(order);
-            } else { //编辑
-                orderDao.updateOrder(order);
-            }
-            return RespResult.ok("保存订单成功!");
-        } else {
-            return RespResult.fail("产品名称不能为空!");
+        // 校验订单编号是否会重复
+        Order orderByCode = orderDao.findOrderByCode(req.getOrderCode());
+        if (orderByCode != null) {
+            return RespResult.fail("订单编号已经存，请重新输入");
         }
+        String operatorId = AcContext.getStaffId();
+        Order order = Order.convert(req);
+        // 落订单主表 CRM_ORDER
+        orderDao.addOrder(order);
+        // 落订单商品关系表CRM_ORDER_GOODS
+        List<OrderGoods> orderGoodsList = req.getGoodsList().stream()
+                .map(x -> OrderGoods.convert(order.getOrderId(), x)).collect(Collectors.toList());
+        orderDao.addOrderGoods(orderGoodsList);
+        return RespResult.ok("保存成功");
     }
 
     public RespResult modifyOrderStateAndDeleteById(Order order) {

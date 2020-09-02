@@ -1,6 +1,7 @@
 package cn.stb.stbcrmserver.dao;
 
 import cn.stb.stbcrmserver.domain.Order;
+import cn.stb.stbcrmserver.domain.OrderGoods;
 import cn.stb.stbcrmserver.vo.OrderListVo;
 import cn.stb.stbcrmserver.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,4 +29,7 @@ public interface OrderDao {
 
     int updateOrder(Order order);
 
+    Order findOrderByCode(String orderCode);
+
+    int addOrderGoods(List<OrderGoods> orderGoodsList);
 }

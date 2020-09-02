@@ -46,13 +46,13 @@ public class OrderController {
 
     /**
      * 添加一个订单
-     * @param order
+     * @param req
      * @return
      */
     @RequestMapping("/addOrder")
     @LoginIgnore
-    public RespResult addOrder(@RequestBody Order order){
-        return orderService.addOrder(order);
+    public RespResult addOrder(@RequestBody AddOrderReq req){
+        return orderService.addOrder(req);
     }
 
     @RequestMapping("/modifyOrderStateAndDeleteById")

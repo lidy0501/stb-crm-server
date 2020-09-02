@@ -1,5 +1,11 @@
-insert into CRM_MENU(MENU_ID, MENU_NAME, MENU_STATE, MENU_DESC, MENU_URL) values
-('00000000002222222212', 'SKU设置', '1', 'SKU设置', '/manage/sku-set');
 
-insert into CRM_RIGHT_MENU(RIGHT_ID, MENU_ID) values
-('00000000001111111103', '00000000002222222212');
+(已执行)
+use crm;
+alter table CRM_ORDER drop column PRODUCT_NAME;
+alter table CRM_ORDER drop column PRODUCT_SPE;
+alter table CRM_ORDER drop column PRODUCT_NUM;
+alter table CRM_ORDER alter column ORDER_STATE set default 0;
+alter table CRM_ORDER modify TOTAL_FEE int default 0 null comment '订单应付总金额，单位：分';
+alter table CRM_ORDER modify DOWN_PAY_FEE int default 0 null comment '已付金额，单位：分';
+alter table CRM_ORDER modify FINAL_PAY_FEE int null comment '待付金额，单位：分';
+alter table CRM_ORDER drop column PAY_PROGRESS;

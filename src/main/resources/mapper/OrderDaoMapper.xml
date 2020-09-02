@@ -24,11 +24,15 @@
         order by UPDATE_TIME desc
     </select>
     <insert id="addOrder" parameterType="cn.stb.stbcrmserver.domain.Order">
-        insert into
-        CRM_ORDER(order_id,order_code,user_id,USER_NAME,COMPANY,operator_id,PRODUCT_NAME,PRODUCT_SPE,PRODUCT_NUM,ORDER_STATE,PAY_TYPE,TOTAL_FEE,DOWN_PAY_FEE,
-        FINAL_PAY_FEE,PAY_PROGRESS,DELIVERY_TIME,DELIVERY_NO,PAY_RECORD,REMARK)
-        values (#{orderId},#{orderCode},#{userId},#{userName},#{company},#{operatorId},#{productName},#{productSpe},#{productNum},#{orderState},#{payType},#{totalFee}
-        ,#{downPayFee},#{finalPayFee},#{payProgress},#{deliveryTime},#{deliveryNo},#{payRecord},#{remark})
+        INSERT INTO CRM_ORDER(
+            ORDER_ID, ORDER_CODE, USER_ID, USER_NAME, COMPANY, OPERATOR_ID, ORDER_STATE
+            , PAY_TYPE, TOTAL_FEE, DOWN_PAY_FEE, FINAL_PAY_FEE, DELIVERY_TIME
+            , DELIVERY_NO, PAY_RECORD, REMARK
+        ) values (
+            #{orderId}, #{orderCode}, #{userId}, #{userName}, #{company}, #{operatorId}, #{orderState}
+            , #{payType}, #{totalFee}, #{downPayFee}, #{finalPayFee}, #{deliveryTime}
+            , #{deliveryNo}, #{payRecord}, #{remark}
+        )
     </insert>
     <update id="modifyOrderStateAndDeleteById" parameterType="cn.stb.stbcrmserver.domain.Order">
         update CRM_ORDER
@@ -105,5 +109,25 @@
             REMARK = #{remark}
         where order_id = #{orderId}
     </update>
+
+    <select id="findOrderByCode" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.Order">
+        SELECT ORDER_ID, ORDER_CODE, USER_ID, USER_NAME, COMPANY, OPERATOR_ID, ORDER_STATE
+            , PAY_TYPE, TOTAL_FEE, DOWN_PAY_FEE, FINAL_PAY_FEE, DELIVERY_TIME
+            , DELIVERY_NO, PAY_RECORD, CREATE_TIME, UPDATE_TIME, REMARK
+        FROM CRM_ORDER
+        WHERE ORDER_STATE != '9'
+        AND ORDER_CODE = #{orderCode}
+    </select>
+
+    <insert id="addOrderGoods" parameterType="java.util.List">
+        INSERT INTO CRM_ORDER_GOODS(
+            ORDER_ID, GOODS_ID, AMOUNT, OPERATOR_ID
+        ) VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.orderId}, #{item.goodsId}, #{item.amount}, #{item.operatorId})
+        </foreach>
+    </insert>
+
+
 
 </mapper>

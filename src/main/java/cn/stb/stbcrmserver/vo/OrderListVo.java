@@ -30,8 +30,6 @@ public class OrderListVo {
                 .userName(order.getUserName())
                 .company(order.getCompany())
                 .operatorName(operatorName)
-                .productName(order.getProductName())
-                .productNum(order.getProductNum())
                 .orderState(order.getOrderState())
                 .totalFee(order.getTotalFee())
                 .deliveryNo(order.getDeliveryNo())
