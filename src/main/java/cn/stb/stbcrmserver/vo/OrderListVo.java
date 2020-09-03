@@ -20,6 +20,7 @@ public class OrderListVo {
     private String operatorName;//跟单人姓名
     private String orderState;//订单状态0:未完成 1:已完成 9:已删除
     private int totalFee;//订单应付总金额
+    private int downPayFee;
     private List<OrderGoodsItem> goodsItemList;
 
     public static OrderListVo convert(Order order, String operatorName, List<OrderGoodsItem> goodsItemList) {
@@ -31,6 +32,7 @@ public class OrderListVo {
                 .operatorName(operatorName)
                 .orderState(order.getOrderState())
                 .totalFee(order.getTotalFee())
+                .downPayFee(order.getDownPayFee())
                 .goodsItemList(goodsItemList)
                 .build();
     }
