@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.stb.stbcrmserver.dao.OrderDao">
     <select id="queryAllOrder" resultType="cn.stb.stbcrmserver.domain.Order" parameterType="java.util.Map">
-        select ORDER_ID, ORDER_CODE, USER_ID, USER_NAME, COMPANY, OPERATOR_ID, PRODUCT_NAME, PRODUCT_SPE, PRODUCT_NUM,
-        ORDER_STATE, PAY_TYPE, TOTAL_FEE, DOWN_PAY_FEE, FINAL_PAY_FEE, PAY_PROGRESS, DELIVERY_TIME,
+        select ORDER_ID, ORDER_CODE, USER_ID, USER_NAME, COMPANY, OPERATOR_ID,
+        ORDER_STATE, PAY_TYPE, TOTAL_FEE, DOWN_PAY_FEE, FINAL_PAY_FEE, DELIVERY_TIME,
         DELIVERY_NO, PAY_RECORD, CREATE_TIME, UPDATE_TIME, REMARK
         from CRM_ORDER
         where ORDER_STATE != '9'
@@ -15,7 +15,7 @@
         </if>
         <if test="searchValue != null and searchValue != ''">
             and (
-            PRODUCT_NAME like CONCAT (concat('%',#{searchValue}),'%')
+            ORDER_CODE like CONCAT (concat('%',#{searchValue}),'%')
             or USER_NAME like CONCAT (concat('%',#{searchValue}),'%')
             or COMPANY like CONCAT (concat('%',#{searchValue}),'%')
             or OPERATOR_ID in (select staff_id from CRM_STAFF where staff_name like CONCAT (concat('%',#{searchValue}),'%') )
@@ -127,6 +127,17 @@
             (#{item.orderId}, #{item.goodsId}, #{item.amount}, #{item.operatorId})
         </foreach>
     </insert>
+
+    <select id="queryOrderGoodsInfoByOrderIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.vo.OrderGoodsItem">
+        SELECT og.ORDER_ID, og.AMOUNT, g.GOODS_NAME, s.SKU_UNIT, s.SKU_COLOR
+        FROM CRM_ORDER_GOODS og
+        LEFT JOIN CRM_GOODS g ON og.GOODS_ID = g.GOODS_ID
+        LEFT JOIN CRM_SKU s ON g.SKU_ID = s.SKU_ID
+        WHERE og.ORDER_ID in
+        <foreach collection="list"  open="("  item="item" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
 
 

@@ -8,10 +8,7 @@ import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.OrderGoods;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.utils.UUIDUtil;
-import cn.stb.stbcrmserver.vo.AddOrderReq;
-import cn.stb.stbcrmserver.vo.OrderListVo;
-import cn.stb.stbcrmserver.vo.SelectGoodsVo;
-import cn.stb.stbcrmserver.vo.UserVo;
+import cn.stb.stbcrmserver.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,6 +113,15 @@ public class OrderService {
         orderDao.changeOrderState(map);
         return RespResult.ok("操作成功");
     }
+
+    /**
+     * 根据orderId 查询商品信息
+     * @return
+     */
+    public List<OrderGoodsItem> queryOrderGoodsInfoByOrderIds(List<String> orderIds) {
+        return orderDao.queryOrderGoodsInfoByOrderIds(orderIds);
+    }
+
 
     public List<SelectGoodsVo> queryAllSelectGoodsVo() {
         return goodsDao.queryAllSelectGoodsVo();

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,14 +18,11 @@ public class OrderListVo {
     private String userName;//客户姓名
     private String company;//公司名称
     private String operatorName;//跟单人姓名
-    private String productName;//产品名称
-    private int productNum;//产品数量
     private String orderState;//订单状态0:未完成 1:已完成 9:已删除
     private int totalFee;//订单应付总金额
-    private String deliveryNo;//物流单号
-    private String remark;//备注
+    private List<OrderGoodsItem> goodsItemList;
 
-    public static OrderListVo convert(Order order, String operatorName) {
+    public static OrderListVo convert(Order order, String operatorName, List<OrderGoodsItem> goodsItemList) {
         return OrderListVo.builder()
                 .orderId(order.getOrderId())
                 .orderCode(order.getOrderCode())
@@ -32,8 +31,7 @@ public class OrderListVo {
                 .operatorName(operatorName)
                 .orderState(order.getOrderState())
                 .totalFee(order.getTotalFee())
-                .deliveryNo(order.getDeliveryNo())
-                .remark(order.getRemark())
+                .goodsItemList(goodsItemList)
                 .build();
     }
 }

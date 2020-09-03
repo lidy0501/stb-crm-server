@@ -35,10 +35,15 @@ public class OrderController {
         List<Order> orderList = orderService.queryAllOrder(req.getSearchValue());
         page.setTotalRows(orderList.size());
         orderList = orderList.stream().skip(startIndex).limit(10).collect(Collectors.toList());
+        // 跟单人信息
         List<Staff> staffList = staffService.queryAllStaffIgnoreState();
         Map<String, Staff> staffMap = staffList.stream().collect(Collectors.toMap(Staff::getStaffId, x -> x));
+        // 查询商品信息
+        List<String> orderIds = orderList.stream().map(Order::getOrderId).collect(Collectors.toList());
+        List<OrderGoodsItem> goodsItemList = orderService.queryOrderGoodsInfoByOrderIds(orderIds);
+        Map<String, List<OrderGoodsItem>> goodsItemListMap = goodsItemList.stream().collect(Collectors.groupingBy(OrderGoodsItem::getOrderId));
         List<OrderListVo> orders = orderList.stream()
-                .map(x -> OrderListVo.convert(x, staffMap.get(x.getOperatorId()).getStaffName()))
+                .map(x -> OrderListVo.convert(x, staffMap.get(x.getOperatorId()).getStaffName(), goodsItemListMap.get(x.getOrderId())))
                 .collect(Collectors.toList());
         ListVo<OrderListVo> data = new ListVo(orders, page);
         return data;
