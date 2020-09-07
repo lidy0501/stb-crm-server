@@ -1,8 +1,6 @@
 package cn.stb.stbcrmserver.controller;
 
-import cn.stb.stbcrmserver.base.LoginIgnore;
-import cn.stb.stbcrmserver.base.Page;
-import cn.stb.stbcrmserver.base.RespResult;
+import cn.stb.stbcrmserver.base.*;
 import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.service.OrderService;
@@ -95,7 +93,7 @@ public class OrderController {
      */
     @RequestMapping("/selectOrderByOrderId/{orderId}")
     @LoginIgnore
-    public Order selectOrderByOrderId(@PathVariable String orderId){
+    public OrderDetailsVo selectOrderByOrderId(@PathVariable String orderId){
         return orderService.selectOrderByOrderId(orderId);
     }
 
@@ -123,5 +121,11 @@ public class OrderController {
     @LoginIgnore
     public List<SelectGoodsVo> queryAllSelectGoodsVo() {
         return orderService.queryAllSelectGoodsVo();
+    }
+
+    @RequestMapping("/saveEditOrder")
+    @Right(RightType.CRM_订单管理)
+    public RespResult saveEditOrder(@RequestBody Order order) {
+        return orderService.saveEditOrder(order);
     }
 }

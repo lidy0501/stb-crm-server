@@ -35,4 +35,6 @@ public interface OrderDao {
     int addOrderGoods(List<OrderGoods> orderGoodsList);
 
     List<OrderGoodsItem> queryOrderGoodsInfoByOrderIds(List<String> orderIds);
+
+    int saveEditOrder(Order order);
 }

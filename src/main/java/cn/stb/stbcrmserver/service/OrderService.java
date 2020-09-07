@@ -14,10 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -86,8 +83,10 @@ public class OrderService {
         return orderDao.selectAllUserVoLikeUserName(userName);
     }
 
-    public Order selectOrderByOrderId(String orderId) {
-        return orderDao.selectOrderByOrderId(orderId);
+    public OrderDetailsVo selectOrderByOrderId(String orderId) {
+        Order order = orderDao.selectOrderByOrderId(orderId);
+        List<OrderGoodsItem> goodsItemList = this.queryOrderGoodsInfoByOrderIds(Collections.singletonList(orderId));
+        return OrderDetailsVo.convert(order, goodsItemList);
     }
 
     public RespResult modifyOrderByUserIdAndOperatorId(Order order) {
@@ -125,5 +124,14 @@ public class OrderService {
 
     public List<SelectGoodsVo> queryAllSelectGoodsVo() {
         return goodsDao.queryAllSelectGoodsVo();
+    }
+
+    public RespResult saveEditOrder(Order order) {
+        // 编辑的时候要变更operatorId !!!!
+        int effectNum = orderDao.saveEditOrder(order);
+        if (effectNum > 0) {
+            return RespResult.ok("保存成功");
+        }
+        return RespResult.fail("保存失败");
     }
 }
