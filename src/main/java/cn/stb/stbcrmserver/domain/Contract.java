@@ -23,6 +23,7 @@ public class Contract {
     private int orderPrice;//订单价格 单位  分
     private String signingDate;//合同签订日期
     private String deadline;//合同截止日期
+    private String contractState;//状态,0,无效,1,有效 默认1
     private String operatorId;//操作员
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
