@@ -48,7 +48,7 @@ public class OrderService {
         // 校验订单编号是否会重复
         Order orderByCode = orderDao.findOrderByCode(req.getOrderCode());
         if (orderByCode != null) {
-            return RespResult.fail("订单编号已经存，请重新输入");
+            return RespResult.fail("订单编号已经存在，请重新输入");
         }
         String operatorId = AcContext.getStaffId();
         Order order = Order.convert(req);
