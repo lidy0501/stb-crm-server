@@ -6,12 +6,16 @@ import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.service.OrderService;
 import cn.stb.stbcrmserver.service.StaffService;
 import cn.stb.stbcrmserver.vo.*;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static cn.stb.stbcrmserver.base.RightType.CRM_订单管理;
+import static cn.stb.stbcrmserver.base.RightType.CRM_财务管理;
 
 @RestController
 @RequestMapping("/OrderController")
@@ -124,8 +128,14 @@ public class OrderController {
     }
 
     @RequestMapping("/saveEditOrder")
-    @Right(RightType.CRM_订单管理)
+    @Right(CRM_订单管理)
     public RespResult saveEditOrder(@RequestBody Order order) {
         return orderService.saveEditOrder(order);
+    }
+
+    @RequestMapping("/staffFinance")
+    @Right(CRM_财务管理)
+    public List<Order> staffFinance(@RequestBody StaffFinanceReq Req){
+        return orderService.queryAllDoneOrderByStaffId(Req);
     }
 }
