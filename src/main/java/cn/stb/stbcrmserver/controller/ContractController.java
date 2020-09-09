@@ -44,7 +44,7 @@ public class ContractController {
      * @param contractId
      * @return
      */
-    @RequestMapping("deleteContract/#{contractId}")
+    @RequestMapping("deleteContract/{contractId}")
     public RespResult deleteContract(@PathVariable String contractId){
         return contractService.deleteContract(contractId);
     }
@@ -54,7 +54,7 @@ public class ContractController {
      * @param contractId
      * @return
      */
-    @RequestMapping("selectContractById/#{contractId}")
+    @RequestMapping("selectContractById/{contractId}")
     public Contract selectContractById(@PathVariable String contractId){
         return contractService.selectContractById(contractId);
     }
