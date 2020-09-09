@@ -156,7 +156,7 @@ CREATE TABLE CRM_CONTRACT(
 		CONTRACT_CODE varchar(50) NOT NULL COMMENT '合同编号',
 		COMPANY_A varchar(100) NOT NULL COMMENT '甲方公司',
 		COMPANY_B varchar(100) NOT NULL COMMENT '乙方公司',
-		ORDER_ID char(20) NOT NULL COMMENT '订单ID',
+		ORDER_CODE varchar(45) NOT NULL COMMENT '订单ID',
 		ORDER_PRICE int default 0 NOT NULL comment '订单价格: 单位  分',
 		SIGNING_DATE varchar(20) NOT NULL COMMENT '合同签订日期' ,
 		DEADLINE varchar(20) NOT NULL COMMENT '合同截止日期' ,
