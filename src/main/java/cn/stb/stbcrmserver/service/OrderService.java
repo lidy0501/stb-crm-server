@@ -134,4 +134,13 @@ public class OrderService {
         }
         return RespResult.fail("保存失败");
     }
+
+    public List<Order> queryAllDoneOrderByStaffId(StaffFinanceReq Req) {
+        Map<String,String> map = new HashMap();
+        map.put("startDate",Req.getStartDate());
+        map.put("endDate",Req.getEndDate());
+        map.put("staffId",Req.getStaffId());
+        List<Order> orderList = orderDao.queryAllDoneOrderByStaffId(map);
+        return orderList;
+    }
 }

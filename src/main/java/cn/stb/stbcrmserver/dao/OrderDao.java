@@ -37,4 +37,6 @@ public interface OrderDao {
     List<OrderGoodsItem> queryOrderGoodsInfoByOrderIds(List<String> orderIds);
 
     int saveEditOrder(Order order);
+
+    List<Order> queryAllDoneOrderByStaffId(Map map);
 }
