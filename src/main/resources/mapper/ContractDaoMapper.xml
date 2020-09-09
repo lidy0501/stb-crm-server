@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.stb.stbcrmserver.dao.UserDao">
     <select id="selectContractByCode" resultType="cn.stb.stbcrmserver.domain.Contract">
-        select contract_id, contract_code, company_a, company_b, order_id, order_price, signing_date,
+        select contract_id, contract_code, company_a, company_b, order_code, order_price, signing_date,
         deadline, contract_state, operator_id
         from CRM_CONTRACT
         where contract_state = '1'
@@ -10,9 +10,9 @@
     </select>
 
     <insert id="addContract" parameterType="cn.stb.stbcrmserver.domain.Contract">
-        insert into CRM_CONTRACT(contract_id, contract_code, company_a, company_b, order_id, order_price, signing_date,
+        insert into CRM_CONTRACT(contract_id, contract_code, company_a, company_b, order_code, order_price, signing_date,
         deadline, operator_id)
-        values (#{contractId}, #{contractCode}, #{companyA}, #{companyB}, #{orderId}, #{orderPrice},
+        values (#{contractId}, #{contractCode}, #{companyA}, #{companyB}, #{orderCode}, #{orderPrice},
         #{signingDate}, #{deadline}, #{operatorId})
     </insert>
 
@@ -22,14 +22,14 @@
             contract_code = #{contractCode},
             company_a = #{companyA},
             company_b = #{companyB},
-            order_id = #{orderId},
+            order_code = #{orderCode},
             order_price = #{orderPrice},
             signing_date = #{signingDate},
             deadline = #{deadline}
     </update>
 
     <select id="findContractById" resultType="cn.stb.stbcrmserver.domain.Contract">
-        select contract_id, contract_code, company_a, company_b, order_id, order_price, signing_date,
+        select contract_id, contract_code, company_a, company_b, order_code, order_price, signing_date,
         deadline, contract_state, operator_id
         from CRM_CONTRACT
         where contract_state = '1'

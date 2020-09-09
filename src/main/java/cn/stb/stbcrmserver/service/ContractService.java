@@ -37,21 +37,19 @@ public class ContractService {
 
     @Transactional
     public RespResult addContract(Contract contract) {
+        //验证合同编号是否存在
         if (!StringUtils.isEmpty(contract.getContractCode())) {
             Contract contractA = contractDao.selectContractByCode(contract.getContractCode());
             if (contractA != null) return RespResult.fail("该编号已经存在!");
         }
+        //判断是否存在合同ID 空是新增否则是编辑
         if (StringUtils.isEmpty(contract.getContractId())) {
-            Order order = orderDao.findOrderByCode(contract.getOrderId());
             contract.setOperatorId(AcContext.getStaffId());
             contract.setContractId(UUIDUtil.getNumId());
-            contract.setOrderId(order.getOrderId());
             int effectedNum = contractDao.addContract(contract);
             if (effectedNum > 0) return RespResult.ok("添加合同成功!");
             return RespResult.fail("添加合同失败!");
         }else {
-            Order order = orderDao.findOrderByCode(contract.getOrderId());
-            contract.setOrderId(order.getOrderId());
             int effectNum = contractDao.updateContract(contract);
             if (effectNum > 0) return RespResult.ok("修改成功!");
             return RespResult.fail("修改失败!");
@@ -61,12 +59,13 @@ public class ContractService {
 
     public RespResult deleteContract(String contractId) {
         Contract contract = contractDao.findContractById(contractId);
-        Order order  = orderDao.findOrderByCode(contract.getOrderId());
+        Order order  = orderDao.findOrderByCode(contract.getOrderCode());
         if (order.equals("") || order.equals(null)){
             return RespResult.fail("删除失败,该合同中的订单尚未被删除!");
         }else {
             int effectNum = contractDao.deleteContract(contractId);
-            return RespResult.ok("删除成功!");
+            if(effectNum>0) return RespResult.ok("删除成功!");
+            return RespResult.fail("删除失败");
         }
     }
 
