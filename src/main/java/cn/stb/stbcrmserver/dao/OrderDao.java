@@ -5,6 +5,7 @@ import cn.stb.stbcrmserver.domain.OrderGoods;
 import cn.stb.stbcrmserver.vo.OrderGoodsItem;
 import cn.stb.stbcrmserver.vo.OrderListVo;
 import cn.stb.stbcrmserver.vo.UserVo;
+import com.sun.tools.corba.se.idl.constExpr.Or;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -37,4 +38,6 @@ public interface OrderDao {
     List<OrderGoodsItem> queryOrderGoodsInfoByOrderIds(List<String> orderIds);
 
     int saveEditOrder(Order order);
+
+    List<Order> queryOrdersByLikeCode(Map map);
 }

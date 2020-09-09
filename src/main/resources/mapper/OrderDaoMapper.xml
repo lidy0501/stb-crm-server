@@ -148,6 +148,25 @@
         where order_id = #{orderId}
     </update>
 
+    <select id="queryOrdersByLikeCode" resultType="cn.stb.stbcrmserver.domain.Order" parameterType="java.util.Map">
+        select ORDER_ID, ORDER_CODE, USER_ID, USER_NAME, COMPANY, OPERATOR_ID,
+        ORDER_STATE, PAY_TYPE, TOTAL_FEE, DOWN_PAY_FEE, FINAL_PAY_FEE, DELIVERY_TIME,
+        DELIVERY_NO, PAY_RECORD, CREATE_TIME, UPDATE_TIME, REMARK
+        from CRM_ORDER
+        where ORDER_STATE != '9'
+        <if test=" 0 neq staffType ">
+            and (
+            operator_id = #{operatorId}
+            or operator_id in (select cs.staff_id from CRM_STAFF cs where cs.operator_id = #{operatorId})
+            )
+        </if>
+        <if test="orderCode != null and orderCode != ''">
+            and (
+            ORDER_CODE like CONCAT (concat('%',#{orderCode}),'%')
+            )
+        </if>
+        order by UPDATE_TIME desc
+    </select>
 
 
 </mapper>

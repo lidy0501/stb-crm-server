@@ -2,20 +2,16 @@ package cn.stb.stbcrmserver.controller;
 
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.base.Right;
-import cn.stb.stbcrmserver.base.RightType;
 import cn.stb.stbcrmserver.domain.Contract;
 import cn.stb.stbcrmserver.service.ContractService;
 import cn.stb.stbcrmserver.vo.ListReq;
+import cn.stb.stbcrmserver.vo.Order4Select;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 import static cn.stb.stbcrmserver.base.RightType.CRM_合同管理;
-import static cn.stb.stbcrmserver.base.RightType.CRM_商品管理;
 
 @RestController
 @RequestMapping("/ContractController")
@@ -66,5 +62,14 @@ public class ContractController {
     @Right(CRM_合同管理)
     public Contract selectContractById(@PathVariable String contractId){
         return contractService.selectContractById(contractId);
+    }
+
+    /**
+     * 查询订单，用于选择
+     */
+    @RequestMapping("/queryOrdersByLikeCode")
+    @Right(CRM_合同管理)
+    public List<Order4Select> queryOrdersByLikeCode(@RequestParam String orderCode) {
+        return contractService.queryOrdersByLikeCode(orderCode);
     }
 }

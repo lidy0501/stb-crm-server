@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="cn.stb.stbcrmserver.dao.UserDao">
+<mapper namespace="cn.stb.stbcrmserver.dao.ContractDao">
     <select id="selectContractByCode" resultType="cn.stb.stbcrmserver.domain.Contract">
         select contract_id, contract_code, company_a, company_b, order_code, order_price, signing_date,
         deadline, contract_state, operator_id
