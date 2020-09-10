@@ -1,15 +1,18 @@
 package cn.stb.stbcrmserver.controller;
 
+import cn.stb.stbcrmserver.base.Page;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.base.Right;
 import cn.stb.stbcrmserver.domain.Contract;
 import cn.stb.stbcrmserver.service.ContractService;
 import cn.stb.stbcrmserver.vo.ListReq;
+import cn.stb.stbcrmserver.vo.ListVo;
 import cn.stb.stbcrmserver.vo.Order4Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static cn.stb.stbcrmserver.base.RightType.CRM_合同管理;
 
@@ -27,8 +30,13 @@ public class ContractController {
      */
     @RequestMapping("queryAllContract")
     @Right(CRM_合同管理)
-    public List<Contract> queryAllContract(@RequestBody ListReq req){
-        return contractService.queryAllContract(req);
+    public ListVo<Contract> queryAllContract(@RequestBody ListReq req){
+        int startIndex = req.getStartIndex();
+        Page page = new Page(startIndex, 10);
+        List<Contract> contractList = contractService.queryAllContract(req);
+        page.setTotalRows(contractList.size());
+        contractList = contractList.stream().skip(startIndex).limit(10).collect(Collectors.toList());
+        return new ListVo<>(contractList, page);
     }
 
     /**

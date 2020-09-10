@@ -177,5 +177,11 @@
         order by UPDATE_TIME desc
     </select>
 
+    <update id="deleteOrderGoodsByOrderId" parameterType="java.lang.String">
+        UPDATE CRM_ORDER_GOODS
+        SET STATE = '0'
+        WHERE ORDER_ID = #{orderId}
+    </update>
+
 
 </mapper>

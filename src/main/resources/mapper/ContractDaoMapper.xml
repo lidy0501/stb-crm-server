@@ -41,4 +41,34 @@
         set contract_state = '0'
         where contract_id = #{contractId}
     </update>
+
+    <select id="queryAllContract" parameterType="java.util.Map" resultType="cn.stb.stbcrmserver.domain.Contract">
+        SELECT contract_id, contract_code, company_a, company_b, order_code, order_price, signing_date,
+        deadline, contract_state, operator_id
+        FROM CRM_CONTRACT
+        WHERE contract_state = '1'
+        <if test=" 0 neq staffType ">
+            AND (
+            operator_id = #{operatorId}
+            OR operator_id IN (SELECT cs.staff_id FROM CRM_STAFF cs WHERE cs.operator_id = #{operatorId})
+            )
+        </if>
+
+        <if test="searchValue != null and searchValue != ''">
+            AND (
+            ORDER_CODE like CONCAT (concat('%',#{searchValue}),'%')
+            or CONTRACT_CODE like CONCAT (concat('%',#{searchValue}),'%')
+            or COMPANY_A like CONCAT (concat('%',#{searchValue}),'%')
+            )
+        </if>
+        order by UPDATE_TIME desc
+    </select>
+
+    <select id="findContractByOrderCode" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.Contract">
+        SELECT contract_id, contract_code, company_a, company_b, order_code, order_price, signing_date,
+               deadline, contract_state, operator_id
+        FROM   CRM_CONTRACT
+        WHERE  contract_state = '1'
+        AND    order_code = #{orderCode}
+    </select>
 </mapper>

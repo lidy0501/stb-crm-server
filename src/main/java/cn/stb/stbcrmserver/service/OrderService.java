@@ -2,8 +2,10 @@ package cn.stb.stbcrmserver.service;
 
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.context.AcContext;
+import cn.stb.stbcrmserver.dao.ContractDao;
 import cn.stb.stbcrmserver.dao.GoodsDao;
 import cn.stb.stbcrmserver.dao.OrderDao;
+import cn.stb.stbcrmserver.domain.Contract;
 import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.OrderGoods;
 import cn.stb.stbcrmserver.domain.Staff;
@@ -23,6 +25,8 @@ public class OrderService {
     private OrderDao orderDao;
     @Autowired
     private GoodsDao goodsDao;
+    @Autowired
+    private ContractDao contractDao;
 
     public List<Order> queryAllOrder(String searchValue) {
         Staff staff = AcContext.getStaff();
@@ -69,13 +73,23 @@ public class OrderService {
         return RespResult.fail("修改信息失败!");
     }
 
+    @Transactional
     public RespResult deleteOrder(String orderId) {
+        // 合同中引用的订单不能删除（合同中引用的是订单的code）
+        Order order = orderDao.selectOrderByOrderId(orderId);
+        Contract contract = contractDao.findContractByOrderCode(order.getOrderCode());
+        if (contract != null) {
+            return RespResult.fail("该订单已被绑定在合同中，不能删除");
+        }
         String operatorId = AcContext.getStaffId();
         Map map = new HashMap();
         map.put("operatorId",operatorId);
         map.put("orderId",orderId);
-        int effectNum = orderDao.deleteOrder(map);
-        if(effectNum > 0 ) return RespResult.ok("删除订单成功!");
+        // 删除订单
+        int effectNum1 = orderDao.deleteOrder(map);
+        // 删除对应的商品 CRM_ORDER_GOODS
+        int effectNum2 = orderDao.deleteOrderGoodsByOrderId(orderId);
+        if(effectNum1 > 0 && effectNum2 > 0 ) return RespResult.ok("删除订单成功!");
         return RespResult.fail("删除失败!");
     }
 

@@ -30,14 +30,12 @@ public class ContractService {
     private OrderDao orderDao;
 
     public List<Contract> queryAllContract(ListReq req) {
-        int startIndex = req.getStartIndex();
-        Page page = new Page(startIndex, 10);
-        List<Contract> contractList =  contractDao.queryAllContract();
-        page.setTotalRows(contractList.size());
-        return contractList;
-//        if (contractList.size() == 0){
-//            return new ListVo<>(new ArrayList<Contract>(), page);
-//        }
+        Staff staff = AcContext.getStaff();
+        Map<String, String> map = new HashMap<>();
+        map.put("staffType", staff.getStaffType());
+        map.put("operatorId", staff.getStaffId());
+        map.put("searchValue", req.getSearchValue());
+        return contractDao.queryAllContract(map);
     }
 
     @Transactional
@@ -63,15 +61,9 @@ public class ContractService {
 
 
     public RespResult deleteContract(String contractId) {
-        Contract contract = contractDao.findContractById(contractId);
-        Order order  = orderDao.findOrderByCode(contract.getOrderCode());
-        if (order.equals("") || order.equals(null)){
-            return RespResult.fail("删除失败,该合同中的订单尚未被删除!");
-        }else {
-            int effectNum = contractDao.deleteContract(contractId);
-            if(effectNum>0) return RespResult.ok("删除成功!");
-            return RespResult.fail("删除失败");
-        }
+        int effectNum = contractDao.deleteContract(contractId);
+        if(effectNum>0) return RespResult.ok("删除成功!");
+        return RespResult.fail("删除失败");
     }
 
     public Contract selectContractById(String contractId) {

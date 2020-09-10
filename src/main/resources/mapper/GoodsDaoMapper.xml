@@ -83,5 +83,11 @@
         from CRM_GOODS g left join CRM_SKU s on g.sku_id = s.sku_id
         where g.goods_state = '1'
     </select>
+
+    <select id="queryOrderGoodsByGoodsId" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.OrderGoods">
+        SELECT ORDER_ID, GOODS_ID, AMOUNT, STATE, OPERATOR_ID, CREATE_TIME, UPDATE_TIME
+        WHERE GOODS_ID = #{goodsId}
+        AND STATE = '1'
+    </select>
     
 </mapper>

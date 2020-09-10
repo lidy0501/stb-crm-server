@@ -1,6 +1,7 @@
 package cn.stb.stbcrmserver.dao;
 
 import cn.stb.stbcrmserver.domain.Goods;
+import cn.stb.stbcrmserver.domain.OrderGoods;
 import cn.stb.stbcrmserver.domain.Sku;
 import cn.stb.stbcrmserver.vo.SelectGoodsVo;
 import org.apache.ibatis.annotations.Mapper;
@@ -32,4 +33,6 @@ public interface GoodsDao {
 	List<Sku> querySkuListByIds(List<String> skuIds);
 
 	List<SelectGoodsVo> queryAllSelectGoodsVo();
+
+	List<OrderGoods> queryOrderGoodsByGoodsId(String goodsId);
 }
