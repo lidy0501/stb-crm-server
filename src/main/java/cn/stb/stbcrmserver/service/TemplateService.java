@@ -1,6 +1,7 @@
 package cn.stb.stbcrmserver.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -14,9 +15,16 @@ import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 @Slf4j
 public class TemplateService {
+	static final List<String> FILE_LIST = Arrays.asList("static/中文报价单.xlsx", "static/出口商业发票模板.xlsx", "static/出口箱单模板.xls",
+			"static/出口订单英文合同.xlsx", "static/英文报价单.xlsx", "static/订单中文合同.doc");
+	static final List<String> FILE_NAMES = Arrays.asList("中文报价单.xlsx", "出口商业发票模板.xlsx", "出口箱单模板.xls",
+			"出口订单英文合同.xlsx", "英文报价单.xlsx", "订单中文合同.doc");
 
 	public void downLoad(HttpServletResponse res) throws Exception {
 		//文件名 可以通过形参传进来
@@ -123,13 +131,13 @@ public class TemplateService {
 	 * 可下载 resources 夹子下的文件
 	 * @param response
 	 */
-	public void downloadTemp(HttpServletResponse response) {
-		getIp();
+	public void downloadTemp(String template, HttpServletResponse response) {
 		InputStream inputStream = null;
 		ServletOutputStream servletOutputStream = null;
+		int index = getIndex(template);
 		try {
-			String filename = "导入模板.docx";
-			String path = "static/租赁合同.docx";
+			String filename = FILE_NAMES.get(index);
+			String path = FILE_LIST.get(index);
 			Resource resource = applicationContext.getResource("classpath:"+path);
 			response.setContentType("application/vnd.ms-excel");
 			response.addHeader("Cache-Control", "no-cache, no-store, must-revalidate");
@@ -171,6 +179,17 @@ public class TemplateService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public int getIndex(String template) {
+		int index = 0;
+		for (int i = 0; i <= FILE_NAMES.size() - 1; i++) {
+			if (FILE_LIST.get(i).contains(template)) {
+				index = i;
+				break;
+			}
+		}
+		return index;
 	}
 
 	/**
