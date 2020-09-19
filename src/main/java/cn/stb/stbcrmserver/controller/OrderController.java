@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static cn.stb.stbcrmserver.base.RightType.CRM_订单管理;
-import static cn.stb.stbcrmserver.base.RightType.CRM_财务管理;
 
 @RestController
 @RequestMapping("/OrderController")
@@ -133,9 +132,5 @@ public class OrderController {
         return orderService.saveEditOrder(order);
     }
 
-    @RequestMapping("/staffFinance")
-    @Right(CRM_财务管理)
-    public List<Order> staffFinance(@RequestBody StaffFinanceReq Req){
-        return orderService.queryAllDoneOrderByStaffId(Req);
-    }
+
 }

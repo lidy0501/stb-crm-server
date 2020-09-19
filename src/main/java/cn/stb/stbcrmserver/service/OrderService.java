@@ -5,16 +5,15 @@ import cn.stb.stbcrmserver.context.AcContext;
 import cn.stb.stbcrmserver.dao.ContractDao;
 import cn.stb.stbcrmserver.dao.GoodsDao;
 import cn.stb.stbcrmserver.dao.OrderDao;
+import cn.stb.stbcrmserver.dao.StaffDao;
 import cn.stb.stbcrmserver.domain.Contract;
 import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.OrderGoods;
 import cn.stb.stbcrmserver.domain.Staff;
-import cn.stb.stbcrmserver.utils.UUIDUtil;
 import cn.stb.stbcrmserver.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -27,6 +26,8 @@ public class OrderService {
     private GoodsDao goodsDao;
     @Autowired
     private ContractDao contractDao;
+    @Autowired
+    private StaffDao staffDao;
 
     public List<Order> queryAllOrder(String searchValue) {
         Staff staff = AcContext.getStaff();
@@ -149,12 +150,26 @@ public class OrderService {
         return RespResult.fail("保存失败");
     }
 
-    public List<Order> queryAllDoneOrderByStaffId(StaffFinanceReq Req) {
+    public List<StaffFinanceVo> queryAllDoneOrderByStaffId(StaffFinanceReq Req) {
         Map<String,String> map = new HashMap();
         map.put("startDate",Req.getStartDate());
         map.put("endDate",Req.getEndDate());
-        map.put("staffId",Req.getStaffId());
+        map.put("searchValue",Req.getSearchValue());
+        //获取所有已经完成的订单
         List<Order> orderList = orderDao.queryAllDoneOrderByStaffId(map);
-        return orderList;
+        //获取当前订单所有操作员ID
+        List<String> operatorId = orderList.stream().map(Order::getOperatorId).collect(Collectors.toList());
+        //获取当前订单所有订单Id
+        List<String> orderId = orderList.stream().map(Order::getOrderId).collect(Collectors.toList());
+        //通过操作员Id查询所以员工
+        List<Staff> staffList = staffDao.queryStaffsByIds(operatorId);
+        Map<String, Staff> staffMap = staffList.stream().collect(Collectors.toMap(Staff::getStaffId,x -> x));
+        //通过订单ID查询所有商品信息
+        List<OrderGoodsItem> orderGoodsItemList = orderDao.queryOrderGoodsInfoByOrderIds(orderId);
+        Map<String,OrderGoodsItem> orderGoodsItemMap = orderGoodsItemList.stream().collect(Collectors.toMap(OrderGoodsItem::getOrderId,x -> x));
+        //
+        List<StaffFinanceVo> data = orderList.stream().map(order ->
+                StaffFinanceVo.convert(staffMap.get(order.getOperatorId()), order , 0,orderGoodsItemMap.get(order.getOrderId()))).collect(Collectors.toList());
+        return data;
     }
 }

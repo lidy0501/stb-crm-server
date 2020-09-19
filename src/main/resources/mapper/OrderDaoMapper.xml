@@ -155,7 +155,13 @@
         from CRM_ORDER
         where ORDER_STATE = '1'
         and (#{startDate} &gt;= update_time and update_time &lt;= #{endDate})
-        and operator_id = #{operatorId}
+        <if test="searchValue != null and searchValue != ''">
+            and (
+            OPERATOR_ID in (select staff_id from CRM_STAFF where staff_name like CONCAT (concat('%',#{searchValue}),'%')
+            or staff_code like CONCAT (concat('%',#{searchValue}),'%') )
+            )
+        </if>
+        GROUP BY operator_id
     </select>
     <select id="queryOrdersByLikeCode" resultType="cn.stb.stbcrmserver.domain.Order" parameterType="java.util.Map">
         select ORDER_ID, ORDER_CODE, USER_ID, USER_NAME, COMPANY, OPERATOR_ID,

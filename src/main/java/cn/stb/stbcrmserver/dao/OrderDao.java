@@ -4,6 +4,7 @@ import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.OrderGoods;
 import cn.stb.stbcrmserver.vo.OrderGoodsItem;
 import cn.stb.stbcrmserver.vo.OrderListVo;
+import cn.stb.stbcrmserver.vo.StaffFinanceVo;
 import cn.stb.stbcrmserver.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class StaffFinanceReq {
     private String startDate;//开始时间
     private String endDate;//结束时间
-    private String staffId;//员工Id
+    private String searchValue;//员工编码/员工姓名
 
 }
