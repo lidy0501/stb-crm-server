@@ -78,10 +78,10 @@ public class FinanceController {
                 .build()).collect(Collectors.toList());
 
         // 所有订单的金额总和
-        int gross = orderList.stream().mapToInt(Order::getTotalFee).sum();
+        int gross = orderList.stream().filter(x -> x.getTotalFee() >= goodsFeeMap.get(x.getOrderId())).mapToInt(Order::getTotalFee).sum();
 
         // 所有订单的总成本
-        int cost = orderItems.stream().mapToInt(x -> x.getGoodsFee()).sum();
+        int cost = orderItems.stream().filter(x -> x.getTotalFee() >= x.getGoodsFee()).mapToInt(x -> x.getGoodsFee()).sum();
 
         FinanceVo financeVo = FinanceVo.builder()
                 .staffCode(staff.getStaffCode())
