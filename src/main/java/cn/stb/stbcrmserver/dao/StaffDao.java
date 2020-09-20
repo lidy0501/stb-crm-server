@@ -30,4 +30,6 @@ public interface StaffDao {
     int changeStaffState(Map<String, String> map);
 
     List<Staff> queryStaffsByIds(List<String> operatorIds);
+
+    Staff findStaffByNameOrCode(String searchValue);
 }

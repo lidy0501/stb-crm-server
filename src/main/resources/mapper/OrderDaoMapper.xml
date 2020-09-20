@@ -155,14 +155,9 @@
         from CRM_ORDER
         where ORDER_STATE = '1'
         and (#{startDate} &gt;= update_time and update_time &lt;= #{endDate})
-        <if test="searchValue != null and searchValue != ''">
-            and (
-            OPERATOR_ID in (select staff_id from CRM_STAFF where staff_name like CONCAT (concat('%',#{searchValue}),'%')
-            or staff_code like CONCAT (concat('%',#{searchValue}),'%') )
-            )
-        </if>
-        GROUP BY operator_id
+        and OPERATOR_ID = #{operatorId}
     </select>
+
     <select id="queryOrdersByLikeCode" resultType="cn.stb.stbcrmserver.domain.Order" parameterType="java.util.Map">
         select ORDER_ID, ORDER_CODE, USER_ID, USER_NAME, COMPANY, OPERATOR_ID,
         ORDER_STATE, PAY_TYPE, TOTAL_FEE, DOWN_PAY_FEE, FINAL_PAY_FEE, DELIVERY_TIME,
@@ -189,5 +184,13 @@
         WHERE ORDER_ID = #{orderId}
     </update>
 
+    <select id="queryOrderGoodsByOrderIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.OrderGoods">
+        SELECT ORDER_ID, GOODS_ID, AMOUNT, OPERATOR_ID, CREATE_TIME, UPDATE_TIME
+        FROM CRM_ORDER_GOODS
+        WHERE ORDER_ID in
+        <foreach collection="list"  open="("  item="item" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
 
 </mapper>

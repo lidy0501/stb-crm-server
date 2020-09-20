@@ -35,4 +35,6 @@ public interface GoodsDao {
 	List<SelectGoodsVo> queryAllSelectGoodsVo();
 
 	List<OrderGoods> queryOrderGoodsByGoodsId(String goodsId);
+
+	List<Goods> queryGoodsByGoodsIds(List<String> goodsIds);
 }

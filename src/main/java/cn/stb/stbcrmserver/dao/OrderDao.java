@@ -44,4 +44,6 @@ public interface OrderDao {
     List<Order> queryOrdersByLikeCode(Map map);
 
     int deleteOrderGoodsByOrderId(String orderId);
+
+    List<OrderGoods> queryOrderGoodsByOrderIds(List<String> orderIds);
 }

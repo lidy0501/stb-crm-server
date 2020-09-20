@@ -11,6 +11,7 @@ import cn.stb.stbcrmserver.domain.Order;
 import cn.stb.stbcrmserver.domain.OrderGoods;
 import cn.stb.stbcrmserver.domain.Staff;
 import cn.stb.stbcrmserver.vo.*;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -157,6 +158,12 @@ public class OrderService {
         map.put("searchValue",Req.getSearchValue());
         //获取所有已经完成的订单
         List<Order> orderList = orderDao.queryAllDoneOrderByStaffId(map);
+
+
+
+
+
+
         //获取当前订单所有操作员ID
         List<String> operatorId = orderList.stream().map(Order::getOperatorId).collect(Collectors.toList());
         //获取当前订单所有订单Id
@@ -171,5 +178,27 @@ public class OrderService {
         List<StaffFinanceVo> data = orderList.stream().map(order ->
                 StaffFinanceVo.convert(staffMap.get(order.getOperatorId()), order , 0,orderGoodsItemMap.get(order.getOrderId()))).collect(Collectors.toList());
         return data;
+    }
+
+    /**
+     * 根据条件查询订单集合
+     */
+    public List<Order> queryOrders4Finance(String staffId, DateTime startDate, DateTime endDate) {
+        Map<String,Object> map = new HashMap();
+        map.put("startDate", startDate);
+        map.put("endDate", endDate);
+        map.put("operatorId", staffId);
+        //获取所有已经完成的订单
+        List<Order> orderList = orderDao.queryAllDoneOrderByStaffId(map);
+        return orderList;
+    }
+
+    /**
+     * 根据orderIds 查询所有的OrderGoodsl
+     * @param orderIds
+     * @return
+     */
+    public List<OrderGoods> queryOrderGoodsByOrderIds(List<String> orderIds) {
+        return orderDao.queryOrderGoodsByOrderIds(orderIds);
     }
 }

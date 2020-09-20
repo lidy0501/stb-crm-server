@@ -104,4 +104,8 @@ public class GoodsService {
 	public List<Sku> querySkuList() {
 	    return goodsDao.querySkuList();
 	}
+
+	public List<Goods> queryGoodsByIds(List<String> goodsIds) {
+	    return goodsDao.queryGoodsByGoodsIds(goodsIds);
+    }
 }
