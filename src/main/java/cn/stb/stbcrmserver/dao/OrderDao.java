@@ -13,6 +13,7 @@ import java.util.Map;
 
 @Mapper
 public interface OrderDao {
+
     List<Order> queryAllOrder(Map map);
 
     int addOrder(Order order);
