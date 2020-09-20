@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,6 +37,9 @@ public class OrderController {
         List<Order> orderList = orderService.queryAllOrder(req.getSearchValue());
         page.setTotalRows(orderList.size());
         orderList = orderList.stream().skip(startIndex).limit(10).collect(Collectors.toList());
+        if (orderList.isEmpty()) {
+            return new ListVo(new ArrayList<OrderListVo>(), page);
+        }
         // 跟单人信息
         List<Staff> staffList = staffService.queryAllStaffIgnoreState();
         Map<String, Staff> staffMap = staffList.stream().collect(Collectors.toMap(Staff::getStaffId, x -> x));
