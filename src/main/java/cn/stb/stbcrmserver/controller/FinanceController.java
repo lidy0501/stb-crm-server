@@ -43,14 +43,15 @@ public class FinanceController {
     public RespResult staffFinance(@RequestBody StaffFinanceReq req){
         Staff staff = staffService.findStaffByNameOrCode(req.getSearchValue());
         if (staff == null) {
-            return RespResult.fail("未找到该员工，请重新搜索！");
+            return RespResult.fail(-1,"未找到该员工，请重新搜索！");
         }
         DateTime startDate = DateTime.parse(req.getStartDate()).withTimeAtStartOfDay();
         DateTime endDate = DateTime.parse(req.getEndDate()).plusDays(1).withTimeAtStartOfDay();
         List<Order> orderList = orderService.queryOrders4Finance(staff.getStaffId(), startDate, endDate);
 
         if (orderList.isEmpty()) {
-            return RespResult.fail("该员工暂无订单");
+            FinanceVo financeVo = FinanceVo.builder().staffCode(staff.getStaffCode()).staffName(staff.getStaffName()).build();
+            return RespResult.failWithCode(-2, "该员工暂无订单", financeVo);
         }
 
         List<String> orderIds = orderList.stream().map(Order::getOrderId).collect(Collectors.toList());
