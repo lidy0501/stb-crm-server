@@ -51,7 +51,7 @@ public class FinanceController {
 
         if (orderList.isEmpty()) {
             FinanceVo financeVo = FinanceVo.builder().staffCode(staff.getStaffCode()).staffName(staff.getStaffName()).build();
-            return RespResult.failWithCode(-2, "该员工暂无订单", financeVo);
+            return RespResult.failWithCode(-2, "该员工暂无已完成的订单", financeVo);
         }
 
         List<String> orderIds = orderList.stream().map(Order::getOrderId).collect(Collectors.toList());
