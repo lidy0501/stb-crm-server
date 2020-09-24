@@ -121,7 +121,18 @@ public class OrderService {
      * @param orderState
      * @return
      */
+    @Transactional
     public RespResult changeOrderState(String orderId, String orderState) {
+        if ("9".equals(orderState)) {
+            // 合同中引用的订单不能删除（合同中引用的是订单的code）
+            Order order = orderDao.selectOrderByOrderId(orderId);
+            Contract contract = contractDao.findContractByOrderCode(order.getOrderCode());
+            if (contract != null) {
+                return RespResult.fail("该订单已被绑定在合同中，不能删除");
+            }
+            // 删除对应的商品 CRM_ORDER_GOODS
+            orderDao.deleteOrderGoodsByOrderId(orderId);
+        }
         Map map = new LinkedHashMap();
         map.put("orderId", orderId);
         map.put("orderState", orderState);
@@ -158,11 +169,6 @@ public class OrderService {
         map.put("searchValue",Req.getSearchValue());
         //获取所有已经完成的订单
         List<Order> orderList = orderDao.queryAllDoneOrderByStaffId(map);
-
-
-
-
-
 
         //获取当前订单所有操作员ID
         List<String> operatorId = orderList.stream().map(Order::getOperatorId).collect(Collectors.toList());
