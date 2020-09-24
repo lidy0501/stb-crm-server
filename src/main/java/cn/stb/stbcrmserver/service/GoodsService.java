@@ -88,8 +88,8 @@ public class GoodsService {
     }
 
     public RespResult deleteSkuById(String skuId) {
-        Goods goods = goodsDao.selectGoodsBySkuId(skuId);
-        if (goods == null){
+        List<Goods> goodsList = goodsDao.selectGoodsBySkuId(skuId);
+        if (goodsList == null || goodsList.isEmpty()){
             String operatorId = AcContext.getStaffId();
             Map<String, String> map = new HashMap<>();
             map.put("operatorId", operatorId);
@@ -97,7 +97,7 @@ public class GoodsService {
             goodsDao.deleteSkuById(map);
             return RespResult.ok("删除成功!");
         }
-        return RespResult.fail("该SKU正在用于商品" + goods.getGoodsName() + "，不能删除");
+        return RespResult.fail("该SKU正在用于商品" + goodsList.get(0).getGoodsName() + "，不能删除");
     }
 
     /** SKU列表 */

@@ -24,7 +24,7 @@ public interface GoodsDao {
 
     int updateSku(Sku sku);
 
-    Goods selectGoodsBySkuId(String skuId);
+    List<Goods> selectGoodsBySkuId(String skuId);
 
 	List<Sku> querySkuList();
 
