@@ -47,9 +47,10 @@
         and order_id = #{orderId}
     </update>
     <delete id="deleteOrder" parameterType="java.util.Map">
-        delete from CRM_ORDER
+        update CRM_ORDER
+        set ORDER_STATE = '9',
+            operatorId = #{operatorId}
         where order_id = #{orderId}
-        and operatorId = #{operatorId}
     </delete>
     <select id="selectAllUserVoLikeUserName" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.vo.UserVo">
         select user_id,user_name,company
