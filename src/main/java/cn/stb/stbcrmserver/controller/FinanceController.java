@@ -78,7 +78,7 @@ public class FinanceController {
                 .goodsFee(goodsFeeMap.get(y.getOrderId()))
                 .build()).collect(Collectors.toList());
 
-        // 所有订单的金额总和
+        // 所有订单的金额总和（订单金额低于成本的时候不计算绩效）
         int gross = orderList.stream().filter(x -> x.getTotalFee() >= goodsFeeMap.get(x.getOrderId())).mapToInt(Order::getTotalFee).sum();
 
         // 所有订单的总成本
