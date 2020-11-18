@@ -28,4 +28,6 @@ public interface UserDao {
     User findUserByUserCode(String userCode);
 
     User selectUserByUserId(String userId);
+
+    int updateUserRemark(User user);
 }

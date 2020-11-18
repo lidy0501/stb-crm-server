@@ -19,6 +19,7 @@ public class UserListVo {
     private String userEmail;//客户邮箱
     private String operatorName;//跟进人
     private int followDays;//跟进天数
+    private String region; // 客户所在地区
 
     public static UserListVo convert(User user, String operatorName) {
         return UserListVo.builder()
@@ -31,6 +32,7 @@ public class UserListVo {
                 .userEmail(user.getUserEmail())
                 .operatorName(operatorName)
                 .followDays(getFollowDays(user.getFollowTime()))
+                .region(user.getRegion())
                 .build();
     }
 

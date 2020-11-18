@@ -17,6 +17,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -31,6 +32,10 @@ public class UserService {
 
     // 新增客户,默认公司客户
     public RespResult addUser(User user) {
+        if (!StringUtils.isEmpty(user.getUserId())) { // 编辑客户备注
+            int row = userDao.updateUserRemark(user);
+            return RespResult.ok("保存成功");
+        }
         String userCode = user.getUserCode();
         User checkUser = userDao.findUserByUserCode(userCode);
         if (checkUser != null && !user.getUserId().equals(checkUser.getUserId())) return RespResult.fail("该账号已经存在!");

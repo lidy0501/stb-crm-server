@@ -36,5 +36,6 @@ public class User {
     private String followTime;//创建时间
     private String subtotal;//跟进小计
     private String remark;//备注
+    private String region;//客户所在地区
 
 }
