@@ -56,9 +56,14 @@
 
         <if test="searchValue != null and searchValue != ''">
             AND (
-            ORDER_CODE like CONCAT (concat('%',#{searchValue}),'%')
-            or CONTRACT_CODE like CONCAT (concat('%',#{searchValue}),'%')
-            or COMPANY_A like CONCAT (concat('%',#{searchValue}),'%')
+                ORDER_CODE like CONCAT (concat('%',#{searchValue}),'%')
+                or CONTRACT_CODE like CONCAT (concat('%',#{searchValue}),'%')
+                or COMPANY_A like CONCAT (concat('%',#{searchValue}),'%')
+                or order_code in (
+                    select co.order_code from CRM_ORDER co where co.OPERATOR_ID in (
+                        select cs.STAFF_ID from CRM_STAFF cs where cs.STAFF_NAME like CONCAT (concat('%',#{searchValue}),'%')
+                     )
+                )
             )
         </if>
         order by UPDATE_TIME desc

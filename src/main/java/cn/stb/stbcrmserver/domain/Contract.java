@@ -28,4 +28,7 @@ public class Contract {
     private DateTime createTime;//创建时间
     private DateTime updateTime;//更新时间
     private String remark;//备注
+
+    private String operatorName; // 跟单人姓名，用于列表页展示，表中无此字段
+
 }

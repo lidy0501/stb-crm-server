@@ -14,6 +14,7 @@ import cn.stb.stbcrmserver.vo.Order4Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public class ContractService {
     private ContractDao contractDao;
     @Autowired
     private OrderDao orderDao;
+    @Autowired
+    private UserService userService;
 
     public List<Contract> queryAllContract(ListReq req) {
         Staff staff = AcContext.getStaff();
@@ -35,7 +38,14 @@ public class ContractService {
         map.put("staffType", staff.getStaffType());
         map.put("operatorId", staff.getStaffId());
         map.put("searchValue", req.getSearchValue());
-        return contractDao.queryAllContract(map);
+
+        List<Contract> contracts = contractDao.queryAllContract(map);
+        if (!CollectionUtils.isEmpty(contracts)) {
+            List<String> operatorIds = contracts.stream().map(Contract::getOperatorId).collect(Collectors.toList());
+            Map<String, String> nameMap = userService.getOperatorNameMap(operatorIds);
+            contracts.forEach(c -> c.setOperatorName(nameMap.get(c.getOperatorId())));
+        }
+        return contracts;
     }
 
     @Transactional
