@@ -45,9 +45,11 @@ public class FinanceController {
         if (staff == null) {
             return RespResult.fail(-1,"未找到该员工，请重新搜索！");
         }
-        DateTime startDate = DateTime.parse(req.getStartDate()).withTimeAtStartOfDay();
-        DateTime endDate = DateTime.parse(req.getEndDate()).plusDays(1).withTimeAtStartOfDay();
-        List<Order> orderList = orderService.queryOrders4Finance(staff.getStaffId(), startDate, endDate);
+        // DateTime startDate = DateTime.parse(req.getStartDate()).withTimeAtStartOfDay();
+        // DateTime endDate = DateTime.parse(req.getEndDate()).plusDays(1).withTimeAtStartOfDay();
+        String start = req.getStartDate() + " 00:00:00";
+        String end = req.getEndDate() + " 23:59:59";
+        List<Order> orderList = orderService.queryOrders4Finance(staff.getStaffId(), start, end);
 
         if (orderList.isEmpty()) {
             FinanceVo financeVo = FinanceVo.builder().staffCode(staff.getStaffCode()).staffName(staff.getStaffName()).build();

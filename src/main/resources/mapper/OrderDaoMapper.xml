@@ -155,7 +155,11 @@
         DELIVERY_NO, PAY_RECORD, CREATE_TIME, UPDATE_TIME, REMARK
         from CRM_ORDER
         where ORDER_STATE = '1'
-        and (#{startDate} &gt;= update_time and update_time &lt;= #{endDate})
+        and (
+                update_time &gt;= #{startDate}
+                and
+                update_time &lt; #{endDate}
+            )
         and OPERATOR_ID = #{operatorId}
     </select>
 

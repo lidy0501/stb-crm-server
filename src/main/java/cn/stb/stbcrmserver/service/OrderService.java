@@ -189,7 +189,7 @@ public class OrderService {
     /**
      * 根据条件查询订单集合
      */
-    public List<Order> queryOrders4Finance(String staffId, DateTime startDate, DateTime endDate) {
+    public List<Order> queryOrders4Finance(String staffId, String startDate, String endDate) {
         Map<String,Object> map = new HashMap();
         map.put("startDate", startDate);
         map.put("endDate", endDate);
