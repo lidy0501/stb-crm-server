@@ -10,9 +10,9 @@
 
     <insert id="addGoods" parameterType="cn.stb.stbcrmserver.domain.Goods">
         insert into
-        CRM_GOODS(goods_id,goods_code,goods_name,goods_price,sku_id,operator_id,remark)
+        CRM_GOODS(goods_id,goods_code,goods_name,goods_price,SKU_CODE, SKU_UNIT, SKU_COLOR, operator_id,remark)
         values
-        (#{goodsId},#{goodsCode},#{goodsName},#{goodsPrice},#{skuId},#{operatorId},#{remark})
+        (#{goodsId},#{goodsCode},#{goodsName},#{goodsPrice},#{skuCode}, #{skuUnit}, #{skuColor}, #{operatorId},#{remark})
     </insert>
 
     <update id="deleteGoodsById" parameterType="java.util.Map">
@@ -63,7 +63,7 @@
     </select>
 
     <select id="findGoodsByCode" parameterType="java.lang.String" resultType="cn.stb.stbcrmserver.domain.Goods">
-        select goods_id, goods_code, goods_name, goods_price, sku_id, create_time, update_time, remark
+        select goods_id, goods_code, goods_name, goods_price, SKU_CODE, SKU_UNIT, SKU_COLOR, create_time, update_time, remark
         from CRM_GOODS
         where goods_state = '1' and goods_code=#{goodsCode}
     </select>

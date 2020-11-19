@@ -26,5 +26,9 @@ public class Goods {
     private DateTime updateTime;//更新时间
     private String remark;//备注
 
+    private String skuCode;//SKU编码
+    private String skuUnit;//SKU单位
+    private String skuColor;//SKU花色
+
 
 }
