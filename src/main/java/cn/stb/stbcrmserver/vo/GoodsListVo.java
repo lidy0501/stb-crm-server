@@ -19,13 +19,13 @@ public class GoodsListVo {
 	private String skuInfo;//商品对应的sku信息
 	private String remark;//备注
 
-	public static GoodsListVo convert(Goods goods, Sku sku) {
+	public static GoodsListVo convert(Goods goods) {
 		return GoodsListVo.builder()
 				.goodsId(goods.getGoodsId())
 				.goodsCode(goods.getGoodsCode())
 				.goodsName(goods.getGoodsName())
 				.goodsPrice(goods.getGoodsPrice())
-				.skuInfo("编码:" + sku.getSkuCode() + " 单位:" + sku.getSkuUnit() + " 花色:" + sku.getSkuColor())
+				.skuInfo("编码:" + goods.getSkuCode() + " 单位:" + goods.getSkuUnit() + " 花色:" + goods.getSkuColor())
 				.remark(goods.getRemark())
 				.build();
 	}

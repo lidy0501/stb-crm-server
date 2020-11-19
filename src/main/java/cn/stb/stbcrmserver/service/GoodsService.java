@@ -35,10 +35,10 @@ public class GoodsService {
             return new ListVo<>(new ArrayList<GoodsListVo>(), page);
         }
         goodsList = goodsList.stream().skip(startIndex).limit(10).collect(Collectors.toList());
-        List<String> skuIds = goodsList.stream().map(Goods::getSkuId).collect(Collectors.toList());
-        List<Sku> skuList = goodsDao.querySkuListByIds(skuIds);
-        Map<String, Sku> skuMap = skuList.stream().collect(Collectors.toMap(Sku::getSkuId, x -> x));
-        List<GoodsListVo> goodsListVos = goodsList.stream().map(goods -> GoodsListVo.convert(goods, skuMap.get(goods.getSkuId()))).collect(Collectors.toList());
+        //List<String> skuIds = goodsList.stream().map(Goods::getSkuId).collect(Collectors.toList());
+        //List<Sku> skuList = goodsDao.querySkuListByIds(skuIds);
+        //Map<String, Sku> skuMap = skuList.stream().collect(Collectors.toMap(Sku::getSkuId, x -> x));
+        List<GoodsListVo> goodsListVos = goodsList.stream().map(goods -> GoodsListVo.convert(goods)).collect(Collectors.toList());
         ListVo<GoodsListVo> data = new ListVo<>(goodsListVos, page);
         return data;
     }

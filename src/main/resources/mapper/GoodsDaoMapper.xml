@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.stb.stbcrmserver.dao.GoodsDao">
     <select id="queryAllGoods" resultType="cn.stb.stbcrmserver.domain.Goods">
-        select goods_id, goods_code, goods_name, goods_price, sku_id,create_time, update_time, remark
+        select goods_id, goods_code, goods_name, goods_price, SKU_CODE, SKU_UNIT, SKU_COLOR, create_time, update_time, remark
         from CRM_GOODS
         where goods_state = '1'
         order by update_time desc
