@@ -61,10 +61,10 @@ public class GoodsService {
     }
     public RespResult deleteGoodsById (String goodsId){
         // todo 校验该商品是否已经存在订单中，订单中存在的商品不能删
-        List<OrderGoods> orderGoodsList = goodsDao.queryOrderGoodsByGoodsId(goodsId);
-        if (orderGoodsList.size() > 0) {
-            return RespResult.fail("该商品已经存在订单中，不能删除");
-        }
+        // List<OrderGoods> orderGoodsList = goodsDao.queryOrderGoodsByGoodsId(goodsId);
+        // if (orderGoodsList.size() > 0) {
+        //     return RespResult.fail("该商品已经存在订单中，不能删除");
+        // }
         String operatorId = AcContext.getStaffId();
         Map<String, String> map = new HashMap<>();
         map.put("operatorId", operatorId);

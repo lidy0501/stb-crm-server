@@ -18,3 +18,8 @@ ALTER TABLE `CRM_GOODS` drop column SKU_ID;
 
 #2020-11-20晚上 本地执行了上面sql
 
+
+#删除sku设置
+DELETE FROM CRM.CRM_MENU WHERE MENU_ID LIKE '00000000002222222212';
+
+#2020-11-21早上 本地执行了上面sql

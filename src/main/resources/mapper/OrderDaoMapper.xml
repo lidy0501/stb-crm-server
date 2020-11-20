@@ -130,10 +130,10 @@
     </insert>
 
     <select id="queryOrderGoodsInfoByOrderIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.vo.OrderGoodsItem">
-        SELECT og.ORDER_ID, og.AMOUNT, g.GOODS_NAME, s.SKU_UNIT, s.SKU_COLOR
+        SELECT og.ORDER_ID, og.AMOUNT, g.GOODS_NAME, g.SKU_UNIT, g.SKU_COLOR
         FROM CRM_ORDER_GOODS og
         LEFT JOIN CRM_GOODS g ON og.GOODS_ID = g.GOODS_ID
-        LEFT JOIN CRM_SKU s ON g.SKU_ID = s.SKU_ID
+        -- LEFT JOIN CRM_SKU s ON g.SKU_ID = s.SKU_ID
         WHERE og.ORDER_ID in
         <foreach collection="list"  open="("  item="item" separator="," close=")">
             #{item}
