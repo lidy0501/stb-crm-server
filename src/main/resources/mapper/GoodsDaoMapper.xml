@@ -93,7 +93,7 @@
     </select>
 
     <select id="queryGoodsByGoodsIds" parameterType="java.util.List" resultType="cn.stb.stbcrmserver.domain.Goods">
-        select goods_id, goods_code, goods_name, goods_price, sku_id, create_time, update_time, remark
+        select goods_id, goods_code, goods_name, goods_price, SKU_CODE, SKU_UNIT, SKU_COLOR, create_time, update_time, remark
         from CRM_GOODS
         where goods_id in
         <foreach collection="list"  open="("  item="item" separator="," close=")">
