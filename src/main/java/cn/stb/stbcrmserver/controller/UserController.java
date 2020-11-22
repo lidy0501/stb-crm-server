@@ -130,15 +130,18 @@ public class UserController {
 
     /**
      * 导出客户资料
+     * @param id 员工id
+     * @param searchValue 搜索参数
+     * @param response
      */
-    @RequestMapping("exportUserInfo")
+    @RequestMapping("/exportUserInfo")
     //@Right(CRM_客户管理)
     @LoginIgnore
-    public void exportUserInfo(@RequestParam String searchValue, HttpServletResponse response) {
+    public void exportUserInfo(@RequestParam("id") String id, @RequestParam("searchValue") String searchValue, HttpServletResponse response) {
         try {
             // ListReq listReq = JSON.parseObject(req, ListReq.class);
-            ListReq listReq = ListReq.builder().searchValue(searchValue).build();
-            userService.exportUserInfo("1", listReq, response); // 1 私有客户
+            // ListReq listReq = ListReq.builder().searchValue(searchValue).build();
+            userService.exportUserInfo("1", id, searchValue, response); // 1 私有客户
         } catch (IOException e) {
             e.printStackTrace();
             log.info("导出失败", e);

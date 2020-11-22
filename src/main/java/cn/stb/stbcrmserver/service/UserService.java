@@ -174,17 +174,17 @@ public class UserService {
     /**
      * 导出客户信息
      * @param userType 客户类型  1私有客户  2 公海客户
-     * @param req 请求参数
+     * @param searchValue 搜索参数
+     * @param staffId 员工Id
      */
-    public void exportUserInfo(String userType, ListReq req, HttpServletResponse r) throws IOException {
-        Staff staff = AcContext.getStaff();
-        String operatorId = staff.getStaffId();
+    public void exportUserInfo(String userType, String staffId, String searchValue, HttpServletResponse r) throws IOException {
+        Staff staff = staffDao.findStaffById(staffId);
         String staffType = staff.getStaffType();
         Map<String, String> map = new HashMap();
         map.put("staffType", staffType);
-        map.put("operatorId", operatorId);
+        map.put("operatorId", staffId);
         map.put("userType", userType);
-        map.put("searchValue", req.getSearchValue());
+        map.put("searchValue", searchValue);
         List<User> users = userDao.queryUserByOperatorIdAndUserType(map);
         List<String> operatorIds = users.stream().map(User::getOperatorId).collect(Collectors.toList());
         Map<String, String> nameMap = getOperatorNameMap(operatorIds);
