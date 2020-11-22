@@ -7,16 +7,20 @@ import cn.stb.stbcrmserver.vo.ListReq;
 import cn.stb.stbcrmserver.vo.ListVo;
 import cn.stb.stbcrmserver.vo.UserListVo;
 import cn.stb.stbcrmserver.vo.UserReq;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.alibaba.fastjson.JSON;
 
-import javax.print.DocFlavor;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 import static cn.stb.stbcrmserver.base.RightType.CRM_客户管理;
 
 @RestController
 @RequestMapping("/UserController")
+@Slf4j
 public class UserController {
     @Autowired
     private UserService userService;
@@ -69,7 +73,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/modifyUser")
-    @LoginIgnore
+    @Right(CRM_客户管理)
     public RespResult modifyUser(@RequestBody User user){
         return userService.modifyUser(user);
     }
@@ -108,7 +112,7 @@ public class UserController {
      * @return
      */
     @RequestMapping("/receiveUser/{userId}")
-    @LoginIgnore
+    @Right(CRM_客户管理)
     public RespResult receiveUser(@PathVariable String userId){
         return userService.receiveUser(userId);
     }
@@ -119,8 +123,27 @@ public class UserController {
      * @return
      */
     @RequestMapping("/distributionUser")
-    @LoginIgnore
+    @Right(CRM_客户管理)
     public RespResult distributionUser(@RequestBody UserReq req){
         return userService.distributionUser(req);
     }
+
+    /**
+     * 导出客户资料
+     */
+    @RequestMapping("exportUserInfo")
+    //@Right(CRM_客户管理)
+    @LoginIgnore
+    public void exportUserInfo(@RequestParam String searchValue, HttpServletResponse response) {
+        try {
+            // ListReq listReq = JSON.parseObject(req, ListReq.class);
+            ListReq listReq = ListReq.builder().searchValue(searchValue).build();
+            userService.exportUserInfo("1", listReq, response); // 1 私有客户
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.info("导出失败", e);
+        }
+
+    }
+
 }

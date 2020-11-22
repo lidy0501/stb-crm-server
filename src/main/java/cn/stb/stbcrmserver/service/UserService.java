@@ -1,5 +1,7 @@
 package cn.stb.stbcrmserver.service;
 
+import cn.afterturn.easypoi.excel.ExcelExportUtil;
+import cn.afterturn.easypoi.excel.entity.ExportParams;
 import cn.stb.stbcrmserver.base.Page;
 import cn.stb.stbcrmserver.base.RespResult;
 import cn.stb.stbcrmserver.context.AcContext;
@@ -12,13 +14,19 @@ import cn.stb.stbcrmserver.vo.ListReq;
 import cn.stb.stbcrmserver.vo.ListVo;
 import cn.stb.stbcrmserver.vo.UserListVo;
 import cn.stb.stbcrmserver.vo.UserReq;
+import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -161,5 +169,39 @@ public class UserService {
 
     public User selectUserByUserId(String userId) {
         return userDao.selectUserByUserId(userId);
+    }
+
+    /**
+     * 导出客户信息
+     * @param userType 客户类型  1私有客户  2 公海客户
+     * @param req 请求参数
+     */
+    public void exportUserInfo(String userType, ListReq req, HttpServletResponse r) throws IOException {
+        Staff staff = AcContext.getStaff();
+        String operatorId = staff.getStaffId();
+        String staffType = staff.getStaffType();
+        Map<String, String> map = new HashMap();
+        map.put("staffType", staffType);
+        map.put("operatorId", operatorId);
+        map.put("userType", userType);
+        map.put("searchValue", req.getSearchValue());
+        List<User> users = userDao.queryUserByOperatorIdAndUserType(map);
+        List<String> operatorIds = users.stream().map(User::getOperatorId).collect(Collectors.toList());
+        Map<String, String> nameMap = getOperatorNameMap(operatorIds);
+        List<UserListVo> userListVos = users.stream().map(user -> UserListVo.convert(user, nameMap.get(user.getOperatorId()))).collect(Collectors.toList());
+
+        String title = "客户资料";
+        r.setCharacterEncoding("UTF-8");
+        r.setHeader("content-Type", "application/vnd.ms-excel");
+        r.setHeader("Content-Disposition",
+                "attachment;filename=" +
+                        URLEncoder.encode(title + ".xls",
+                                "UTF-8"));
+        val out = r.getOutputStream();
+        @Cleanup Workbook workbook = ExcelExportUtil
+                .exportExcel(new ExportParams(title, title),
+                        UserListVo.class, userListVos);
+        workbook.write(out);
+        out.close();
     }
 }
