@@ -26,9 +26,19 @@ public class UserListVo {
     private String post;// 公司职位
     @Excel(name = "跟进人", width = 20)
     private String operatorName;//跟进人
-    @Excel(name = "跟今天数", width = 20)
+    @Excel(name = "跟进天数", width = 20)
     private int followDays;//跟进天数
+    @Excel(name = "国家", width = 20)
+    private String nation;//客户国家
+    @Excel(name = "地区", width = 20)
     private String region; // 客户所在地区
+    @Excel(name = "公司地址", width = 20)
+    private String companyAddress;//客户公司地址
+    @Excel(name = "公司网址", width = 40)
+    private String companyWeb;//客户公司网址
+    @Excel(name = "备注", width = 40)
+    private String remark;//备注
+
 
     public static UserListVo convert(User user, String operatorName) {
         return UserListVo.builder()
@@ -42,6 +52,10 @@ public class UserListVo {
                 .operatorName(operatorName)
                 .followDays(getFollowDays(user.getFollowTime()))
                 .region(user.getRegion())
+                .nation(user.getNation())
+                .companyAddress(user.getCompanyAddress())
+                .companyWeb(user.getCompanyWeb())
+                .remark(user.getRemark())
                 .build();
     }
 
