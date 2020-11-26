@@ -154,7 +154,7 @@ public class OrderService {
     }
 
     public RespResult saveEditOrder(Order order) {
-        // 编辑的时候要变更operatorId !!!!
+        // 编辑的时候不要变更operatorId !!!!
         int effectNum = orderDao.saveEditOrder(order);
         if (effectNum > 0) {
             return RespResult.ok("保存成功");

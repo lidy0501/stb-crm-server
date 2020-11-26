@@ -145,7 +145,10 @@
         set    DOWN_PAY_FEE = #{downPayFee},
                FINAL_PAY_FEE = #{finalPayFee},
                PAY_RECORD = #{payRecord},
-               REMARK = #{remark}
+               REMARK = #{remark},
+               PAY_TYPE = #{payType},
+               DELIVERY_NO = #{deliveryNo},
+               DELIVERY_TIME = #{deliveryTime}
         where order_id = #{orderId}
     </update>
 
