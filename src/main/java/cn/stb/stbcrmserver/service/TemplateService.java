@@ -21,10 +21,9 @@ import java.util.List;
 @Service
 @Slf4j
 public class TemplateService {
-	static final List<String> FILE_LIST = Arrays.asList("static/中文报价单.xlsx", "static/出口商业发票模板.xlsx", "static/出口箱单模板.xls",
-			"static/出口订单英文合同.xlsx", "static/英文报价单.xlsx", "static/订单中文合同.doc");
-	static final List<String> FILE_NAMES = Arrays.asList("中文报价单.xlsx", "出口商业发票模板.xlsx", "出口箱单模板.xls",
-			"出口订单英文合同.xlsx", "英文报价单.xlsx", "订单中文合同.doc");
+	static final List<String> FILE_LIST = Arrays.asList("static/中文报价单-DGAG20200915001.xlsx", "static/出口商业发票Invoice-DGAG20200915001.xlsx", "static/出口箱单PACKING LIST-DGAG20200915001.xls",
+			"static/出口订单英文合同PI-DGAG20200915001.xlsx", "static/英文报价单QUOT-DGAG20200915001.xlsx", "static/中文销售合同-DGAG20200915001.doc");
+	static final List<String> FILE_NAMES = Arrays.asList("中文报价单-DGAG20200915001.xlsx", "出口商业发票Invoice-DGAG20200915001.xlsx", "出口箱单PACKING LIST-DGAG20200915001.xls", "出口订单英文合同PI-DGAG20200915001.xlsx", "英文报价单QUOT-DGAG20200915001.xlsx", "中文销售合同-DGAG20200915001.doc");
 
 	public void downLoad(HttpServletResponse res) throws Exception {
 		//文件名 可以通过形参传进来
