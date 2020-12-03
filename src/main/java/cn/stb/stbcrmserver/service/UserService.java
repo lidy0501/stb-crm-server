@@ -40,13 +40,15 @@ public class UserService {
 
     // 新增客户,默认公司客户
     public RespResult addUser(User user) {
-        if (!StringUtils.isEmpty(user.getUserId())) { // 编辑客户备注
-            int row = userDao.updateUserRemark(user);
-            return RespResult.ok("保存成功");
-        }
         String userCode = user.getUserCode();
         User checkUser = userDao.findUserByUserCode(userCode);
-        if (checkUser != null && !checkUser.getUserId().equals(user.getUserId())) return RespResult.fail("该账号已经存在!");
+        if (checkUser != null && !checkUser.getUserId().equals(user.getUserId())) return RespResult.fail("该客户编码已经存在!");
+
+        if (!StringUtils.isEmpty(user.getUserId())) { // 编辑客户
+            int row = userDao.updateUser(user);
+            return RespResult.ok("保存成功");
+        }
+        // 新增
         user.setUserId(UUIDUtil.getNumId());
         String operatorId = AcContext.getStaffId();
         user.setUserType("1"); //私有

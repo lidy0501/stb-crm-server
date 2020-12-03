@@ -30,4 +30,6 @@ public interface UserDao {
     User selectUserByUserId(String userId);
 
     int updateUserRemark(User user);
+
+    int updateUser(User user);
 }

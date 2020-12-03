@@ -109,4 +109,21 @@
         set remark = #{remark}
         where user_id = #{userId}
     </update>
+
+    <update id="updateUser" parameterType="cn.stb.stbcrmserver.domain.User">
+        update CRM_USER
+        set user_code = #{userCode}
+        ,user_name = #{userName}
+        ,nation = #{nation}
+        ,user_phone = #{userPhone}
+        ,user_telephone = #{userTelephone}
+        ,user_email = #{userEmail}
+        ,company = #{company}
+        ,company_address = #{companyAddress}
+        ,company_web = #{companyWeb}
+        ,post = #{post}
+        ,remark = #{remark}
+        ,region = #{region}
+        where user_id = #{userId}
+    </update>
 </mapper>
