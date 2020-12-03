@@ -46,7 +46,7 @@ public class UserService {
         }
         String userCode = user.getUserCode();
         User checkUser = userDao.findUserByUserCode(userCode);
-        if (checkUser != null && !user.getUserId().equals(checkUser.getUserId())) return RespResult.fail("该账号已经存在!");
+        if (checkUser != null && !checkUser.getUserId().equals(user.getUserId())) return RespResult.fail("该账号已经存在!");
         user.setUserId(UUIDUtil.getNumId());
         String operatorId = AcContext.getStaffId();
         user.setUserType("1"); //私有
